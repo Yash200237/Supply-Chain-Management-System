@@ -1,108 +1,106 @@
 -- Insert into Customer
-INSERT INTO Customer (customer_ID, first_name, last_name, username, email, password, phone_number, address, customer_type) VALUES
-(UNHEX(REPLACE(UUID(), '-', '')), 'Alice', 'Johnson', 'alicejohnson', 'alice.j@example.com', 'alice123', '5551231111', '123 Apple St', 'retailer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Bob', 'Smith', 'bobsmith', 'bob.smith@example.com', 'bob123', '5551241112', '456 Orange St', 'wholesaler'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Charlie', 'Brown', 'charliebrown', 'charlie.b@example.com', 'charlie123', '5551251113', '789 Peach St', 'end customer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Diana', 'Ross', 'dianaross', 'diana.r@example.com', 'diana123', '5551261114', '101 Pine St', 'retailer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Ethan', 'Clark', 'ethanclark', 'ethan.c@example.com', 'ethan123', '5551271115', '202 Maple St', 'wholesaler'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Fiona', 'Green', 'fionagreen', 'fiona.g@example.com', 'fiona123', '5551281116', '303 Oak St', 'end customer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'George', 'Harris', 'georgeharris', 'george.h@example.com', 'george123', '5551291117', '404 Birch St', 'retailer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Hannah', 'Moore', 'hannahmoore', 'hannah.m@example.com', 'hannah123', '5551301118', '505 Cedar St', 'wholesaler'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Isaac', 'Lewis', 'isaaclewis', 'isaac.l@example.com', 'isaac123', '5551311119', '606 Spruce St', 'end customer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Julia', 'Walker', 'juliawalker', 'julia.w@example.com', 'julia123', '5551321120', '707 Fir St', 'retailer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Kevin', 'Hall', 'kevinhall', 'kevin.h@example.com', 'kevin123', '5551331121', '808 Elm St', 'wholesaler'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Laura', 'King', 'lauraking', 'laura.k@example.com', 'laura123', '5551341122', '909 Willow St', 'end customer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Michael', 'Scott', 'michaelscott', 'michael.s@example.com', 'michael123', '5551351123', '1010 Cherry St', 'retailer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Nina', 'Taylor', 'ninataylor', 'nina.t@example.com', 'nina123', '5551361124', '1111 Beech St', 'wholesaler'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Oliver', 'Anderson', 'oliveranderson', 'oliver.a@example.com', 'oliver123', '5551371125', '1212 Cedar St', 'end customer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Paula', 'Martin', 'paulamartin', 'paula.m@example.com', 'paula123', '5551381126', '1313 Maple St', 'retailer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Quincy', 'Robinson', 'quincyrobinson', 'quincy.r@example.com', 'quincy123', '5551391127', '1414 Spruce St', 'wholesaler'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Rachel', 'Thompson', 'rachelthompson', 'rachel.t@example.com', 'rachel123', '5551401128', '1515 Pine St', 'end customer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Steve', 'Evans', 'steveevans', 'steve.e@example.com', 'steve123', '5551411129', '1616 Fir St', 'retailer'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Tina', 'Wright', 'tinawright', 'tina.w@example.com', 'tina123', '5551421130', '1717 Cherry St', 'wholesaler');
-
+INSERT INTO Customer (customer_ID, first_name, last_name, city, username, email, password, phone_number, address, customer_type) VALUES
+(1,'Supun','Peiris','Kandy','supunpeiris','supunp@gmail.com','supunp123','0711234567','No 115, Haragama,Kapuliyadda, Talathuoya','retailer'),
+(2,'Sapumal','Siriwardhana','Colombo','sapumalsiriwardhana','sapumals@gmail.com','sapumals123','0761234967','411 Galle Road, Colombo 03','wholesaler'),
+(3,'Shriya','Shantha','Negombo','shriyashantha','shriyas@gmail.com','shriyas123','0768234967','No 24,1st Cross Street, Negombo','end customer'),
+(4,'Evon','Gunathilaka','Galle','evongunathilaka','evong@gmail.com','evong123','0763334967','590 Galle Road, Galle','wholesaler'),
+(5,'Fiona','Fernando','Matara','fionafernando','fionaf@gmail.com','fionaf123','0717934567','No 3/4, 1 Lane, Upatissa mawatha, Walgama South,Matara','end customer'),
+(6,'Georgina','Alvis','Jaffna','georginaalvis','georgea@gmail.com','georgea123','0714434567','Nellandai Veethi,Thumpalai,Point- Pedro','retailer'),
+(7,'Hannah','Jayaweera','Trincomalee','hannahjayaweera','hannahj@gmail.com','hannahj123','0761114967','B6,Panichankemi,Trincomalee','wholesaler'),
+(8,'Isaac','Newton','Kandy','isaacnewton','isaacn@gmail.com','isaacn123','0708132497','No 78, Ullandupitiya Rd,Werellagama','end customer'),
+(9,'Julia','Premawardhana','Colombo','juliapremawardhana','juliap@gmail.com','juliap123','0700922497','200 Union Place, Colombo 02','retailer'),
+(10,'Kevin','Balasooriya','Negombo','kevinbalasooriya','kevinb@gmail.com','kevinb123','0714035267','No 17,Mankuliya Road, Negombo','wholesaler'),
+(11,'Laura','Aponsu','Galle','lauraaponsu','lauraa@gmail.com','lauraa123','0769900267','188 Main Street, Galle','end customer'),
+(12,'Michael','Perera','Matara','michaelperera','michaelp@gmail.com','michaelp123','0708135557','No 107, Dehigaspe,Pitabeddara','retailer'),
+(13,'Soffy','Taylor','Jaffna','soffytaylor','soffyt@gmail.com','soffyt123','0717835557','St. Mary’s Lane,Kopay,Jaffna','wholesaler'),
+(14,'Patrick','Anderson','Trincomalee','patrickanderson','patricka@gmail.com','patricka123','0711111157','B34,Hulogedara,Trincomalee','end customer'),
+(15,'Piyadasa','Samarasekara','Kandy','piyadasasamarasekara','piyadasas@gmail.com','piyadasas123','0761654467','No 85/8,Station Road,Katugastota','retailer'),
+(16,'Amali','Karunarathna','Colombo','amalikarunarathna','amalik@gmail.com','amalik123','0113448902','65 Maligawatte Road, Colombo 10','wholesaler'),
+(17,'Sithumi','Jayasinghe','Negombo','sithumijayasinghe','sithumij@gmail.com','sithumij123','0751653367','No 4,Kudapaduwa, Negombo','end customer'),
+(18,'Sunimal','Vidhana','Galle','sunimalvidhana','sunimalv@gmail.com','sunimalv123','0741653375','No 245/5, SI, Ransiri Uyana,Moris Rd, Galle','retailer'),
+(19,'Tina','Kariyawasam','Matara','tinakariyawasam','tinak@gmail.com','tinak123','0719999991','No 72/19, Aswatta,Kirimetimulla, Thelijjawila','wholesaler'),
+(20,'Diana','Peiris','Jaffna','dianapeiris','dianap@gmail.com','dianap123','0760003991','657/1 Hospital Road,Jaffna','retailer');
 
 
 -- Insert into Driver
 INSERT INTO Driver (driver_ID, first_name, last_name, username, email, password, phone_number, total_hours, weekly_hours, monthly_salary) VALUES
-(UNHEX(REPLACE(UUID(), '-', '')), 'Michael', 'Williams', 'michaelw', 'michael.w@example.com', 'password123', '5551231001', 40.0, 20.0, 40000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'David', 'Brown', 'davidb', 'david.b@example.com', 'password789', '5551231003', 45.0, 22.5, 42000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'John', 'Miller', 'johnm', 'john.m@example.com', 'password102', '5551231005', 50.0, 25.0, 45000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'William', 'Martinez', 'williamm', 'william.m@example.com', 'password104', '5551231007', 47.0, 23.5, 43000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'James', 'Clark', 'jamesc', 'james.c@example.com', 'password106', '5551231009', 39.0, 19.5, 39500),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Daniel', 'Lewis', 'daniell', 'daniel.l@example.com', 'password108', '5551231011', 46.0, 23.0, 42500),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Chloe', 'Walker', 'chloew', 'chloe.w@example.com', 'password109', '5551231012', 43.0, 21.5, 41500),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Lucas', 'Perez', 'lucasp', 'lucas.p@example.com', 'password110', '5551231013', 44.0, 22.0, 42000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Mia', 'Young', 'miay', 'mia.y@example.com', 'password111', '5551231014', 40.0, 20.0, 40000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Ethan', 'King', 'ethank', 'ethan.k@example.com', 'password112', '5551231015', 37.0, 18.5, 38500);
-
+(1,'Nimal','Alvis','nimala','nimala@gmail.com','password123','0711112223',140.00,20.00,40000.00),
+(2,'Kamal','Perera','kamalp','kamalp@gmail.com','password789','0711122334',145.00,22.50,42000.00),
+(3,'Bimal','Fernando','bimalf','bimalf@gmail.com','password102','0713322114',150.00,25.00,45000.00),
+(4,'Pathum','Kumara','pathumk','pathumk@gmail.com','password104','0717788991',147.00,23.50,43000.00),
+(5,'Kantha','Lakshan','kanthal','kanthal@gmail.com','password106','0714455661',139.00,19.50,39500.00),
+(6,'Shantha','Rathna','shanthar','shanthar@gmail.com','password108','0713344990',146.00,23.00,42500.00),
+(7,'Priyantha','Peiris','priyanthap','priyanthap@gmail.com','password109','0718833221',143.00,21.50,41500.00),
+(8,'Lasantha','Karunarathna','lasanthak','lasanthak@gmail.com','password110','0715500883',144.00,23.00,42000.00),
+(9,'Krishantha','Kariyawasam','krishanthak','krishanthak@gmail.com','password111','0714400558',140.00,20.00,40000.00),
+(10,'Dimantha','Aponsu','dimanthaa','dimanthaa@gmail.com','password112','0710099335',137.00,18.50,38500.00);
 
 
 -- Insert into DriverAssistant
 INSERT INTO DriverAssistant (driverA_ID, first_name, last_name, username, email, password, phone_number, total_hours, weekly_hours, monthly_salary) VALUES
-(UNHEX(REPLACE(UUID(), '-', '')), 'Tom', 'Lee', 'tomlee', 'tom@assist.com', 'passtom', '5556667777', 65.0, 22.0, 30000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Emma', 'Clark', 'emmaclark', 'emma@assist.com', 'passemma', '5557778888', 70.0, 25.0, 32000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Alex', 'Brooks', 'alexbrooks', 'alex@assist.com', 'passalex', '5558889999', 68.0, 24.0, 31000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Sophia', 'Turner', 'sophiaturner', 'sophia@assist.com', 'passsophia', '5559991111', 62.0, 21.0, 29000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Daniel', 'Morris', 'danielmorris', 'daniel@assist.com', 'passdaniel', '5551112222', 75.0, 27.0, 34000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Liam', 'Harris', 'liamharris', 'liam@assist.com', 'passliam', '5552223333', 64.0, 22.0, 30000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Chloe', 'Hill', 'chloehill', 'chloe@assist.com', 'passchloe', '5553334444', 67.0, 23.5, 31000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'James', 'Nelson', 'jamesnelson', 'james@assist.com', 'passjames', '5554445555', 72.0, 26.0, 33000),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Olivia', 'Cooper', 'oliviacooper', 'olivia@assist.com', 'passolivia', '5555556666', 69.0, 24.5, 31500),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Lucas', 'Parker', 'lucasparker', 'lucas@assist.com', 'passlucas', '5556667777', 66.0, 23.0, 30500);
+(1,'Lal','Kantha','lalkantha','lalk@gmail.com','passlalk','0710033772',165.00,22.00,30000.00),
+(2,'Lisal','Jayamanna','lisaljaya','lisalj@gmail.com','passlisalj','0710011772',170.00,25.00,32000.00),
+(3,'Movindu','Gunasinghe','movinduguna','movindug@gmail.com','passmovindug','0710099772',168.00,24.00,31000.00),
+(4,'Namal','Lanka','namallan','namall@gmail.com','passsnamall','0719988775',162.00,21.00,29000.00),
+(5,'Nipun','Jayasinghe','nipunjaya','nipunj@gmail.com','passnipunj','0719080775',175.00,27.00,34000.00),
+(6,'Piyath','Premachandra','piyathprema','piyathp@gmail.com','passpiyathp','0712565775',164.00,22.00,30000.00),
+(7,'Vikum','Peiris','vikumpei','vikump@gmail.com','passvikump','0712565707',167.00,23.50,31000.00),
+(8,'Viranga','Nelson','viranganel','virangan@gmail.com','passvirangan','0712035707',172.00,26.00,33000.00),
+(9,'Vinod','Alvis','vinodalv','vinoda@gmail.com','passvinoda','0710234772',169.00,24.50,31500.00),
+(10,'Yasindu','Piyasiri','yasindupiya','yasindup@gmail.com','passyasindup','0718765432',166.00,23.00,30500.00);
 
 
 -- Insert into Store
-INSERT INTO Store (store_ID, city) VALUES
-(UNHEX(REPLACE(UUID(), '-', '')), 'Kandy'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Colombo'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Negombo'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Galle'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Matara'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Jaffna'),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Trincomalee');
+INSERT INTO Store (city,store_ID) VALUES
+('Kandy',1),
+('Colombo',2),
+('Negombo',3),
+('Galle',4),
+('Matara',5),
+('Jaffna',6),
+('Trincomalee',7);
 
 
 -- Insert into Product
 INSERT INTO Product (product_ID, name, price, discount, volume) VALUES
-(UNHEX(REPLACE(UUID(), '-', '')), 'T-shirt', 2000, 5, 0.3),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Jeans', 5000, 1, 0.8),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Sneakers', 7500, 8, 1.2),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Backpack', 4500, 2, 1.5),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Sunglasses', 500, 0, 0.2),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Wristwatch', 3200, 5, 0.3),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Wallet', 2500, 1, 0.2),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Handbag', 5500, 8, 0.7),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Belt', 1800, 5, 0.1),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Cap', 1500, 7, 0.2),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Socks', 100, 0, 0.1),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Jacket', 1000, 0, 1.8),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Dress', 7000, 2, 1.0),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Blender', 9000, 10, 2.5),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Coffee Maker', 10000, 15, 3.0),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Toaster', 8000, 10, 1.8),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Iron', 4500, 8, 1.4),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Cookware Set', 12000, 20, 5.0),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Bath Towel', 2500, 0, 1.0),
-(UNHEX(REPLACE(UUID(), '-', '')), 'Pillow', 3000, 2, 1.2);
+(1,'T-shirt',2000.00,5,0.30),
+(2,'Jeans',5000.00,1,0.80),
+(3,'Sneakers',7500.00,8,1.20),
+(4,'Backpack',4500.00,2,1.50),
+(5,'Sunglasses',500.00,0,0.20),
+(6,'Wristwatch',3200.00,5,0.30),
+(7,'Wallet',2500.00,1,0.20),
+(8,'Handbag',5500.00,8,0.70),
+(9,'Belt',1800.00,5,0.10),
+(10,'Cap',1500.00,7,0.20),
+(11,'Socks',100.00,0,0.10),
+(12,'Jacket',1000.00,0,1.80),
+(13,'Dress',7000.00,2,1.00),
+(14,'Blender',9000.00,10,2.50),
+(15,'Coffee Maker',10000.00,15,3.00),
+(16,'Toaster',8000.00,10,1.80),
+(17,'Iron',4500.00,8,1.40),
+(18,'Cookware Set',12000.00,20,5.00),
+(19,'Bath Towel',2500.00,0,1.00),
+(20,'Pillow',3000.00,2,1.20);
 
 
 -- Insert into Train
 INSERT INTO Train (train_ID, time, day, capacity, destination) VALUES
-(UNHEX(REPLACE(UUID(), '-', '')), '08:00:00', 'Monday', 2000, 'Colombo'),
-(UNHEX(REPLACE(UUID(), '-', '')), '14:00:00', 'Monday', 2000, 'Negombo'),
-(UNHEX(REPLACE(UUID(), '-', '')), '08:00:00', 'Tuesday', 1800, 'Galle'),
-(UNHEX(REPLACE(UUID(), '-', '')), '14:00:00', 'Tuesday', 1800, 'Matara'),
-(UNHEX(REPLACE(UUID(), '-', '')), '08:00:00', 'Wednesday', 2200, 'Jaffna'),
-(UNHEX(REPLACE(UUID(), '-', '')), '14:00:00', 'Wednesday', 2200, 'Trincomalee'),
-(UNHEX(REPLACE(UUID(), '-', '')), '08:00:00', 'Thursday', 1900, 'Colombo'),
-(UNHEX(REPLACE(UUID(), '-', '')), '14:00:00', 'Thursday', 1900, 'Negombo'),
-(UNHEX(REPLACE(UUID(), '-', '')), '08:00:00', 'Friday', 2100, 'Galle'),
-(UNHEX(REPLACE(UUID(), '-', '')), '14:00:00', 'Friday', 2100, 'Matara'),
-(UNHEX(REPLACE(UUID(), '-', '')), '08:00:00', 'Saturday', 2000, 'Jaffna'),
-(UNHEX(REPLACE(UUID(), '-', '')), '14:00:00', 'Saturday', 2000, 'Trincomalee'),
-(UNHEX(REPLACE(UUID(), '-', '')), '08:00:00', 'Sunday', 2000, 'Colombo'),
-(UNHEX(REPLACE(UUID(), '-', '')), '14:00:00', 'Sunday', 2000, 'Negombo');
+(1,'08:00:00','Monday',2000.00,'Colombo'),
+(2,'14:00:00','Monday',2000.00,'Negombo'),
+(3,'08:00:00','Tuesday',1800.00,'Galle'),
+(4,'14:00:00','Tuesday',1800.00,'Matara'),
+(5,'08:00:00','Wednesday',2200.00,'Jaffna'),
+(6,'14:00:00','Wednesday',2200.00,'Trincomalee'),
+(7,'08:00:00','Thursday',1900.00,'Colombo'),
+(8,'14:00:00','Thursday',1900.00,'Negombo'),
+(9,'08:00:00','Friday',2100.00,'Galle'),
+(10,'14:00:00','Friday',2100.00,'Matara'),
+(11,'08:00:00','Saturday',2000.00,'Jaffna'),
+(12,'14:00:00','Saturday',2000.00,'Trincomalee'),
+(13,'08:00:00','Sunday',2000.00,'Colombo'),
+(14,'14:00:00','Sunday',2000.00,'Negombo');
 
 
 -- Insert into OrderStatus
@@ -112,5 +110,6 @@ INSERT INTO OrderStatus (status_ID, status, description) VALUES
 (3, 'Out for delivery', 'Order has been dispatched from the local store'),
 (4, 'Delivered', 'Order has been delivered'),
 (5, 'Cancelled', 'Order was cancelled');
+
 
 
