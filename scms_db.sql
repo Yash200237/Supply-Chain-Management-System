@@ -83,8 +83,7 @@ CREATE TABLE `Truck` (
   `truck_Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `capacity` NUMERIC(8,2),
   PRIMARY KEY (`truck_Id`),
-  CONSTRAINT `fk_truck_store` FOREIGN KEY (`store_ID`) REFERENCES `Store`(`store_ID`) ON DELETE SET NULL
-  
+  FOREIGN KEY (`store_ID`) REFERENCES `Store`(`store_ID`)
 );
 
 CREATE TABLE `TruckSchedule` (
@@ -118,7 +117,7 @@ CREATE TABLE `Order` (
   CONSTRAINT `fk_order_status` FOREIGN KEY (`status_ID`) REFERENCES `OrderStatus`(`status_ID`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_order_route` FOREIGN KEY (`route_ID`) REFERENCES `Route`(`route_ID`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_order_customer` FOREIGN KEY (`customer_ID`) REFERENCES `Customer`(`customer_ID`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `fk_order_schedule` FOREIGN KEY (`schedule_ID`) REFERENCES `TruckSchedule`(`schedule_ID`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `fk_order_schedule` FOREIGN KEY (`schedule_ID`) REFERENCES `TruckSchedule`(`schedule_ID`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE `Product` (
