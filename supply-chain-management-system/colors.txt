@@ -1,0 +1,9 @@
+1. Deep Blue (#1A73E8): For headers, main buttons, and key elements. Represents reliability and professionalism.
+
+2. Green (#34A853): Accent color for buttons, icons, and highlights. Represents sustainability and growth.
+
+3. Light Blue (#E8F0FE): Background color or for secondary buttons and sections. Creates a clean, approachable feel.
+
+4. Gray (#757575): For text, borders, and subtle UI elements. Neutral and easy on the eyes, complementing the primary colors.
+
+5. White (#FFFFFF): Main background color for a clean and modern look.
