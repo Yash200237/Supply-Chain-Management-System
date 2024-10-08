@@ -1,0 +1,100 @@
+.dashboard {
+    text-align: center;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.content-blocks {
+    display: flex;
+    flex-direction: column; /* Stack blocks vertically */
+    align-items: stretch;   /* Ensure blocks stretch to fill container */
+    gap: 20px;              /* Space between blocks */
+    margin-top: 20px;
+}
+
+.content-block {
+    background: #f9f9f9; /* Light background for blocks */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    width: 100%; /* Make the width 100% to fill the container */
+    max-width: 1000px; /* Optional: Set a max width for larger screens */
+    margin: 0 auto; /* Center the block horizontally */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.order-products {
+    /* Additional styling specific to Order Products can go here */
+}
+
+.track-delivery {
+    /* Additional styling specific to Track Delivery can go here */
+}
+
+.content-block:hover {
+    transform: scale(1.02); /* Scale effect on hover */
+}
+
+.button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.order-products .button {
+    background-color: #28a745; /* Green for Order Products */
+    color: white;
+}
+
+.track-delivery .button {
+    background-color: #007bff; /* Blue for Track Delivery */
+    color: white;
+}
+
+.button:hover {
+    opacity: 0.9; /* Slight opacity change on hover */
+}
+
+.product-list {
+    padding: 20px;
+    text-align: center;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px;
+}
+
+.product-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: scale(1.02); /* Scale effect on hover */
+}
+
+.order-button {
+    padding: 10px 15px;
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.order-button:hover {
+    opacity: 0.9; /* Slight opacity change on hover */
+}

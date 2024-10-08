@@ -6,6 +6,7 @@ import About from './components/pages/About';
 import Home from "./components/pages/Home";
 import Login from './components/pages/Login';
 import Signup from './components/pages/SignUp';
+import CustomerDashboard from './components/customer/CustomerDashboard';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path='/customerdashboard' element={<CustomerDashboard/>} />
         </Routes>
 
         <Footer />

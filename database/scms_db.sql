@@ -27,7 +27,7 @@ CREATE TABLE `Customer` (
   `city` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL,  -- Changed to NOT NULL
+  `password` VARCHAR(64) BINARY NOT NULL,  
   `phone_number` VARCHAR(10),
   `address` VARCHAR(100),
   `customer_type` ENUM('retailer', 'wholesaler', 'end customer') NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE `DriverAssistant` (
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL,  -- Changed to NOT NULL
+  `password` VARCHAR(64) BINARY NOT NULL, 
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
   `weekly_hours` NUMERIC(4,2),
@@ -55,7 +55,7 @@ CREATE TABLE `Manager` (
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL,  -- Changed to NOT NULL
+  `password` VARCHAR(64) BINARY NOT NULL,  
   `phone_number` VARCHAR(10),
   `store_ID` TINYINT UNSIGNED NOT NULL,
   `salary` NUMERIC(8,2),
@@ -69,7 +69,7 @@ CREATE TABLE `Driver` (
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL,  -- Changed to NOT NULL
+  `password` VARCHAR(64) BINARY NOT NULL,  
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
   `weekly_hours` NUMERIC(4,2),
@@ -92,8 +92,8 @@ CREATE TABLE `TruckSchedule` (
   `driverA_ID` INT UNSIGNED NOT NULL,
   `truck_Id` INT UNSIGNED NOT NULL,
   `route_ID` INT UNSIGNED NOT NULL,
-  `time` TIME NOT NULL,  -- Changed to NOT NULL
-  `date` DATE NOT NULL,  -- Changed to NOT NULL
+  `time` TIME NOT NULL,  
+  `date` DATE NOT NULL,  
   `manager_ID` INT UNSIGNED NOT NULL,
   `status` VARCHAR(10),
   PRIMARY KEY (`schedule_ID`),
@@ -109,8 +109,8 @@ CREATE TABLE `Order` (
   `customer_ID` INT UNSIGNED NOT NULL,
   `route_ID` INT UNSIGNED NOT NULL,
   `status_ID` INT NOT NULL,
-  `time` TIME NOT NULL,  -- Changed to NOT NULL
-  `date` DATE NOT NULL,  -- Changed to NOT NULL
+  `time` TIME NOT NULL,  
+  `date` DATE NOT NULL,  
   `total_volume` NUMERIC(8,2),
   `schedule_ID` INT UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`order_ID`),
@@ -140,7 +140,7 @@ CREATE TABLE `OrderProduct` (
 
 CREATE TABLE `Train` (
   `train_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `time` TIME NOT NULL,  -- Changed to NOT NULL
+  `time` TIME NOT NULL,  
   `day` VARCHAR(15),
   `capacity` NUMERIC(8,2),
   `destination` VARCHAR(50),
@@ -151,8 +151,7 @@ CREATE TABLE `TrainSchedule` (
   `train_ID` INT UNSIGNED NOT NULL,
   `order_ID` INT UNSIGNED NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
-  `time` TIME NOT NULL,  -- Changed to NOT NULL
-  `date` DATE NOT NULL,  -- Changed to NOT NULL
+  PRIMARY KEY (`train_ID`),
   FOREIGN KEY (`train_ID`) REFERENCES `Train`(`train_ID`),
   FOREIGN KEY (`manager_ID`) REFERENCES `Manager`(`manager_ID`)
 );
