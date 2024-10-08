@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../App.css";
 
+import CustomerDashboard from "../customer/CustomerDashboard";
 import Login from "./Login";
 
 function Home() {
@@ -56,6 +57,9 @@ function Home() {
       </Link>
       <Link to="/signup">
         <button >Sign up</button>
+      </Link>
+      <Link to="/customerdashboard">
+        <button >Customer</button>
       </Link>
     </div>
   );
