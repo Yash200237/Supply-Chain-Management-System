@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../App.css";
 
-import Login from "./Login";
 
 function Home() {
   return (
@@ -56,6 +55,15 @@ function Home() {
       </Link>
       <Link to="/signup">
         <button >Sign up</button>
+      </Link>
+      <Link to="/customerdashboard">
+        <button >Customer</button>
+      </Link>
+      <Link to="/driverdashboard">
+        <button >Driver</button>
+      </Link>
+      <Link to="/managerdashboard">
+        <button >Manager</button>
       </Link>
     </div>
   );
