@@ -8,8 +8,11 @@ import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/SignUp";
 import CustomerDashboard from "./components/customer/CustomerDashboard";
+import TrainSchedule from "./components/manager/TrainSchedule";
 import ManagerDashboard from "./components/manager/ManagerDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
+import ProductList from "./components/customer/products";
+import Tracking from "./components/customer/Tracking";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -27,6 +30,9 @@ function App() {
           <Route path="/customerdashboard" element={<CustomerDashboard />} />
           <Route path="/driverdashboard" element={<DriverDashboard />} />
           <Route path="/Managerdashboard" element={<ManagerDashboard />} />
+          <Route path="/trainschedule" element={<TrainSchedule />} />
+          <Route path="/order-products" element={<ProductList />} />
+          <Route path="/track-orders" element={<Tracking />} />
         </Routes>
 
         <Footer />
