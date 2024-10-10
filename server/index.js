@@ -1,6 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { managerRouter } from "./routes/ManagerRoute.js";
+import { signupRouter } from "./routes/SignupRoute.js";
+import { customerRouter } from "./routes/CustomerRoute.js";
+import { driverRouter } from "./routes/DriverRoute.js";
+
 //import con from './utils/db.js';
 
 const app = express();
@@ -12,7 +16,10 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/auth", managerRouter);
+app.use("/start", managerRouter);
+app.use("/signup", signupRouter);
+app.use("/start", customerRouter);
+app.use("/start", driverRouter);
 
 app.listen(5000, () => {
   console.log("server is running on port 5000");
