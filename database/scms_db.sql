@@ -1,23 +1,23 @@
 CREATE TABLE `OrderStatus` (
   `status_ID` INT NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(20) NOT NULL,
-  `description` VARCHAR(200),
+  `description` VARCHAR(100),
   PRIMARY KEY (`status_ID`)
 );
 
 CREATE TABLE `Store` (
   `city` VARCHAR(20) NOT NULL,
-  `store_ID` TINYINT UNSIGNED NOT NULL,
+  `store_ID` TINYINT UNSIGNED NOT NULL ,  -- Changed to TINYINT
   PRIMARY KEY (`store_ID`)
 );
 
 CREATE TABLE `Route` (
   `route_ID` INT UNSIGNED NOT NULL,
-  `store_ID` TINYINT UNSIGNED NOT NULL,
+  `store_ID` TINYINT UNSIGNED NOT NULL,  -- Changed to TINYINT
   `duration` NUMERIC(4,2),
   `path_description` VARCHAR(200),
   PRIMARY KEY (`route_ID`),
-  CONSTRAINT `fk_route_store` FOREIGN KEY (`store_ID`) REFERENCES `Store`(`store_ID`) ON DELETE CASCADE
+  CONSTRAINT `fk_route_store` FOREIGN KEY (`store_ID`) REFERENCES `Store`(`store_ID`) ON DELETE CASCADE  -- Automatically delete related routes when a store is deleted
 );
 
 CREATE TABLE `Customer` (
@@ -27,7 +27,7 @@ CREATE TABLE `Customer` (
   `city` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL,  
+  `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `address` VARCHAR(100),
   `customer_type` ENUM('retailer', 'wholesaler', 'end customer') NOT NULL,
@@ -40,13 +40,13 @@ CREATE TABLE `DriverAssistant` (
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL, 
+  `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
   `weekly_hours` NUMERIC(4,2),
   `monthly_salary` NUMERIC(8,2),
   PRIMARY KEY (`driverA_ID`),
-  CHECK (`weekly_hours` BETWEEN 0 AND 60)
+  CHECK (`weekly_hours` BETWEEN 0 AND 60)  -- Constraint for weekly_hours
 );
 
 CREATE TABLE `Manager` (
@@ -55,9 +55,9 @@ CREATE TABLE `Manager` (
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL,  
+  `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
-  `store_ID` TINYINT UNSIGNED NOT NULL,
+  `store_ID` TINYINT UNSIGNED NOT NULL,  -- Changed to TINYINT
   `salary` NUMERIC(8,2),
   PRIMARY KEY (`manager_ID`),
   FOREIGN KEY (`store_ID`) REFERENCES `Store`(`store_ID`)
@@ -69,17 +69,17 @@ CREATE TABLE `Driver` (
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
   `email` VARCHAR(50) DEFAULT NULL,
-  `password` VARCHAR(64) BINARY NOT NULL,  
+  `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
   `weekly_hours` NUMERIC(4,2),
   `monthly_salary` NUMERIC(8,2),
   PRIMARY KEY (`driver_ID`),
-  CHECK (`weekly_hours` BETWEEN 0 AND 40)
+  CHECK (`weekly_hours` BETWEEN 0 AND 40)  -- Constraint for weekly_hours
 );
 
 CREATE TABLE `Truck` (
-  `store_ID` TINYINT UNSIGNED NOT NULL,
+  `store_ID` TINYINT UNSIGNED ,  -- Changed to TINYINT
   `truck_Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `capacity` NUMERIC(8,2),
   PRIMARY KEY (`truck_Id`),
@@ -92,10 +92,10 @@ CREATE TABLE `TruckSchedule` (
   `driverA_ID` INT UNSIGNED NOT NULL,
   `truck_Id` INT UNSIGNED NOT NULL,
   `route_ID` INT UNSIGNED NOT NULL,
-  `time` TIME NOT NULL,  
-  `date` DATE NOT NULL,  
+  `time` TIME NOT NULL,
+  `date` DATE NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
-  `status` VARCHAR(10),
+  `status` ENUM('scheduled','on progress','completed'),
   PRIMARY KEY (`schedule_ID`),
   FOREIGN KEY (`driverA_ID`) REFERENCES `DriverAssistant`(`driverA_ID`),
   FOREIGN KEY (`route_ID`) REFERENCES `Route`(`route_ID`),
@@ -109,8 +109,8 @@ CREATE TABLE `Order` (
   `customer_ID` INT UNSIGNED NOT NULL,
   `route_ID` INT UNSIGNED NOT NULL,
   `status_ID` INT NOT NULL,
-  `time` TIME NOT NULL,  
-  `date` DATE NOT NULL,  
+  `time` TIME NOT NULL,
+  `date` DATE NOT NULL,
   `total_volume` NUMERIC(8,2),
   `schedule_ID` INT UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`order_ID`),
@@ -140,7 +140,7 @@ CREATE TABLE `OrderProduct` (
 
 CREATE TABLE `Train` (
   `train_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `time` TIME NOT NULL,  
+  `time` TIME NOT NULL,
   `day` VARCHAR(15),
   `capacity` NUMERIC(8,2),
   `destination` VARCHAR(50),
@@ -151,7 +151,7 @@ CREATE TABLE `TrainSchedule` (
   `train_ID` INT UNSIGNED NOT NULL,
   `order_ID` INT UNSIGNED NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`train_ID`),
   FOREIGN KEY (`train_ID`) REFERENCES `Train`(`train_ID`),
   FOREIGN KEY (`manager_ID`) REFERENCES `Manager`(`manager_ID`)
 );
+
