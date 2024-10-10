@@ -1,0 +1,212 @@
+/* Home.css */
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffffff;
+  
+    box-sizing: border-box;
+  }
+  
+  .main-content {
+    background-color: #020e4b;
+  
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: fit-content;
+    width: 100%;
+    
+    padding: 30px; /* Adjusted padding to accommodate carousel */
+    text-align: center;
+    position: relative;
+  }
+  
+  .title {
+    color: #ffffff;
+    font-size: 36px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .description {
+    color: #ffffff;
+    line-height: 1.8;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  
+  .primary-buttons .btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .btn-login {
+    background-color: #2980b9;
+  }
+  
+  .btn-login:hover {
+    background-color: #3498db;
+  }
+  
+  .btn-signup {
+    background-color: #27ae60;
+  }
+  
+  .btn-signup:hover {
+    background-color: #2ecc71;
+  }
+  
+  .secondary-buttons .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .btn-customer {
+    background-color: #ffffff;
+  }
+  
+  .btn-customer:hover {
+    background-color: #d35400;
+  }
+  
+  .btn-driver {
+    background-color: #ffffff;
+  }
+  
+  .btn-driver:hover {
+    background-color: #ffffff;
+  }
+  
+  .btn-manager {
+    background-color: #ffffff;
+  }
+  
+  .btn-manager:hover {
+    background-color: #e74c3c;
+  }
+  
+  .button-link {
+    text-decoration: none;
+  }
+  
+  .footer {
+    margin-top: auto;
+    padding: 20px;
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Carousel Styles */
+  .carousel {
+    position: relative;
+    max-width: 100%;
+    margin: 20px auto; /* Adjusted margin for spacing */
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .carousel-slides {
+    display: flex;
+    height: 500px;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+  
+  .carousel-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 1;
+    font-size: 18px;
+  }
+  
+  .carousel-button.prev {
+    left: 10px;
+  }
+  
+  .carousel-button.next {
+    right: 10px;
+  }
+  
+  .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .carousel-indicators {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .indicator.active {
+    background-color: #007bff;
+  }
