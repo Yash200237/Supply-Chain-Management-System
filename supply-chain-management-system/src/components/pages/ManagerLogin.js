@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import axios from 'axios'
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const AdminLogin = () => {
+const ManagerLogin = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
+
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,15 +23,23 @@ const AdminLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform login logic here (e.g., API call)
-    axios.post('http://localhost:5000/auth/adminlogin',formData)
-    .then(result => console.log(result))
-    .catch(err => console.log(err));
-    console.log('Admin Login data:', formData);
+    axios
+      .post("http://localhost:5000/start/managerlogin", formData)
+      .then((result) => {
+        if (result.data.loginStatus) {
+          navigate("/managerdashboard");
+        } else {
+          setError(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+    //console.log('Login data:', formData);
   };
 
   return (
-    <div className="admin-login">
+    <div className="login">
       <h2>Login</h2>
+      <div className="text-danger">{error && error}</div>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email:</label>
@@ -56,4 +69,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default ManagerLogin;

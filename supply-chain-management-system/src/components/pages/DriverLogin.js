@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const DriverLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,10 +24,10 @@ const Login = () => {
     e.preventDefault();
     // Perform login logic here (e.g., API call)
     axios
-      .post("http://localhost:5000/auth/login", formData)
+      .post("http://localhost:5000/start/driverlogin", formData)
       .then((result) => {
         if (result.data.loginStatus) {
-          navigate("/ManagerDashboard");
+          navigate("/driverdashboard");
         } else {
           setError(result.data.Error);
         }
@@ -69,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default DriverLogin;
