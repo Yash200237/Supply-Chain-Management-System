@@ -25,48 +25,48 @@ INSERT INTO Customer (first_name, last_name, city, username, email, password, ph
 
 
 -- Insert into Driver
-INSERT INTO Driver (first_name, last_name, username, email, password, phone_number, total_hours, weekly_hours, monthly_salary) VALUES
-('Nimal', 'Alvis', 'nimala', 'nimala@gmail.com', SHA2('password123', 256), '0711112223', 140.00, 20.00, 40000.00),
-('Kamal', 'Perera', 'kamalp', 'kamalp@gmail.com', SHA2('password789', 256), '0711122334', 145.00, 22.50, 42000.00),
-('Bimal', 'Fernando', 'bimalf', 'bimalf@gmail.com', SHA2('password102', 256), '0713322114', 150.00, 25.00, 45000.00),
-('Pathum', 'Kumara', 'pathumk', 'pathumk@gmail.com', SHA2('password104', 256), '0717788991', 147.00, 23.50, 43000.00),
-('Kantha', 'Lakshan', 'kanthal', 'kanthal@gmail.com', SHA2('password106', 256), '0714455661', 139.00, 19.50, 39500.00),
-('Shantha', 'Rathna', 'shanthar', 'shanthar@gmail.com', SHA2('password108', 256), '0713344990', 146.00, 23.00, 42500.00),
-('Priyantha', 'Peiris', 'priyanthap', 'priyanthap@gmail.com', SHA2('password109', 256), '0718833221', 143.00, 21.50, 41500.00),
-('Lasantha', 'Karunarathna', 'lasanthak', 'lasanthak@gmail.com', SHA2('password110', 256), '0715500883', 144.00, 23.00, 42000.00),
-('Krishantha', 'Kariyawasam', 'krishanthak', 'krishanthak@gmail.com', SHA2('password111', 256), '0714400558', 140.00, 20.00, 40000.00),
-('Dimantha', 'Aponsu', 'dimanthaa', 'dimanthaa@gmail.com', SHA2('password112', 256), '0710099335', 137.00, 18.50, 38500.00),
-('Nishan', 'Dissanayake', 'nishand', 'nishand@gmail.com', SHA2('password113', 256), '0718765431', 142.00, 21.00, 41000.00),
-('Rohan', 'Silva', 'rohans', 'rohans@gmail.com', SHA2('password114', 256), '0718765432', 135.00, 19.00, 39000.00),
-('Tharindu', 'Jayawardena', 'tharinduj', 'tharinduj@gmail.com', SHA2('password115', 256), '0718765433', 150.00, 24.00, 44000.00),
-('Udara', 'Weerasinghe', 'udaraw', 'udaraw@gmail.com', SHA2('password116', 256), '0718765434', 147.00, 22.50, 43000.00),
-('Lakshan', 'Gamage', 'lakshang', 'lakshang@gmail.com', SHA2('password117', 256), '0718765435', 138.00, 20.00, 39500.00),
-('Chathura', 'Wickramasinghe', 'chathuraw', 'chathuraw@gmail.com', SHA2('password118', 256), '0718765436', 145.00, 22.00, 42000.00),
-('Saranga', 'Liyanage', 'sarangal', 'sarangal@gmail.com', SHA2('password119', 256), '0718765437', 143.00, 21.50, 41500.00),
-('Gayan', 'Abeyratne', 'gayana', 'gayana@gmail.com', SHA2('password120', 256), '0718765438', 140.00, 20.00, 40000.00);
+INSERT INTO Driver (first_name, last_name, city, username, email, password, phone_number, total_hours, weekly_hours, monthly_salary) VALUES
+('Nimal', 'Alvis','Kandy', 'nimala', 'nimala@gmail.com', SHA2('password123', 256), '0711112223', 140.00, 20.00, 40000.00),
+('Kamal', 'Perera','Kandy', 'kamalp', 'kamalp@gmail.com', SHA2('password789', 256), '0711122334', 145.00, 22.50, 42000.00),
+('Bimal', 'Fernando','Colombo', 'bimalf', 'bimalf@gmail.com', SHA2('password102', 256), '0713322114', 150.00, 25.00, 45000.00),
+('Pathum', 'Kumara','Colombo', 'pathumk', 'pathumk@gmail.com', SHA2('password104', 256), '0717788991', 147.00, 23.50, 43000.00),
+('Kantha', 'Lakshan','Colombo', 'kanthal', 'kanthal@gmail.com', SHA2('password106', 256), '0714455661', 139.00, 19.50, 39500.00),
+('Shantha', 'Rathna','Negombo', 'shanthar', 'shanthar@gmail.com', SHA2('password108', 256), '0713344990', 146.00, 23.00, 42500.00),
+('Priyantha', 'Peiris','Negombo', 'priyanthap', 'priyanthap@gmail.com', SHA2('password109', 256), '0718833221', 143.00, 21.50, 41500.00),
+('Lasantha', 'Karunarathna','Negombo', 'lasanthak', 'lasanthak@gmail.com', SHA2('password110', 256), '0715500883', 144.00, 23.00, 42000.00),
+('Krishantha', 'Kariyawasam','Galle', 'krishanthak', 'krishanthak@gmail.com', SHA2('password111', 256), '0714400558', 140.00, 20.00, 40000.00),
+('Dimantha', 'Aponsu','Galle', 'dimanthaa', 'dimanthaa@gmail.com', SHA2('password112', 256), '0710099335', 137.00, 18.50, 38500.00),
+('Nishan', 'Dissanayake','Matara', 'nishand', 'nishand@gmail.com', SHA2('password113', 256), '0718765431', 142.00, 21.00, 41000.00),
+('Rohan', 'Silva','Matara', 'rohans', 'rohans@gmail.com', SHA2('password114', 256), '0718765432', 135.00, 19.00, 39000.00),
+('Tharindu', 'Jayawardena','Matara', 'tharinduj', 'tharinduj@gmail.com', SHA2('password115', 256), '0718765433', 150.00, 24.00, 44000.00),
+('Udara', 'Weerasinghe','Jaffna', 'udaraw', 'udaraw@gmail.com', SHA2('password116', 256), '0718765434', 147.00, 22.50, 43000.00),
+('Lakshan', 'Gamage','Jaffna', 'lakshang', 'lakshang@gmail.com', SHA2('password117', 256), '0718765435', 138.00, 20.00, 39500.00),
+('Chathura', 'Wickramasinghe','Trincomalee', 'chathuraw', 'chathuraw@gmail.com', SHA2('password118', 256), '0718765436', 145.00, 22.00, 42000.00),
+('Saranga', 'Liyanage','Trincomalee', 'sarangal', 'sarangal@gmail.com', SHA2('password119', 256), '0718765437', 143.00, 21.50, 41500.00),
+('Gayan', 'Abeyratne','Trincomalee', 'gayana', 'gayana@gmail.com', SHA2('password120', 256), '0718765438', 140.00, 20.00, 40000.00);
 
 
 
 -- Insert into DriverAssistant
 INSERT INTO DriverAssistant (first_name, last_name, username, email, password, phone_number, total_hours, weekly_hours, monthly_salary) VALUES
-('Lal', 'Kantha', 'lalkantha', 'lalk@gmail.com', SHA2('passlalk', 256), '0710033772', 165.00, 22.00, 30000.00),
-('Lisal', 'Jayamanna', 'lisaljaya', 'lisalj@gmail.com', SHA2('passlisalj', 256), '0710011772', 170.00, 25.00, 32000.00),
-('Movindu', 'Gunasinghe', 'movinduguna', 'movindug@gmail.com', SHA2('passmovindug', 256), '0710099772', 168.00, 24.00, 31000.00),
-('Namal', 'Lanka', 'namallan', 'namall@gmail.com', SHA2('passsnamall', 256), '0719988775', 162.00, 21.00, 29000.00),
-('Nipun', 'Jayasinghe', 'nipunjaya', 'nipunj@gmail.com', SHA2('passnipunj', 256), '0719080775', 175.00, 27.00, 34000.00),
-('Piyath', 'Premachandra', 'piyathprema', 'piyathp@gmail.com', SHA2('passpiyathp', 256), '0712565775', 164.00, 22.00, 30000.00),
-('Vikum', 'Peiris', 'vikumpei', 'vikump@gmail.com', SHA2('passvikump', 256), '0712565707', 167.00, 23.50, 31000.00),
-('Viranga', 'Nelson', 'viranganel', 'virangan@gmail.com', SHA2('passvirangan', 256), '0712035707', 172.00, 26.00, 33000.00),
-('Vinod', 'Alvis', 'vinodalv', 'vinoda@gmail.com', SHA2('passvinoda', 256), '0710234772', 169.00, 24.50, 31500.00),
-('Yasindu', 'Piyasiri', 'yasindupiya', 'yasindup@gmail.com', SHA2('passyasindup', 256), '0718765432', 166.00, 23.00, 30500.00),
-('Chaminda', 'Weerakkody', 'chamindaw', 'chamindaw@gmail.com', SHA2('passchamindaw', 256), '0718765433', 170.00, 25.00, 32000.00),
-('Tharindu', 'Perera', 'tharindup', 'tharindup@gmail.com', SHA2('passtharindup', 256), '0718765434', 165.00, 22.50, 30000.00),
-('Isuru', 'Fernando', 'isuruf', 'isuruf@gmail.com', SHA2('passisuruf', 256), '0718765435', 168.00, 24.00, 31000.00),
-('Janith', 'Jayasinghe', 'janithj', 'janithj@gmail.com', SHA2('passjanithj', 256), '0718765436', 175.00, 27.00, 34000.00),
-('Roshan', 'Silva', 'roshans', 'roshans@gmail.com', SHA2('passroshans', 256), '0718765437', 160.00, 21.50, 29000.00),
-('Sunil', 'Samarasinghe', 'sunils', 'sunils@gmail.com', SHA2('passsunils', 256), '0718765438', 170.00, 25.00, 32000.00),
-('Lahiru', 'Bandara', 'lahirub', 'lahirub@gmail.com', SHA2('passlahirub', 256), '0718765439', 169.00, 24.50, 31500.00),
-('Asanka', 'Wijesinghe', 'asankaw', 'asankaw@gmail.com', SHA2('passasankaw', 256), '0718765440', 166.00, 23.00, 30500.00);
+('Lal', 'Kantha','Trincomalee', 'lalkantha', 'lalk@gmail.com', SHA2('passlalk', 256), '0710033772', 165.00, 22.00, 30000.00),
+('Lisal', 'Jayamanna','Trincomalee', 'lisaljaya', 'lisalj@gmail.com', SHA2('passlisalj', 256), '0710011772', 170.00, 25.00, 32000.00),
+('Movindu', 'Gunasinghe','Trincomalee', 'movinduguna', 'movindug@gmail.com', SHA2('passmovindug', 256), '0710099772', 168.00, 24.00, 31000.00),
+('Namal', 'Lanka','Jaffna', 'namallan', 'namall@gmail.com', SHA2('passsnamall', 256), '0719988775', 162.00, 21.00, 29000.00),
+('Nipun', 'Jayasinghe','Jaffna', 'nipunjaya', 'nipunj@gmail.com', SHA2('passnipunj', 256), '0719080775', 175.00, 27.00, 34000.00),
+('Piyath', 'Premachandra','Matara', 'piyathprema', 'piyathp@gmail.com', SHA2('passpiyathp', 256), '0712565775', 164.00, 22.00, 30000.00),
+('Vikum', 'Peiris','Matara', 'vikumpei', 'vikump@gmail.com', SHA2('passvikump', 256), '0712565707', 167.00, 23.50, 31000.00),
+('Viranga', 'Nelson','Matara', 'viranganel', 'virangan@gmail.com', SHA2('passvirangan', 256), '0712035707', 172.00, 26.00, 33000.00),
+('Vinod', 'Alvis','Galle', 'vinodalv', 'vinoda@gmail.com', SHA2('passvinoda', 256), '0710234772', 169.00, 24.50, 31500.00),
+('Yasindu', 'Piyasiri','Galle', 'yasindupiya', 'yasindup@gmail.com', SHA2('passyasindup', 256), '0718765432', 166.00, 23.00, 30500.00),
+('Chaminda', 'Weerakkody','Negombo', 'chamindaw', 'chamindaw@gmail.com', SHA2('passchamindaw', 256), '0718765433', 170.00, 25.00, 32000.00),
+('Tharindu', 'Perera','Negombo', 'tharindup', 'tharindup@gmail.com', SHA2('passtharindup', 256), '0718765434', 165.00, 22.50, 30000.00),
+('Isuru', 'Fernando','Negombo', 'isuruf', 'isuruf@gmail.com', SHA2('passisuruf', 256), '0718765435', 168.00, 24.00, 31000.00),
+('Janith', 'Jayasinghe','Colombo', 'janithj', 'janithj@gmail.com', SHA2('passjanithj', 256), '0718765436', 175.00, 27.00, 34000.00),
+('Roshan', 'Silva','Colombo', 'roshans', 'roshans@gmail.com', SHA2('passroshans', 256), '0718765437', 160.00, 21.50, 29000.00),
+('Sunil', 'Samarasinghe','Colombo', 'sunils', 'sunils@gmail.com', SHA2('passsunils', 256), '0718765438', 170.00, 25.00, 32000.00),
+('Lahiru', 'Bandara','Kandy', 'lahirub', 'lahirub@gmail.com', SHA2('passlahirub', 256), '0718765439', 169.00, 24.50, 31500.00),
+('Asanka', 'Wijesinghe','Kandy', 'asankaw', 'asankaw@gmail.com', SHA2('passasankaw', 256), '0718765440', 166.00, 23.00, 30500.00);
 
 
 -- Insert into Store
@@ -145,28 +145,28 @@ INSERT INTO Manager (first_name, last_name, username, email, password, phone_num
 
 
 -- Insert into Truck
-INSERT INTO Truck (store_ID, capacity) VALUES
-(1, 10.00),
-(1, 10.50),
-(1, 9.80),
-(2, 10.20),
-(2, 10.00),
-(2, 10.00),
-(3, 9.80),
-(3, 10.00),
-(3, 10.50),
-(4, 10.00),
-(4, 10.20),
-(4, 10.00),
-(5, 10.20),
-(5, 10.00),
-(5, 9.80),
-(6, 10.00),
-(6, 10.20),
-(6, 10.50),
-(7, 10.00),
-(7, 9.80),
-(7, 10.00);
+INSERT INTO Truck (store_ID, truck_plate_no, capacity) VALUES
+(1,'CP 6719', 10.00),
+(1,'CP 1230', 10.50),
+(1,'CP 1098', 9.80),
+(2,'WP 5432', 10.20),
+(2,'WP 1230', 10.00),
+(2,'WP 7651', 10.00),
+(3,'WP 7012' 9.80),
+(3,'WP 3480' 10.00),
+(3,'WP 4472' 10.50),
+(4,'SP 2345', 10.00),
+(4,'SP 8765', 10.20),
+(4,'SP 5432', 10.00),
+(5,'SP 9145', 10.20),
+(5,'SP 1540', 10.00),
+(5,'SP 5413', 9.80),
+(6,'NP 6789', 10.00),
+(6,'NP 9876', 10.20),
+(6,'NP 3432', 10.50),
+(7,'EP 9846', 10.00),
+(7,'EP 4321', 9.80),
+(7,'EP 8765', 10.00);
 
 
 -- Insert into Route
@@ -199,30 +199,30 @@ INSERT INTO Route (route_ID, store_ID, duration, path_description) VALUES
 
 -- Insert into TruckSchedule
 INSERT INTO TruckSchedule (driver_ID, driverA_ID, truck_Id, route_ID, time, date, manager_ID, status) VALUES
-(1, 18, 3, 1, '08:00:00', '2024-10-30', 1, 'scheduled'),   -- 1       Kandy
-(2, 17, 2, 2, '09:00:00', '2024-10-30', 1, 'scheduled'),   -- 2
+(1, 18, 3, 1, '08:00:00', '2024-10-20', 1, 'completed'),   -- 1       Kandy
+(2, 17, 2, 2, '09:00:00', '2024-10-20', 1, 'completed'),   -- 2
 
-(3, 16, 1, 3, '08:30:00', '2024-10-30', 2, 'scheduled'),   -- 3       Colombo
-(4, 15, 5, 4, '08:30:00', '2024-10-30', 2, 'scheduled'),   -- 4
-(5, 14, 6, 5, '09:30:00', '2024-10-30', 2, 'scheduled'),   -- 5
+(3, 16, 1, 3, '08:30:00', '2024-10-20', 2, 'completed'),   -- 3       Colombo
+(4, 15, 5, 4, '08:30:00', '2024-10-20', 2, 'completed'),   -- 4
+(5, 14, 6, 5, '09:30:00', '2024-10-20', 2, 'completed'),   -- 5
 
-(6, 13, 4, 6, '08:30:00', '2024-10-30', 3, 'scheduled'),   -- 6       Negombo
-(7, 12, 9, 7, '08:00:00', '2024-10-30', 3, 'scheduled'),   -- 7
-(8, 11, 8, 8, '08:30:00', '2024-10-30', 3, 'scheduled'),   -- 8
+(6, 13, 4, 6, '08:30:00', '2024-10-20', 3, 'completed'),   -- 6       Negombo
+(7, 12, 9, 7, '08:00:00', '2024-10-20', 3, 'completed'),   -- 7
+(8, 11, 8, 8, '08:30:00', '2024-10-20', 3, 'completed'),   -- 8
 
-(9, 10, 7, 9, '09:00:00', '2024-10-30', 4, 'scheduled'),   -- 9       Galle
-(10, 9, 10, 10, '09:00:00', '2024-10-30', 4, 'scheduled'), -- 10
+(9, 10, 7, 9, '09:00:00', '2024-10-20', 4, 'completed'),   -- 9       Galle
+(10, 9, 10, 10, '09:00:00', '2024-10-20', 4, 'completed'), -- 10
 
-(11, 8, 12, 11, '08:00:00', '2024-10-30', 5, 'scheduled'), -- 11      Matara
-(12, 7, 11, 12, '08:30:00', '2024-10-30', 5, 'scheduled'), -- 12
-(13, 6, 14, 13, '08:00:00', '2024-10-30', 5, 'scheduled'), -- 13
+(11, 8, 12, 11, '08:00:00', '2024-10-20', 5, 'completed'), -- 11      Matara
+(12, 7, 11, 12, '08:30:00', '2024-10-20', 5, 'completed'), -- 12
+(13, 6, 14, 13, '08:00:00', '2024-10-20', 5, 'completed'), -- 13
 
-(14, 5, 15, 14, '09:00:00', '2024-10-06', 6, 'scheduled'), -- 14      Jaffna
-(15, 4, 13, 15, '08:00:00', '2024-10-06', 6, 'scheduled'), -- 15
+(14, 5, 15, 14, '09:00:00', '2024-10-20', 6, 'completed'), -- 14      Jaffna
+(15, 4, 13, 15, '08:00:00', '2024-10-20', 6, 'completed'), -- 15
 
-(16, 3, 18, 16, '09:30:00', '2024-10-06', 7, 'scheduled'), -- 16      Trincomalee  
-(17, 2, 17, 17, '08:00:00', '2024-10-06', 7, 'scheduled'), -- 17
-(18, 1, 16, 18, '08:30:00', '2024-10-06', 7, 'scheduled'), -- 18
+(16, 3, 18, 16, '09:30:00', '2024-10-20', 7, 'completed'), -- 16      Trincomalee   -- completed
+(17, 2, 17, 17, '08:00:00', '2024-10-20', 7, 'completed'), -- 17
+(18, 1, 16, 18, '08:30:00', '2024-10-20', 7, 'completed'), -- 18
 
 (1, 17, 3, 1, '09:00:00', '2024-11-08', 1, 'completed'), -- 19      Kandy
 (2, 18, 2, 2, '09:00:00', '2024-11-08', 1, 'completed'), -- 20
