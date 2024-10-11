@@ -39,6 +39,7 @@ const ManagerLogin = () => {
   return (
     <div className="login">
       <h2>Login</h2>
+      <div className="text-danger">{error && error}</div>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email:</label>

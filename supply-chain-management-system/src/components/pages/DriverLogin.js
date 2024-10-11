@@ -38,6 +38,7 @@ const DriverLogin = () => {
 
   return (
     <div className="login">
+      <div className="text-danger">{error && error}</div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>

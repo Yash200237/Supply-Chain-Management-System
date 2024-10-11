@@ -63,23 +63,36 @@ const Signup = () => {
       axios
         .post("http://localhost:5000/auth/signup", formData)
         .then((res) => {
-          navigate("/login");
+          if (res.data.signupStatus) {
+            // If signup is successful, display success message and reset the form
+            console.log("Signup data:", formData);
+            setSuccessMessage("Signup successful!");
+            setFormData({
+              firstname: "",
+              lastname: "",
+              username: "",
+              email: "",
+              password: "",
+              address: "",
+              closestcity: "",
+              phone: "",
+              customerType: "",
+            });
+            navigate("/start/customerlogin");
+          }
         })
-        .catch((err) => console.log(err));
-      // Perform signup logic here (e.g., API call)
-      console.log("Signup data:", formData);
-      setSuccessMessage("Signup successful! Welcome aboard!");
-      setFormData({
-        firstname: "",
-        lastname: "",
-        username: "",
-        email: "",
-        password: "",
-        address: "",
-        closestcity: "",
-        phone: "",
-        customerType: "",
-      });
+        .catch((err) => {
+          // Check if the error response from the backend contains an error message
+          if (err.response && err.response.data && err.response.data.Error) {
+            setErrors({ form: err.response.data.Error });
+          } else {
+            setErrors({
+              signupError:
+                "An unexpected error occurred during signup. Please try again later.",
+            });
+          }
+          setSuccessMessage(""); // Clear success message if there's an error
+        });
     }
   };
 
@@ -87,6 +100,11 @@ const Signup = () => {
     <div className="signup-container">
       <h2>Signup</h2>
       {successMessage && <p className="success-message">{successMessage}</p>}
+      {errors.form && <p style={{ color: "red" }}>{errors.form}</p>}
+      {errors.signupError && (
+        <p style={{ color: "red" }}>{errors.signupError}</p>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstname">First Name:</label>
