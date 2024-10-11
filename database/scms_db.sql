@@ -26,7 +26,7 @@ CREATE TABLE `Customer` (
   `last_name` VARCHAR(20) NOT NULL,
   `city` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `address` VARCHAR(100),
@@ -38,8 +38,9 @@ CREATE TABLE `DriverAssistant` (
   `driverA_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(20) NOT NULL,
   `last_name` VARCHAR(20) NOT NULL,
+  `city` VARCHAR(20) NOT NULL,  -- New field for city
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
@@ -54,7 +55,7 @@ CREATE TABLE `Manager` (
   `first_name` VARCHAR(20) NOT NULL,
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `store_ID` TINYINT UNSIGNED NOT NULL,  -- Changed to TINYINT
@@ -67,8 +68,9 @@ CREATE TABLE `Driver` (
   `driver_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(20) NOT NULL,
   `last_name` VARCHAR(20) NOT NULL,
+  `city` VARCHAR(20) NOT NULL,  -- New field for city
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
@@ -81,6 +83,7 @@ CREATE TABLE `Driver` (
 CREATE TABLE `Truck` (
   `store_ID` TINYINT UNSIGNED ,  -- Changed to TINYINT
   `truck_Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `truck_plate_no` VARCHAR(10) NOT NULL,  -- Updated to NOT NULL and VARCHAR(10)
   `capacity` NUMERIC(8,2),
   PRIMARY KEY (`truck_Id`),
   CONSTRAINT `fk_truck_store` FOREIGN KEY (`store_ID`) REFERENCES `Store`(`store_ID`) ON DELETE SET NULL
@@ -95,7 +98,7 @@ CREATE TABLE `TruckSchedule` (
   `time` TIME NOT NULL,
   `date` DATE NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
-  `status` ENUM('scheduled','on progress','completed'),
+  `status` ENUM('scheduled','completed'),
   PRIMARY KEY (`schedule_ID`),
   FOREIGN KEY (`driverA_ID`) REFERENCES `DriverAssistant`(`driverA_ID`),
   FOREIGN KEY (`route_ID`) REFERENCES `Route`(`route_ID`),
@@ -124,7 +127,7 @@ CREATE TABLE `Product` (
   `product_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(20) NOT NULL,
   `price` NUMERIC(8,2),
-  `discount` INT,
+  `discount` NUMERIC(4,2),
   `volume` NUMERIC(8,2),
   PRIMARY KEY (`product_ID`)
 );
