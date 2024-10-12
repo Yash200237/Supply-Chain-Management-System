@@ -48,7 +48,7 @@ INSERT INTO Driver (first_name, last_name, city, username, email, password, phon
 
 
 -- Insert into DriverAssistant
-INSERT INTO DriverAssistant (first_name, last_name, username, email, password, phone_number, total_hours, weekly_hours, monthly_salary) VALUES
+INSERT INTO DriverAssistant (first_name, last_name,city, username, email, password, phone_number, total_hours, weekly_hours, monthly_salary) VALUES
 ('Lal', 'Kantha','Trincomalee', 'lalkantha', 'lalk@gmail.com', SHA2('passlalk', 256), '0710033772', 165.00, 22.00, 30000.00),
 ('Lisal', 'Jayamanna','Trincomalee', 'lisaljaya', 'lisalj@gmail.com', SHA2('passlisalj', 256), '0710011772', 170.00, 25.00, 32000.00),
 ('Movindu', 'Gunasinghe','Trincomalee', 'movinduguna', 'movindug@gmail.com', SHA2('passmovindug', 256), '0710099772', 168.00, 24.00, 31000.00),
@@ -152,9 +152,9 @@ INSERT INTO Truck (store_ID, truck_plate_no, capacity) VALUES
 (2,'WP 5432', 10.20),
 (2,'WP 1230', 10.00),
 (2,'WP 7651', 10.00),
-(3,'WP 7012' 9.80),
-(3,'WP 3480' 10.00),
-(3,'WP 4472' 10.50),
+(3,'WP 7012', 9.80),
+(3,'WP 3480', 10.00),
+(3,'WP 4472', 10.50),
 (4,'SP 2345', 10.00),
 (4,'SP 8765', 10.20),
 (4,'SP 5432', 10.00),
