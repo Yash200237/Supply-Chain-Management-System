@@ -1,0 +1,40 @@
+/* CSS for the Start component */
+.loginPage {
+    background-color: #f8f9fa; /* Light background color */
+  }
+  
+  .loginForm {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    color: #343a40;
+  }
+  
+  button {
+    width: 30%;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+    transition: all 0.3s ease;
+  }
+  
+  /* Extra responsiveness for smaller screens */
+  @media (max-width: 768px) {
+    .loginForm {
+      width: 90%;
+    }
+  
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
