@@ -26,7 +26,7 @@ CREATE TABLE `Customer` (
   `last_name` VARCHAR(20) NOT NULL,
   `city` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `address` VARCHAR(100),
@@ -40,7 +40,7 @@ CREATE TABLE `DriverAssistant` (
   `last_name` VARCHAR(20) NOT NULL,
   `city` VARCHAR(20) NOT NULL,  -- New field for city
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
@@ -55,7 +55,7 @@ CREATE TABLE `Manager` (
   `first_name` VARCHAR(20) NOT NULL,
   `last_name` VARCHAR(20) NOT NULL,
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `store_ID` TINYINT UNSIGNED NOT NULL,  -- Changed to TINYINT
@@ -70,7 +70,7 @@ CREATE TABLE `Driver` (
   `last_name` VARCHAR(20) NOT NULL,
   `city` VARCHAR(20) NOT NULL,  -- New field for city
   `username` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(64) BINARY NOT NULL,
   `phone_number` VARCHAR(10),
   `total_hours` NUMERIC(6,2),
@@ -127,7 +127,7 @@ CREATE TABLE `Product` (
   `product_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(20) NOT NULL,
   `price` NUMERIC(8,2),
-  `discount` INT,
+  `discount` NUMERIC(4,2),
   `volume` NUMERIC(8,2),
   PRIMARY KEY (`product_ID`)
 );
@@ -157,3 +157,4 @@ CREATE TABLE `TrainSchedule` (
   FOREIGN KEY (`train_ID`) REFERENCES `Train`(`train_ID`),
   FOREIGN KEY (`manager_ID`) REFERENCES `Manager`(`manager_ID`)
 );
+

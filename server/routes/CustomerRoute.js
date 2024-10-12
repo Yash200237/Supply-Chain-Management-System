@@ -4,15 +4,15 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.post("/managerlogin", (req, res) => {
+router.post("/customerlogin", (req, res) => {
   const sql =
-    "SELECT * FROM manager WHERE email = ? AND password = SHA2(?, 256)";
+    "SELECT * FROM customer WHERE email = ? AND password = SHA2(?, 256)";
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
     if (err) return res.json({ loginStatus: false, Error: "Query error" });
     if (result.length > 0) {
       const email = result[0].email;
       const token = jwt.sign(
-        { role: "manager", email: email },
+        { role: "customer", email: email },
         "jwt_secret_key",
         { expiresIn: "1d" }
       );
@@ -24,4 +24,4 @@ router.post("/managerlogin", (req, res) => {
   });
 });
 
-export { router as managerRouter };
+export { router as customerRouter };
