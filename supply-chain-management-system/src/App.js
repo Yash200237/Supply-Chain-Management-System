@@ -16,6 +16,7 @@ import DriverDashboard from "./components/driver/DriverDashboard";
 import ProductList from "./components/customer/products";
 import Tracking from "./components/customer/Tracking";
 import Registration from "./components/manager/Registration";
+import Cart from "./components/customer/Cart";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/order-products" element={<ProductList />} />
           <Route path="/track-orders" element={<Tracking />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
 
         <Footer />
