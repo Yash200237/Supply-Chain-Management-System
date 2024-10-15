@@ -1,23 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Customer.css";
-import { useNavigate } from "react-router-dom";
 
-const CustomerDashboard = ({ customerName }) => {
-  const navigate = useNavigate(); // Use the navigate hook from React Router
+const CustomerDashboard = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [customerName, setCustomerName] = useState("");
+
+  useEffect(() => {
+    // Check if customerName is passed via location.state
+    if (location.state && location.state.customerName) {
+      setCustomerName(location.state.customerName);
+      localStorage.setItem("customerName", location.state.customerName);
+      console.log("Customer name from location state:", location.state.customerName);
+    } else {
+      // If no customerName in location.state, check localStorage
+      const storedCustomerName = localStorage.getItem("customerName");
+      if (storedCustomerName) {
+        setCustomerName(storedCustomerName);
+        console.log("Customer name from localStorage:", storedCustomerName);
+      } else {
+        // No customerName found, redirect to login
+        console.log("No customer name found, redirecting to login...");
+        navigate("/customerlogin");
+      }
+    }
+  }, [location, navigate]);
 
   const handleOrderProducts = () => {
-    navigate("/order-products"); // Navigate to the Order Products page
+    navigate("/order-products");
   };
 
   const handleTrackDelivery = () => {
-    // Logic to track delivery (e.g., redirect to the tracking page)
     navigate("/track-orders");
   };
 
   return (
     <div className="dashboard">
       <header>
-        <h1>Welcome, {customerName}!</h1>
+        <h1>Welcome, {customerName || "Customer"}!</h1>
       </header>
       <div className="content-blocks">
         <div className="content-block order-products">

@@ -76,7 +76,7 @@ const ProductList = () => {
     navigate("/cart");
   };
 
-  return (
+return (
     <div className="product-list">
       <div className="product-list-header">
         <h1>Order Products</h1>
@@ -96,12 +96,12 @@ const ProductList = () => {
             <p>Volume: {product.volume}L</p>
             {/* Quantity input */}
             <div>
-              <label htmlFor={`quantity-${product.product_ID}`}>
+              <label htmlFor={'quantity-${product.product_ID}'}>
                 Quantity:{" "}
               </label>
               <input
                 type="number"
-                id={`quantity-${product.product_ID}`}
+                id={'quantity-${product.product_ID}'}
                 value={quantities[product.product_ID]}
                 min="1"
                 onChange={(e) =>
