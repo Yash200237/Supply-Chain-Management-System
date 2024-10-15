@@ -10,14 +10,19 @@ router.post("/customerlogin", (req, res) => {
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
     if (err) return res.json({ loginStatus: false, Error: "Query error" });
     if (result.length > 0) {
-      const email = result[0].email;
+      const customer = result[0]; // Assign result[0] to customer
+      const email = customer.email;
       const token = jwt.sign(
-        { role: "customer", email: email },
+        {
+          role: "customer",
+          email: customer.email,
+          customer_ID: customer.customer_ID,
+        }, // Add customer_ID to the token
         "jwt_secret_key",
         { expiresIn: "1d" }
       );
       res.cookie("token", token);
-      return res.json({ loginStatus: true });
+      return res.json({ loginStatus: true, customer_ID: customer.customer_ID });
     } else {
       return res.json({ loginStatus: false, Error: "wrong email or password" });
     }

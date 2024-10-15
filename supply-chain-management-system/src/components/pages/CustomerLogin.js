@@ -27,6 +27,7 @@ const CustomerLogin = () => {
       .post("http://localhost:5000/start/customerlogin", formData)
       .then((result) => {
         if (result.data.loginStatus) {
+          localStorage.setItem("customer_ID", result.data.customer_ID);
           navigate("/customerdashboard");
         } else {
           setError(result.data.Error);
