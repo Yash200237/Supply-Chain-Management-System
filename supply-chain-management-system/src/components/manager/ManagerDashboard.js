@@ -22,28 +22,31 @@ const ManagerDashboard = ({ customerName }) => {
             <div className="content-blocks">
 
                 <div className="content-block order-list">
-                    <h2>Pending Orders</h2>
+                    <h2>PENDING ORDERS</h2>
                     <p>Check pending orders.</p>
-                    <button className="button" onClick={handleTrackDelivery}>
-                        Order List
+                    <Link to="/pendingorders" className="button-link">
+                    <button className="button">
+                        ORDER LIST
                     </button>
+                    </Link>
                 </div>
                 <div className="content-block train-shedual">
-                    <h2>Train Schedual</h2>
+                    <h2>TRAIN SCHEDUAL</h2>
                     <p>Check train schedule.</p>
                     <Link to="/trainschedual" className="button-link">
                     <button className="button">
-                        Train Shedual
+                    TRAIN SCHEDUAL
                     </button>
                     </Link>
                     
                 </div>
                 
                 <div className="content-block truck-shedual">
-                    <h2>Truck Schedual</h2>
+                    <h2>TRUCK SCHEDUAL</h2>
                     <p>Schedule trucks for order delivery.</p>
-                    <button className="button" onClick={handleTrackDelivery}>
-                        Truck Shedual
+                    
+                    <button className="button">
+                    TRUCK SCHEDUAL
                     </button>
                 </div>
             </div>

@@ -54,7 +54,7 @@ header {
 }
 
 .train-shedual .button {
-    background-color: #28a745; /* Green for Order Products */
+    background-color: #007bff; /* Green for Order Products */
     color: white;
 }
 
@@ -64,7 +64,7 @@ header {
 }
 
 .truck-shedual .button {
-    background-color: #FF0000; /* Blue for Track Delivery */
+    background-color: #007bff; /* Blue for Track Delivery */
     color: white;
 }
 

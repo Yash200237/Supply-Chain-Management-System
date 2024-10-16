@@ -10,30 +10,30 @@ import TableRow from '@mui/material/TableRow';
 
 const columns = [
   { id: 'trainNumber', label: 'Train No.', minWidth: 170, align: 'left', },
-  { id: 'capacity', label: 'Capacity', minWidth: 220, align: 'left', },
+  { id: 'capacity', label: 'Capacity', minWidth: 100, align: 'left', },
   {
     id: 'from',
     label: 'From',
     minWidth: 170,
-    align: 'left',
+    align: 'right',
   },
   {
     id: 'departureTime',
     label: 'Departure Time',
     minWidth: 170,
-    align: 'left',
+    align: 'right',
   },
   {
     id: 'to',
     label: 'To',
     minWidth: 170,
-    align: 'left',
+    align: 'right',
   },
   {
     id: 'arrivalTime',
     label: 'Arrival Time',
     minWidth: 170,
-    align: 'left',
+    align: 'right',
   },
 ];
 
@@ -68,10 +68,10 @@ export default function TrainScheduleTable() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell align="left" colSpan={2}>
+              <TableCell align="center" colSpan={2}>
                 Train Details
               </TableCell>
-              <TableCell align="left" colSpan={4}>
+              <TableCell align="center" colSpan={4}>
                 Schedule
               </TableCell>
             </TableRow>

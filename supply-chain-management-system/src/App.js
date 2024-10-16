@@ -10,7 +10,8 @@ import CustomerDashboard from './components/customer/CustomerDashboard';
 import TrainSchedual from './components/manager/TrainSchedual'
 import ManagerDashboard from './components/manager/ManagerDashboard';
 import DriverDashboard from './components/driver/DriverDashboard';
-
+import PendingOrders from './components/manager/PendingOrders';
+import OrderPreview from './components/manager/OrderPreview';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
@@ -30,6 +31,8 @@ function App() {
           <Route path='/driverdashboard' element={<DriverDashboard/>} />
           <Route path='/Managerdashboard' element={<ManagerDashboard/>} />
           <Route path='/trainschedual' element={<TrainSchedual/>} />
+          <Route path='/pendingorders' element={<PendingOrders/>} />
+          <Route path='/orderpreview' element={<OrderPreview/>} />
         </Routes>
 
         <Footer />
