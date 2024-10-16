@@ -103,8 +103,27 @@ header {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%; /* This will make the button take up the full width of its container */
+    max-width: 200px; /* You can set a maximum width if you don't want it too wide */
 }
 
 .order-button:hover {
     opacity: 0.9; /* Slight opacity change on hover */
 }
+
+.product-list-header {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    gap: 20px; /* Adds space between the heading and the cart icon */
+  }
+  
+  .cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #000; /* You can change the color */
+  }
+  
+  .cart-icon:hover {
+    color: #007bff; /* Add a hover effect */
+  }
