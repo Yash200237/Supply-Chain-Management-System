@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./Cart.css"; // Import your CSS for styling
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
-  const [cartUpdated, setCartUpdated] = useState(false); // To trigger a re-fetch after updating the cart
   const [routes, setRoutes] = useState([]);
   const [selectedRoute, setSelectedRoute] = useState(""); // To store selected route
   const [customer_ID, setCustomerID] = useState(null); // Store the customer ID
+  const navigate = useNavigate(); // For navigating post-checkout
+
+  // Helper function to update localStorage
+  const updateCartInLocalStorage = (updatedCart) => {
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
 
   useEffect(() => {
-    // Fetch cart items from the backend
-    axios
-      .get("http://localhost:5000/cart")
-      .then((response) => {
-        setCart(response.data.cart); // Set the fetched cart items in state
-      })
-      .catch((error) => {
-        console.error("Error fetching cart: ", error);
-      });
+    // Get cart items from localStorage
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart)); // Initialize cart from localStorage
+    }
+
     // Fetch available routes from the backend
     axios
       .get("http://localhost:5000/routes") // Assuming this is the route to get routes
@@ -32,33 +35,21 @@ const Cart = () => {
     // Get customer_ID from local storage (after login)
     const storedCustomerID = localStorage.getItem("customer_ID");
     setCustomerID(storedCustomerID);
-  }, [cartUpdated]);
+  }, []);
 
-  // Handle updating quantity
   const updateQuantity = (product_ID, quantity) => {
-    axios
-      .post("http://localhost:5000/cart/add", { product_ID, quantity })
-      .then((response) => {
-        setCartUpdated(!cartUpdated); // Trigger a re-fetch to update the cart
-      })
-      .catch((error) => {
-        console.error("Error updating quantity: ", error);
-      });
+    const updatedCart = cart.map((item) =>
+      item.product_ID === product_ID ? { ...item, quantity } : item
+    );
+    setCart(updatedCart);
+    updateCartInLocalStorage(updatedCart); // Update cart in localStorage
   };
 
   // Handle removing item from cart
   const removeFromCart = (product_ID) => {
-    axios
-      .post("http://localhost:5000/cart/remove", { product_ID })
-      .then((response) => {
-        setCartUpdated(!cartUpdated); // Trigger a re-fetch to update the cart
-        window.dispatchEvent(
-          new CustomEvent("productRemovedFromCart", { detail: product_ID })
-        );
-      })
-      .catch((error) => {
-        console.error("Error removing product: ", error);
-      });
+    const updatedCart = cart.filter((item) => item.product_ID !== product_ID);
+    setCart(updatedCart);
+    updateCartInLocalStorage(updatedCart); // Update cart in localStorage
   };
 
   // Handle checkout
@@ -68,20 +59,23 @@ const Cart = () => {
       return;
     }
 
+    const payload = {
+      customer_ID,
+      route_ID: selectedRoute,
+      cart, // Send the cart from localStorage
+    };
+
     axios
-      .post("http://localhost:5000/cart/checkout", {
-        customer_ID,
-        route_ID: selectedRoute,
-      })
+      .post("http://localhost:5000/cart/checkout", payload)
       .then((response) => {
         if (response.data.success) {
           alert("Checkout successful!");
           setCart([]); // Clear the cart after successful checkout
+          localStorage.removeItem("cart"); // Clear the cart from localStorage
+          navigate("/order-confirmation"); // Redirect to a confirmation page
         }
       })
-      .catch((error) => {
-        console.error("Error during checkout: ", error);
-      });
+      .catch((error) => console.error("Error during checkout:", error));
   };
 
   return (
@@ -91,34 +85,53 @@ const Cart = () => {
         <p>Your cart is empty.</p>
       ) : (
         <div>
-          {cart.map((item, index) => (
-            <div key={index} className="cart-item">
-              <h2>{item.name}</h2>
-              <p>Price: LKR {item.price}</p>
-              <p>Quantity: {item.quantity}</p>
-              <p>Volume: {item.volume}L</p>
-
-              {/* Update quantity */}
-              <label htmlFor={`quantity-${item.product_ID}`}>
-                Update Quantity:
-              </label>
-              <input
-                type="number"
-                id={`quantity-${item.product_ID}`}
-                value={item.quantity}
-                min="1"
-                onChange={(e) =>
-                  updateQuantity(item.product_ID, parseInt(e.target.value))
-                }
-              />
-              <button
-                onClick={() => removeFromCart(item.product_ID)}
-                className="remove-button"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
+          <table className="cart-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Quantity</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.name}</td>
+                  <td>
+                    LKR{" "}
+                    {typeof item.price === "number"
+                      ? item.price.toFixed(2)
+                      : "N/A"}
+                  </td>
+                  <td>{item.discount}%</td>
+                  <td>
+                    <input
+                      type="number"
+                      id={`quantity-${item.product_ID}`}
+                      value={item.quantity}
+                      min="1"
+                      onChange={(e) =>
+                        updateQuantity(
+                          item.product_ID,
+                          parseInt(e.target.value)
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => removeFromCart(item.product_ID)}
+                      className="remove-button"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
           {/* Route Selection */}
           <div className="route-selection">
@@ -146,5 +159,4 @@ const Cart = () => {
     </div>
   );
 };
-
 export default Cart;

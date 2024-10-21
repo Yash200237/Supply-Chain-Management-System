@@ -28,15 +28,11 @@ const ProductList = () => {
         console.error("Error fetching products: ", error);
       });
 
-    // Fetch the current cart to reflect on the products page
-    axios
-      .get("http://localhost:5000/cart")
-      .then((response) => {
-        setCart(response.data.cart.map((item) => item.product_ID)); // Set cart product IDs
-      })
-      .catch((error) => {
-        console.error("Error fetching cart: ", error);
-      });
+    // Load cart from local storage on mount
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
   }, []);
 
   // Handle quantity change
@@ -47,28 +43,41 @@ const ProductList = () => {
     });
   };
 
-  // Handle the ordering process
+  // Handle the ordering process and store in local storage
   const handleOrder = (product) => {
-    const { product_ID } = product;
+    const { product_ID, price } = product;
     const quantity = quantities[product_ID];
 
-    axios
-      .post("http://localhost:5000/cart/add", { product_ID, quantity }) // Send product details to the backend
-      .then((response) => {
-        if (response.data.success) {
-          setCart([...cart, product_ID]); // Add product ID to the cart state
-        } else {
-          console.error("Failed to add product to cart");
-        }
-      })
-      .catch((error) => {
-        console.error("Error adding product to cart: ", error);
-      });
+    // Check if product is already in the cart
+    const existingProduct = cart.find((item) => item.product_ID === product_ID);
+
+    // If the product already exists, update its quantity; otherwise, add new product
+    let updatedCart;
+    if (existingProduct) {
+      updatedCart = cart.map((item) =>
+        item.product_ID === product_ID
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      );
+    } else {
+      updatedCart = [
+        ...cart,
+        {
+          ...product,
+          price: Number(price), // Ensure price is stored as a number
+          quantity,
+          discount: product.discount,
+        },
+      ];
+    }
+    // Update local storage and state
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
   // Check if product is already in the cart
   const isInCart = (product_ID) => {
-    return cart.includes(product_ID);
+    return cart.some((item) => item.product_ID === product_ID);
   };
 
   // Navigate to cart page
@@ -91,7 +100,12 @@ const ProductList = () => {
         {products.map((product, index) => (
           <div key={index} className="product-card">
             <h2>{product.name}</h2>
-            <p>Price: LKR{product.price}</p>
+            <p>
+              Price: LKR{" "}
+              {isNaN(Number(product.price))
+                ? "N/A"
+                : Number(product.price).toFixed(2)}
+            </p>
             <p>Discount: {product.discount}%</p>
             <p>Volume: {product.volume}L</p>
             {/* Quantity input */}
