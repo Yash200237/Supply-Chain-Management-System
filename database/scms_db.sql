@@ -98,7 +98,7 @@ CREATE TABLE `TruckSchedule` (
   `time` TIME NOT NULL,
   `date` DATE NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
-  `status` ENUM('scheduled','completed'),  -- Removed 'on progress'
+  `status` ENUM('scheduled', 'on progress', 'completed'),  -- Added 'on progress'
   PRIMARY KEY (`schedule_ID`),
   FOREIGN KEY (`driverA_ID`) REFERENCES `DriverAssistant`(`driverA_ID`),
   FOREIGN KEY (`route_ID`) REFERENCES `Route`(`route_ID`),
@@ -106,6 +106,7 @@ CREATE TABLE `TruckSchedule` (
   FOREIGN KEY (`driver_ID`) REFERENCES `Driver`(`driver_ID`),
   FOREIGN KEY (`truck_Id`) REFERENCES `Truck`(`truck_Id`)
 );
+
 
 CREATE TABLE `Order` (
   `order_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
