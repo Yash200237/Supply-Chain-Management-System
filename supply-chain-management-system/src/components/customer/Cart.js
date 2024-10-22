@@ -92,44 +92,66 @@ const Cart = () => {
                 <th>Price</th>
                 <th>Discount</th>
                 <th>Quantity</th>
+                <th>Discounted Unit Price</th> {/* New Column */}
+                <th>Total</th> {/* New Total Column */}
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {cart.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>
-                    LKR{" "}
-                    {typeof item.price === "number"
-                      ? item.price.toFixed(2)
-                      : "N/A"}
-                  </td>
-                  <td>{item.discount}%</td>
-                  <td>
-                    <input
-                      type="number"
-                      id={`quantity-${item.product_ID}`}
-                      value={item.quantity}
-                      min="1"
-                      onChange={(e) =>
-                        updateQuantity(
-                          item.product_ID,
-                          parseInt(e.target.value)
-                        )
-                      }
-                    />
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => removeFromCart(item.product_ID)}
-                      className="remove-button"
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {cart.map((item, index) => {
+                // Calculate discounted price
+                const discountedPrice =
+                  item.price - item.price * (item.discount / 100);
+                // Calculate the total cost (discounted price * quantity)
+                const total = discountedPrice * item.quantity;
+                return (
+                  <tr key={index}>
+                    <td>{item.name}</td>
+                    <td>
+                      LKR{" "}
+                      {typeof item.price === "number"
+                        ? item.price.toFixed(2)
+                        : "N/A"}
+                    </td>
+                    <td>{item.discount}%</td>
+                    <td>
+                      <input
+                        type="number"
+                        id={`quantity-${item.product_ID}`}
+                        value={item.quantity}
+                        min="1"
+                        onChange={(e) =>
+                          updateQuantity(
+                            item.product_ID,
+                            parseInt(e.target.value)
+                          )
+                        }
+                      />
+                    </td>
+
+                    {/* Display discounted price */}
+                    <td>
+                      LKR{" "}
+                      {typeof discountedPrice === "number"
+                        ? discountedPrice.toFixed(2)
+                        : "N/A"}
+                    </td>
+                    {/* Display total (discounted price * quantity) */}
+                    <td>
+                      LKR {typeof total === "number" ? total.toFixed(2) : "N/A"}
+                    </td>
+
+                    <td>
+                      <button
+                        onClick={() => removeFromCart(item.product_ID)}
+                        className="remove-button"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
 
