@@ -34,6 +34,8 @@ router.post("/customerlogin", (req, res) => {
         loginStatus: true,
         customer_ID: customer.customer_ID,
         customerName: customer.first_name, // Include customer name in the response
+
+        
       });
     } else {
       return res.status(401).json({ loginStatus: false, Error: "Wrong email or password" });
