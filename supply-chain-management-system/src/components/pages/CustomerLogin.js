@@ -24,16 +24,20 @@ const CustomerLogin = () => {
     e.preventDefault();
     // Perform login logic here (e.g., API call)
     axios
-      .post("http://localhost:5000/start/customerlogin", formData)
-      .then((result) => {
-        if (result.data.loginStatus) {
-          navigate("/customerdashboard");
-        } else {
-          setError(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-    //console.log('Login data:', formData);
+    .post("http://localhost:5000/start/customerlogin", formData)
+    .then((result) => {
+      console.log("API Response:", result.data); // Log the entire response object
+
+      if (result.data.loginStatus) {
+        console.log("Customer Name:", result.data.customerName); // Check this again
+        localStorage.setItem("customer_ID", result.data.customer_ID);
+        localStorage.setItem("customerName", result.data.customerName); // Store the customer name
+        navigate("/customerdashboard", { state: { customerName: result.data.customerName } });
+      } else {
+        setError(result.data.Error);
+      }
+    })
+    .catch((err) => console.log(err));
   };
 
   return (
