@@ -8,6 +8,7 @@ import { signupRouter } from "./routes/SignupRoute.js";
 import { customerRouter } from "./routes/CustomerRoute.js";
 import { driverRouter } from "./routes/DriverRoute.js";
 import { registrationRouter } from "./routes/RegistrationRoute.js";
+import { trainScheduleRouter } from "./routes/TrainScheduleRoute.js"; // Import the train schedule router
 
 // Initialize Express app
 const app = express();
@@ -29,6 +30,7 @@ app.use("/auth", signupRouter);
 app.use("/start", customerRouter);
 app.use("/start", driverRouter);
 app.use(registrationRouter);
+app.use(trainScheduleRouter); // Register the train schedule router
 
 // JWT authentication middleware
 const authenticateJWT = (req, res, next) => {
