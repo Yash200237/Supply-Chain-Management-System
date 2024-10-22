@@ -6,23 +6,33 @@ const CustomerDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [customerName, setCustomerName] = useState("");
+  const [customer_ID, setCustomer_customer_ID] = useState(""); // Add state for customer _customer_ID
 
   useEffect(() => {
     // Check if customerName is passed via location.state
     if (location.state && location.state.customerName) {
       setCustomerName(location.state.customerName);
       localStorage.setItem("customerName", location.state.customerName);
-      console.log("Customer name from location state:", location.state.customerName);
     } else {
       // If no customerName in location.state, check localStorage
       const storedCustomerName = localStorage.getItem("customerName");
       if (storedCustomerName) {
         setCustomerName(storedCustomerName);
-        console.log("Customer name from localStorage:", storedCustomerName);
       } else {
         // No customerName found, redirect to login
         console.log("No customer name found, redirecting to login...");
         navigate("/customerlogin");
+      }
+    }
+
+    // Get customer _customer_ID from location.state or localStorage
+    if (location.state && location.state.customer_ID) {
+      setCustomer_customer_ID(location.state.customer_ID);
+      localStorage.setItem("customer_ID", location.state.customer_ID);
+    } else {
+      const storedCustomer_customer_ID = localStorage.getItem("customer_ID");
+      if (storedCustomer_customer_ID) {
+        setCustomer_customer_ID(storedCustomer_customer_ID);
       }
     }
   }, [location, navigate]);
@@ -32,7 +42,11 @@ const CustomerDashboard = () => {
   };
 
   const handleTrackDelivery = () => {
-    navigate("/track-orders");
+    if (customer_ID) {
+      navigate(`/track-orders/${customer_ID}`); // Navigate using the actual customer _customer_ID
+    } else {
+      console.log("Customer _customer_ID not found.");
+    }
   };
 
   return (

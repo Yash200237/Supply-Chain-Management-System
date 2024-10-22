@@ -27,7 +27,7 @@ const CustomerLogin = () => {
     .post("http://localhost:5000/start/customerlogin", formData)
     .then((result) => {
       console.log("API Response:", result.data); // Log the entire response object
-      console.log(result.data.loginStatus);
+
       if (result.data.loginStatus) {
         console.log("Customer Name:", result.data.customerName); // Check this again
         localStorage.setItem("customer_ID", result.data.customer_ID);
