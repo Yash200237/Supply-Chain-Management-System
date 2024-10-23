@@ -13,3 +13,16 @@ JOIN orderstatus s ON s.status_ID = o.status_ID
 JOIN orderproduct op ON o.order_ID = op.order_id
 JOIN product p ON p.product_ID = op.product_id
 GROUP BY o.order_ID;
+
+--CustomerDetails
+CREATE OR REPLACE VIEW CustomerDetails AS
+SELECT 
+	first_name as `First Name`,
+    customer_ID,
+    CONCAT(first_name, ' ', last_name) AS `Full Name`, 
+    email AS `Email`, 
+    phone_number AS `Phone Number`, 
+    address AS `Address`,
+    city AS `City`,
+    password
+FROM customer; 
