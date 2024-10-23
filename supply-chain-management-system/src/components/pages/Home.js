@@ -118,9 +118,7 @@ function Home() {
         </div>
       </div>
 
-      <footer className="footer">
-        <p>© 2024 SmartDelivery. All rights reserved.</p>
-      </footer>
+      
     </div>
   );
 }
