@@ -1,11 +1,11 @@
 import express from "express";
-import con from "../utils/db.js"; // Adjust the path to your database connection
+import con from "../utils/db.js";  // Ensure your database connection is properly set up in db.js
 
 const router = express.Router();
 
-// Route to get train data
-router.get("/api/Train", (req, res) => {
-  const sql = "SELECT * FROM Train"; // Query the Train table
+// Route to get train schedule
+router.get("/api/TrainSchedule", (req, res) => {
+  const sql = "SELECT * FROM Train";  // Adjust the table name if necessary
   con.query(sql, (err, result) => {
     if (err) {
       console.error("Error fetching train data: ", err);
@@ -68,4 +68,33 @@ router.get("/api/AvailableTrainsCount", (req, res) => {
   });
 });
 
+// Route to get pending orders for each city
+router.get("/api/PendingOrders", (req, res) => {
+  const sql = `
+    SELECT 
+      c.city,
+      COUNT(o.order_id) AS pending_orders
+    FROM \`order\` o
+    INNER JOIN customer c ON o.customer_id = c.customer_id
+    WHERE o.schedule_ID IS NULL
+    GROUP BY c.city
+  `;
+
+  con.query(sql, (err, result) => {
+    if (err) {
+      console.error("Error fetching pending orders data: ", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    console.log(result);
+
+    const pendingOrdersCount = result.reduce((acc, row) => {
+      acc[row.city] = row.pending_orders;
+      return acc;
+    }, {});
+
+    res.json(pendingOrdersCount);
+  });
+});
+
+// Export the router
 export { router as trainScheduleRouter };

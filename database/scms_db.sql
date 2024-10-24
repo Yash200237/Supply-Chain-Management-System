@@ -142,6 +142,8 @@ CREATE TABLE `OrderProduct` (
   FOREIGN KEY (`product_ID`) REFERENCES `Product`(`product_ID`)
 );
 
+
+
 CREATE TABLE `Train` (
   `train_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `time` TIME NOT NULL,

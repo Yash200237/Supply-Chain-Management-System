@@ -11,8 +11,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button"; // Import Button component
-import Tooltip from "@mui/material/Tooltip"; // Import Tooltip component
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import axios from "axios";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -36,13 +36,13 @@ export default function TrainScheduleTable() {
   const [cityTrainMap, setCityTrainMap] = useState({});
   const [availableTrainsCount, setAvailableTrainsCount] = useState({});
   const [selectedTrains, setSelectedTrains] = useState({});
-  const [scheduledTrains, setScheduledTrains] = useState({}); // New state for scheduled trains
+  const [scheduledTrains, setScheduledTrains] = useState({});
 
   useEffect(() => {
-    // Fetch train data from the backend
     axios
-      .get("http://localhost:5000/api/Train")
+      .get("http://localhost:5000/api/TrainSchedule")
       .then((response) => {
+        console.log("Train Data Response:", response.data); // Add this line
         setRows(response.data);
         setLoading(false);
       })
@@ -51,30 +51,30 @@ export default function TrainScheduleTable() {
         setLoading(false);
       });
 
-    const simulatedPendingOrders = {
-      Colombo: 25,
-      Negombo: 45,
-      Galle: 66,
-      Matara: 33,
-      Jaffna: 12,
-      Trincomalee: 77
-    };
-    setPendingOrders(simulatedPendingOrders);
+    axios
+      .get("http://localhost:5000/api/PendingOrders")
+      .then((response) => {
+        console.log("Pending Orders Response:", response.data);
+        setPendingOrders(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching pending orders data", error);
+      });
 
-    // Fetch train IDs grouped by city from the backend
     axios
       .get("http://localhost:5000/api/TrainCityMap")
       .then((response) => {
+        console.log("Train City Map Response:", response.data); // Add this line
         setCityTrainMap(response.data);
       })
       .catch((error) => {
         console.error("Error fetching city-train map data", error);
       });
 
-    // Fetch available trains count for each city
     axios
       .get("http://localhost:5000/api/AvailableTrainsCount")
       .then((response) => {
+        console.log("Available Trains Count Response:", response.data); // Add this line
         setAvailableTrainsCount(response.data);
       })
       .catch((error) => {
@@ -96,6 +96,11 @@ export default function TrainScheduleTable() {
       ...prev,
       [city]: trainId
     }));
+    // Reset the scheduled state for this city when a new train is selected
+    setScheduledTrains((prev) => ({
+      ...prev,
+      [city]: false
+    }));
   };
 
   const handleScheduleNow = (city) => {
@@ -111,7 +116,6 @@ export default function TrainScheduleTable() {
     return `Train ${train.train_ID} (${train.day} - ${train.time})`;
   };
 
-  // Define custom background colors for each city
   const backgroundColors = {
     Colombo: '#f0e68c',
     Negombo: '#add8e6',
@@ -191,15 +195,15 @@ export default function TrainScheduleTable() {
                 <div style={{ width: 100, height: 100, margin: "0 auto" }}>
                   <AnimatedProgressProvider
                     valueStart={0}
-                    valueEnd={pendingOrders[city]}
+                    valueEnd={pendingOrders[city] || 0}
                     duration={1.4}
                     easingFunction={easeQuadInOut}
                   >
                     {(value) => {
                       return (
                         <CircularProgressbar
-                          value={pendingOrders[city]}
-                          text={`${pendingOrders[city]}`}
+                          value={pendingOrders[city] || 0}
+                          text={`${pendingOrders[city] || 0}`}
                           styles={buildStyles({
                             pathTransition: "none",
                             textColor: "#f88",
@@ -212,22 +216,27 @@ export default function TrainScheduleTable() {
                   </AnimatedProgressProvider>
                 </div>
                 <Typography variant="body1" style={{ marginTop: '10px' }}>
-                  Pending Orders: {pendingOrders[city]}
+                  Pending Orders: {pendingOrders[city] || 0}
                 </Typography>
 
-                {/* Move Available Trains Count here */}
                 <Typography variant="body2" style={{ marginTop: '15px', fontWeight: 'bold' }}>
                   Available Trains: {cityTrains.length}
                 </Typography>
 
-                {/* Dropdown for Train IDs */}
                 <Select
                   fullWidth
                   style={{ marginTop: '10px' }}
                   value={selectedTrains[city] || ''}
                   onChange={(e) => handleTrainSelect(city, e.target.value)}
+                  displayEmpty
+                  renderValue={(selected) => {
+                    if (!selected) {
+                      return "Select Train ID";
+                    }
+                    const selectedTrain = rows.find(train => train.train_ID === selected);
+                    return selectedTrain ? formatTrainInfo(selectedTrain) : "Select Train ID";
+                  }}
                 >
-                  <MenuItem value="" disabled>Select Train ID</MenuItem>
                   {cityTrains.map((train) => (
                     <MenuItem key={train.train_ID} value={train.train_ID}>
                       {formatTrainInfo(train)}
@@ -235,24 +244,23 @@ export default function TrainScheduleTable() {
                   ))}
                 </Select>
 
-                {/* Schedule Now Button with Tooltip */}
                 <Tooltip title={!selectedTrains[city] ? "Select a train before assigning orders" : ""}>
                   <span>
                     <Button
-                      variant="contained" // Use Material-UI's contained button style
+                      variant="contained"
                       style={{
                         marginTop: '15px',
-                        backgroundColor: '#4F67ED', // Your specified color
+                        backgroundColor: '#4F67ED',
                         color: 'white',
                         padding: '10px 20px',
                         borderRadius: '5px',
                         cursor: 'pointer',
-                        whiteSpace: 'nowrap', // Prevent text wrapping
-                        overflow: 'hidden',    // Hide overflow
-                        textOverflow: 'ellipsis' // Show ellipsis if text is too long
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
                       }}
                       onClick={() => handleScheduleNow(city)}
-                      disabled={!selectedTrains[city]} // Disable if no train is selected
+                      disabled={!selectedTrains[city]}
                     >
                       {scheduledTrains[city] ? "Assigned!" : "Assign Orders"}
                     </Button>
