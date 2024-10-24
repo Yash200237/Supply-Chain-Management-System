@@ -1,91 +1,70 @@
 import express from "express";
+import authenticateToken from "./jwtMiddleware.js"; // Import the middleware
 import con from "../utils/db.js"; // Assuming this is your DB connection
 
 const router = express.Router();
 
-// Route: Checkout
-router.post("/cart/checkout", (req, res) => {
-  const { customer_ID, route_ID, cart } = req.body;
+// Fetch routes for the store in the customer's city using the stored procedure
+router.get("/routes", authenticateToken, (req, res) => {
+  const customerID = req.customer_ID;
+
+  const procedureCall = "CALL GetRoutesForCustomerCity(?)";
+
+  con.query(procedureCall, [customerID], (err, result) => {
+    if (err) {
+      console.error("Error executing stored procedure: ", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    res.json({ routes: result[0] }); // result[0] contains the result set from the stored procedure
+  });
+});
+
+// Route: Checkout using the stored procedure
+router.post("/checkout", authenticateToken, (req, res) => {
+  const customerID = req.customer_ID; // Extracted from JWT middleware
+  const { route_ID, cart } = req.body; // Cart is sent from the front-end
+
+  // Add logging to check if the payload is received correctly
+  console.log("Checkout Payload:", req.body);
+  console.log("Customer ID:", customerID);
+  console.log("Route ID:", route_ID);
+  console.log("Cart:", cart);
 
   if (!cart || cart.length === 0) {
     return res.status(400).json({ success: false, message: "Cart is empty" });
   }
 
-  // Calculate total volume
+  // Calculate total volume for the order
   let total_volume = 0;
-
-  const productPromises = cart.map((item) => {
-    return new Promise((resolve, reject) => {
-      con.query(
-        "SELECT * FROM Product WHERE product_ID = ?",
-        [item.product_ID],
-        (err, result) => {
-          if (err) reject(err);
-          const product = result[0];
-          total_volume += product.volume * item.quantity;
-          resolve();
-        }
-      );
-    });
+  cart.forEach((item) => {
+    total_volume += item.volume * item.quantity;
   });
 
-  Promise.all(productPromises)
-    .then(() => {
-      // Insert the order into the Order table
-      const orderSql =
-        "INSERT INTO `Order` (customer_ID, route_ID, status_ID, time, date, total_volume) VALUES (?, ?, ?, NOW(), CURDATE(), ?)";
-      con.query(
-        orderSql,
-        [customer_ID, route_ID, 1, total_volume],
-        (err, result) => {
-          if (err)
-            return res
-              .status(500)
-              .json({ success: false, message: "Order creation failed" });
+  // Convert cart to a JSON string to pass to the stored procedure
+  const cartJSON = JSON.stringify(cart);
 
-          const order_ID = result.insertId;
+  // Call the stored procedure
+  const procedureCall = "CALL InsertOrderAndProducts(?, ?, ?, ?)";
+  con.query(
+    procedureCall,
+    [customerID, route_ID, total_volume, cartJSON],
+    (err, result) => {
+      if (err) {
+        console.error("Error executing stored procedure: ", err);
+        return res.status(500).json({
+          success: false,
+          message: "Database error during order creation",
+        });
+      }
 
-          // Insert each product into the OrderProduct table
-          const orderProductPromises = cart.map((item) => {
-            const orderProductSql =
-              "INSERT INTO OrderProduct (order_ID, product_ID, quantity) VALUES (?, ?, ?)";
-            return new Promise((resolve, reject) => {
-              con.query(
-                orderProductSql,
-                [order_ID, item.product_ID, item.quantity],
-                (err) => {
-                  if (err) reject(err);
-                  resolve();
-                }
-              );
-            });
-          });
-
-          Promise.all(orderProductPromises)
-            .then(() => {
-              res.json({
-                success: true,
-                message: "Checkout successful",
-                order_ID,
-              });
-            })
-            .catch((err) => {
-              return res.status(500).json({
-                success: false,
-                message: "Failed to add products to order",
-                error: err,
-              });
-            });
-        }
-      );
-    })
-    .catch((err) => {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to retrieve products",
-        error: err,
+      res.json({
+        success: true,
+        message: "Checkout successful",
+        order_ID: result[0].insertId, // Use the generated order ID from the procedure
       });
-    });
+    }
+  );
 });
 
 export { router as cartRouter };
