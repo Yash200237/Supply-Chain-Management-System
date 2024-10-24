@@ -7,7 +7,7 @@ CREATE TABLE `OrderStatus` (
 
 CREATE TABLE `Store` (
   `city` VARCHAR(20) NOT NULL,
-  `store_ID` TINYINT UNSIGNED NOT NULL ,  -- Changed to TINYINT
+  `store_ID` TINYINT UNSIGNED NOT NULL,  -- Changed to TINYINT
   PRIMARY KEY (`store_ID`)
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE `Driver` (
 );
 
 CREATE TABLE `Truck` (
-  `store_ID` TINYINT UNSIGNED ,  -- Changed to TINYINT
+  `store_ID` TINYINT UNSIGNED,  -- Changed to TINYINT
   `truck_Id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `truck_plate_no` VARCHAR(10) NOT NULL,  -- Updated to NOT NULL and VARCHAR(10)
   `capacity` NUMERIC(8,2),
@@ -98,7 +98,10 @@ CREATE TABLE `TruckSchedule` (
   `time` TIME NOT NULL,
   `date` DATE NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
+HEAD
   `status` ENUM('scheduled','on progress','completed'),
+  `status` ENUM('scheduled', 'on progress', 'completed'),  -- Added 'on progress'
+main
   PRIMARY KEY (`schedule_ID`),
   FOREIGN KEY (`driverA_ID`) REFERENCES `DriverAssistant`(`driverA_ID`),
   FOREIGN KEY (`route_ID`) REFERENCES `Route`(`route_ID`),
@@ -106,6 +109,7 @@ CREATE TABLE `TruckSchedule` (
   FOREIGN KEY (`driver_ID`) REFERENCES `Driver`(`driver_ID`),
   FOREIGN KEY (`truck_Id`) REFERENCES `Truck`(`truck_Id`)
 );
+
 
 CREATE TABLE `Order` (
   `order_ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,

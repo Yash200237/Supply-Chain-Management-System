@@ -24,22 +24,26 @@ const ManagerLogin = () => {
     e.preventDefault();
     // Perform login logic here (e.g., API call)
     axios
-      .post("http://localhost:5000/start/managerlogin", formData)
-      .then((result) => {
-        if (result.data.loginStatus) {
-          navigate("/managerdashboard");
-        } else {
-          setError(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-    //console.log('Login data:', formData);
+    .post("http://localhost:5000/start/managerlogin", formData)
+    .then((result) => {
+      console.log("API Response:", result.data); // Log the entire response object
+      console.log(result.data.loginStatus);
+      if (result.data.loginStatus) {
+        console.log("Manager Name:", result.data.managerName); // Check this again
+        localStorage.setItem("manager_ID", result.data.manager_ID);
+        localStorage.setItem("managerName", result.data.managerName); // Store the manager name
+        navigate("/managerdashboard", { state: { managerName: result.data.managerName } });
+      } else {
+        setError(result.data.Error);
+      }
+    })
+    .catch((err) => console.log(err));
   };
 
   return (
     <div className="login">
-      <h2>Login</h2>
       <div className="text-danger">{error && error}</div>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email:</label>

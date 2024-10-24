@@ -1,5 +1,3 @@
-// import './App.css';
-
 import NavBar from "./components/inc/Navbar";
 import Footer from "./components/inc/Footer";
 import About from "./components/pages/About";
@@ -14,7 +12,7 @@ import TrainSchedule from "./components/manager/TrainSchedule";
 import ManagerDashboard from "./components/manager/ManagerDashboard";
 import DriverDashboard from "./components/driver/DriverDashboard";
 import ProductList from "./components/customer/products";
-import Tracking from "./components/customer/Tracking";
+import Tracking from "./components/customer/Tracking"; // Import the Tracking component
 import Registration from "./components/manager/Registration";
 import Cart from "./components/customer/Cart";
 
@@ -39,7 +37,7 @@ function App() {
           <Route path="/managerdashboard" element={<ManagerDashboard />} />
           <Route path="/trainschedule" element={<TrainSchedule />} />
           <Route path="/order-products" element={<ProductList />} />
-          <Route path="/track-orders" element={<Tracking />} />
+          <Route path="/track-orders/:customer_ID" element={<Tracking />} /> {/* Updated route */}
           <Route path="/registration" element={<Registration />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>

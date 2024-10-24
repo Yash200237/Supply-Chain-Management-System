@@ -1,6 +1,37 @@
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+.customer-details {
+    flex: 1; /* 1/8 of the screen */
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-right: 2px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.customer-details h2 {
+    margin-bottom: 20px;
+}
+
+.customer-details p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.content {
+    flex: 7; /* 7/8 of the screen */
+    padding: 20px;
+}
+
 .dashboard {
     text-align: center;
     padding: 20px;
+    height: 100vh;
 }
 
 header {
@@ -106,14 +137,14 @@ header {
     justify-content: center; /* Centers the content horizontally */
     align-items: center; /* Centers the content vertically */
     gap: 20px; /* Adds space between the heading and the cart icon */
-  }
-  
-  .cart-icon {
+}
+
+.cart-icon {
     font-size: 24px;
     cursor: pointer;
     color: #000; /* You can change the color */
-  }
-  
-  .cart-icon:hover {
+}
+
+.cart-icon:hover {
     color: #007bff; /* Add a hover effect */
-  }
+}

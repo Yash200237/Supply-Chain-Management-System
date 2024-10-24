@@ -26,14 +26,42 @@ const CustomerLogin = () => {
     axios
       .post("http://localhost:5000/start/customerlogin", formData)
       .then((result) => {
+        console.log("API Response:", result.data); // Log the entire response object
+
         if (result.data.loginStatus) {
+HEAD
           navigate("/customerdashboard");
+
+          // Store customer details in localStorage
+          localStorage.setItem("customer_ID", result.data.customer_ID);
+          localStorage.setItem("customerName", result.data.customerName); // Store the customer name
+          localStorage.setItem("fullName", result.data.fullName); // Full Name
+          localStorage.setItem("email", result.data.email); // Email
+          localStorage.setItem("phoneNumber", result.data.phoneNumber); // Phone Number
+          localStorage.setItem("address", result.data.address); // Address
+          localStorage.setItem("city", result.data.city); // City
+
+          // Navigate to dashboard and pass state
+          navigate("/customerdashboard", { 
+            state: { 
+              customerName: result.data.customerName,
+              customer_ID: result.data.customer_ID,
+              fullName: result.data.fullName,
+              email: result.data.email,
+              phoneNumber: result.data.phoneNumber,
+              address: result.data.address,
+              city: result.data.city
+            } 
+          });
+main
         } else {
           setError(result.data.Error);
         }
       })
-      .catch((err) => console.log(err));
-    //console.log('Login data:', formData);
+      .catch((err) => {
+        console.log(err);
+        setError("An error occurred while logging in.");
+      });
   };
 
   return (
