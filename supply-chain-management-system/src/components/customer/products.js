@@ -3,6 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js"; // Import CryptoJS for hashing
 
 import "./Customer.css"; // Import your CSS for styling
 
@@ -28,10 +29,22 @@ const ProductList = () => {
         console.error("Error fetching products: ", error);
       });
 
-    // Load cart from local storage on mount
-    const storedCart = localStorage.getItem("cart");
+    // Load cart from local storage on mount using customer-specific key
+    const token = getTokenFromCookies();
+    if (!token) {
+      console.error("User not logged in");
+      return;
+    }
+
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
+    const customerID = decodedToken.customer_ID;
+    const hashedCustomerID = hashCustomerID(customerID);
+    const storedCart = localStorage.getItem(`cart_${hashedCustomerID}`);
+
     if (storedCart) {
-      setCart(JSON.parse(storedCart));
+      setCart(JSON.parse(storedCart)); // Load the correct cart
+    } else {
+      setCart([]); // If no cart, start with an empty one
     }
   }, []);
 
@@ -41,6 +54,18 @@ const ProductList = () => {
       ...quantities,
       [product_ID]: newQuantity,
     });
+  };
+  // Helper to get customer ID from JWT stored in cookies
+  const getTokenFromCookies = () => {
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="));
+    return token ? token.split("=")[1] : null;
+  };
+
+  // Helper to hash the customer ID
+  const hashCustomerID = (customerID) => {
+    return CryptoJS.SHA256(String(customerID)).toString(); // Hash the customer ID
   };
 
   // Handle the ordering process and store in local storage
@@ -70,11 +95,22 @@ const ProductList = () => {
         },
       ];
     }
+    // Get customer ID from JWT
+    const token = getTokenFromCookies();
+    if (!token) {
+      console.error("Customer is not logged in");
+      return;
+    }
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
+    const customerID = decodedToken.customer_ID;
+
+    // Hash the customer ID to create the unique cart key
+    const cartKey = `cart_${hashCustomerID(customerID)}`;
+
     // Update local storage and state
     setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart)); // <-- Store cart with the hashed customer-specific key
   };
-
   // Check if product is already in the cart
   const isInCart = (product_ID) => {
     return cart.some((item) => item.product_ID === product_ID);

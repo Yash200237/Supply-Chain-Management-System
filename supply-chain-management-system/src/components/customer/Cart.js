@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Cart.css"; // Import your CSS for styling
 import axios from "axios";
+import CryptoJS from "crypto-js"; // For hashing
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -9,6 +10,7 @@ const Cart = () => {
   const [isConfirming, setIsConfirming] = useState(false); // To control the pop-up confirmation
   const [isCheckoutSuccessful, setIsCheckoutSuccessful] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [customerID, setCustomerID] = useState(null);
 
   // Helper to retrieve token from cookies
   const getTokenFromCookies = () => {
@@ -16,6 +18,20 @@ const Cart = () => {
       .split("; ")
       .find((row) => row.startsWith("token="));
     return token ? token.split("=")[1] : null;
+  };
+
+  // Helper to hash customer ID (we will use this as the key for the cart in localStorage)
+  const hashCustomerID = (customerID) => {
+    return CryptoJS.SHA256(String(customerID)).toString(); // Hash the customerID to use as a unique key
+  };
+
+  // Save the current cart for the customer in local storage
+  const saveCartForCustomer = (customerID, updatedCart) => {
+    const hashedCustomerID = hashCustomerID(customerID);
+    const cartKey = `cart_${hashedCustomerID}`;
+    console.log("Saving cart with key:", cartKey); // Debugging the cart key
+    console.log("Cart data being saved:", updatedCart); // Debugging the cart data
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart));
   };
 
   // Trigger the confirmation modal
@@ -28,46 +44,66 @@ const Cart = () => {
     setIsConfirming(true); // Show confirmation modal
   };
 
-  // Helper function to update localStorage
-  const updateCartInLocalStorage = (updatedCart) => {
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-  };
-
   useEffect(() => {
-    // Get cart items from localStorage
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCart(JSON.parse(storedCart)); // Initialize cart from localStorage
+    // Retrieve the cart for the current customer from local storage
+    const getCartForCustomer = (customerID) => {
+      const hashedCustomerID = hashCustomerID(customerID);
+      const cartKey = `cart_${hashedCustomerID}`;
+      console.log("Retrieving cart with key:", cartKey); // Add this line to debug
+      const storedCart = localStorage.getItem(cartKey);
+      return storedCart ? JSON.parse(storedCart) : [];
+    };
+
+    const token = getTokenFromCookies();
+    if (!token) {
+      alert("You need to log in.");
+      return;
     }
 
-    // Fetch available routes from the backend (JWT is stored in cookies)
-    axios
-      .get("http://localhost:5000/cart/routes", {
-        headers: {
-          Authorization: `Bearer ${getTokenFromCookies()}`, // Fetch JWT token from cookies
-        },
-      })
-      .then((response) => {
-        setRoutes(response.data.routes); // Set the available routes in state
-      })
-      .catch((error) => {
-        console.error("Error fetching routes: ", error);
-      });
-  }, []);
+    try {
+      // Decode JWT to extract customer ID
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      const customerID = decodedToken.customer_ID;
+      setCustomerID(customerID); // Store customer ID in state
+
+      // Fetch cart from localStorage using customer ID
+      const storedCart = getCartForCustomer(customerID);
+      console.log("Stored cart for customer:", storedCart); // Debugging line
+      setCart(storedCart);
+
+      // Fetch available routes from the backend
+      axios
+        .get("http://localhost:5000/cart/routes", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          setRoutes(response.data.routes);
+        })
+        .catch((error) => {
+          console.error("Error fetching routes: ", error);
+        });
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }, [customerID]);
 
   const updateQuantity = (product_ID, quantity) => {
     const updatedCart = cart.map((item) =>
       item.product_ID === product_ID ? { ...item, quantity } : item
     );
     setCart(updatedCart);
-    updateCartInLocalStorage(updatedCart); // Update cart in localStorage
+
+    console.log("Updated cart:", updatedCart); // Debugging the updated cart before saving
+    saveCartForCustomer(customerID, updatedCart); // Save the updated cart for the customer
   };
 
   // Handle removing item from cart
   const removeFromCart = (product_ID) => {
     const updatedCart = cart.filter((item) => item.product_ID !== product_ID);
     setCart(updatedCart);
-    updateCartInLocalStorage(updatedCart); // Update cart in localStorage
+
+    console.log("Updated cart after removal:", updatedCart); // Debugging the updated cart before saving
+    saveCartForCustomer(customerID, updatedCart); // Save the updated cart for the customer
   };
 
   // Calculate the total bill and enrich cart with calculated values (discounted price and total per item)
@@ -120,9 +156,15 @@ const Cart = () => {
       if (checkoutResponse.data.success) {
         setIsCheckoutSuccessful(true); // Show success modal
         // Delay clearing the cart and removing from local storage to allow success message display
+
+        // Decode JWT to extract customer ID
+        const decodedToken = JSON.parse(atob(token.split(".")[1]));
+        const customerID = decodedToken.customer_ID;
+        const hashedCustomerID = hashCustomerID(customerID); // Hash the customer ID
+
         setTimeout(() => {
           setCart([]); // Clear cart after success message is shown
-          localStorage.removeItem("cart"); // Remove cart from local storage
+          localStorage.removeItem(`cart_${hashedCustomerID}`); // Remove cart from local storage
           setIsSubmitting(false);
         }, 3000); // Delay of 3 seconds before clearing the cart
       } else {
@@ -145,6 +187,7 @@ const Cart = () => {
         <p>Your cart is empty.</p>
       ) : (
         <div>
+          <></>
           <table className="cart-table">
             <thead>
               <tr>
@@ -174,12 +217,18 @@ const Cart = () => {
                       id={`quantity-${item.product_ID}`}
                       value={item.quantity}
                       min="1"
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        console.log(
+                          "Quantity change triggered for item:",
+                          item.product_ID,
+                          "New Quantity:",
+                          e.target.value
+                        ); // Add log here
                         updateQuantity(
                           item.product_ID,
                           parseInt(e.target.value)
-                        )
-                      }
+                        );
+                      }}
                     />
                   </td>
                   {/* Display discounted price */}
@@ -198,7 +247,13 @@ const Cart = () => {
                   </td>
                   <td>
                     <button
-                      onClick={() => removeFromCart(item.product_ID)}
+                      onClick={() => {
+                        console.log(
+                          "Remove button clicked for item:",
+                          item.product_ID
+                        ); // Add log here
+                        removeFromCart(item.product_ID);
+                      }}
                       className="remove-button"
                     >
                       Remove
@@ -229,6 +284,11 @@ const Cart = () => {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="alert alert-info text-center mt-4" role="alert">
+            <strong>Note:</strong> Your order will take at least{" "}
+            <strong>7 days</strong> for delivery. Thank you for your patience!
           </div>
 
           {/* Display the checkout confirmation modal */}

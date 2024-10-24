@@ -21,8 +21,15 @@ router.post("/customerlogin", (req, res) => {
         "jwt_secret_key",
         { expiresIn: "1d" }
       );
+      // Set token as cookie (this part can stay as is)
       res.cookie("token", token);
-      return res.json({ loginStatus: true, customer_ID: customer.customer_ID });
+
+      // Return token and other data in the JSON response
+      return res.json({
+        loginStatus: true,
+        token, // Send token in the response so the front-end can use it
+        customer_ID: customer.customer_ID,
+      });
     } else {
       return res.json({ loginStatus: false, Error: "wrong email or password" });
     }
