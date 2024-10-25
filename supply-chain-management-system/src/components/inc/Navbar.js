@@ -1,39 +1,50 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaInfoCircle, FaHome } from "react-icons/fa"; // Icons for style
 
 function NavBar() {
   return (
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <Link to="/" class="navbar-brand">
-        SmartDelivery
-      </Link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <>
+    <style type="text/css">
+    {`
+    .navbar {
+      background-color: Blue !important;
+    }
+    `}
+    </style>
+    <nav className="navbar navbar-expand-lg bg-dark navbar-dark py-3 shadow">
+      <div className="container">
+        <Link to="/" className="navbar-brand fs-3 fw-bold text-light">
+          SmartDelivery
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-      <div
-        class=" collapse navbar-collapse d-flex justify-content-between"
-        id="navbarSupportedContent"
-      >
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <Link to="/about" class="nav-link">
-              About
-            </Link>
-          </li>
-        </ul>
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link to="/" className="nav-link text-light d-flex align-items-center gap-1">
+                <FaHome /> Home 
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/about" className="nav-link text-light d-flex align-items-center gap-1">
+                <FaInfoCircle /> About
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav></>
   );
 }
 
