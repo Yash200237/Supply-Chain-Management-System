@@ -14,7 +14,8 @@ const theme = createTheme({
     background: { default: "#f5f5f5" },
   },
   typography: {
-    h4: { fontWeight: 600, marginBottom: "10px" },
+    h4: { fontWeight: 600, marginBottom: "5px" },
+    subtitle1: { color: "#757575", fontSize: "0.9rem", marginBottom: "20px" },
   },
 });
 
@@ -34,12 +35,17 @@ const Start = () => {
           <Typography variant="h4" align="center">
             Login As
           </Typography>
+
+          <Typography variant="subtitle1" align="center">
+            Welcome, please log in to continue
+          </Typography>
+
           <Divider sx={{ my: 2 }} />
 
           <Box display="flex" flexDirection="column" gap={2} mt={3}>
             <Button
               variant="contained"
-              color="primary"
+              disableElevation
               onClick={() => navigate("/start/customerlogin")}
               fullWidth
             >
@@ -48,7 +54,7 @@ const Start = () => {
 
             <Button
               variant="contained"
-              color="success"
+              disableElevation
               onClick={() => navigate("/start/driverlogin")}
               fullWidth
             >
@@ -57,7 +63,7 @@ const Start = () => {
 
             <Button
               variant="contained"
-              color="info"
+              disableElevation
               onClick={() => navigate("/start/managerlogin")}
               fullWidth
             >
