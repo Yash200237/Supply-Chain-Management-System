@@ -3,17 +3,18 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css"; // Import the CSS file
 import Button from "@mui/material/Button";
-
+import img5 from "../../assets/images/new.jpg"
+import img1 from "../../assets/images/img1.jpg"
 function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
     {
-      image: "https://via.placeholder.com/800x400?text=Slide+1",
+      image: img5,
       caption: "Welcome to SmartDelivery!",
     },
     {
-      image: "https://via.placeholder.com/800x400?text=Slide+2",
+      image: img1,
       caption: "Optimize Your Supply Chain with Real-Time Data!",
     },
     {
@@ -105,17 +106,7 @@ function Home() {
           </Link>
         </div>
 
-        <div className="button-group secondary-buttons">
-          <Link to="/customerdashboard" className="button-link">
-            <button className="btn btn-customer">Customer</button>
-          </Link>
-          <Link to="/driverdashboard" className="button-link">
-            <button className="btn btn-driver">Driver</button>
-          </Link>
-          <Link to="/managerdashboard" className="button-link">
-            <button className="btn btn-manager">Manager</button>
-          </Link>
-        </div>
+        
       </div>
 
       

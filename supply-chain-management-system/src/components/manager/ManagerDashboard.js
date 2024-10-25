@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 const ManagerDashboard = () => {
   const navigate = useNavigate();
@@ -46,9 +47,9 @@ const ManagerDashboard = () => {
           <h2>Registration</h2>
           <p>Register Drivers and Assistant drivers</p>
           <Link to="/registration" className="button-link">
-            <button className="button" onClick={handleTrackDelivery}>
+          <Button variant="contained" disableElevation>
               Register
-            </button>
+            </Button>
           </Link>
         </div>
 
@@ -56,9 +57,9 @@ const ManagerDashboard = () => {
           <h2>Schedule Orders to Trains </h2>
           <p>Check train schedule and assign orders to trains</p>
           <Link to="/trainschedule" className="button-link">
-            <button className="button" onClick={handleTrackDelivery}>
+          <Button variant="contained" disableElevation>
               Assign Orders
-            </button>
+            </Button>
           </Link>
         </div>
 
@@ -66,9 +67,9 @@ const ManagerDashboard = () => {
           <h2>Create Truck Schedules</h2>
           <p>Schedule trucks for order delivery.</p>
           <Link to="/truckschedule" className="button-link">
-            <button className="button" onClick={handleTrackDelivery}>
+              <Button variant="contained" disableElevation>
               Schedule Trucks
-            </button>
+              </Button>
           </Link>
         </div>
 
@@ -76,9 +77,9 @@ const ManagerDashboard = () => {
           <h2>Reports</h2>
           <p>Sales reports, Working Hours reports, Customer-order reports</p>
           <Link to="/reports" className="button-link">
-            <button className="button" onClick={handleTrackDelivery}>
-              Generate Reports
-            </button>
+            <Button variant="contained" disableElevation>
+            Generate Reports
+            </Button>
           </Link>
         </div>
       </div>

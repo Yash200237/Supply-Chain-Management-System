@@ -16,6 +16,9 @@ import Tracking from "./components/customer/Tracking"; // Import the Tracking co
 import Registration from "./components/manager/Registration";
 import Cart from "./components/customer/Cart";
 
+
+
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -40,6 +43,7 @@ function App() {
           <Route path="/track-orders/:customer_ID" element={<Tracking />} /> {/* Updated route */}
           <Route path="/registration" element={<Registration />} />
           <Route path="/cart" element={<Cart />} />
+
         </Routes>
 
         <Footer />
