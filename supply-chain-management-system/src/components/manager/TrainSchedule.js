@@ -245,6 +245,11 @@ export default function TrainScheduleTable() {
                 <Typography style={{ marginTop: 10 }}>
                   Pending Orders: {pendingOrders[city] || 0}
                 </Typography>
+
+                <Typography variant="body2" style={{ marginTop: '15px', fontWeight: 'bold' }}>
+                  Available Trains: {cityTrains.length}
+                </Typography>
+                
                 <Select
                   value={selectedTrains[city] || ""}
                   onChange={(event) => handleTrainSelect(city, event.target.value)}
