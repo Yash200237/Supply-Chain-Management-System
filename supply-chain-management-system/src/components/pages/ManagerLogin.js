@@ -24,16 +24,24 @@ const ManagerLogin = () => {
     e.preventDefault();
     // Perform login logic here (e.g., API call)
     axios
-      .post("http://localhost:5000/start/managerlogin", formData)
+      .post("http://localhost:5000/managerlogin", formData)
       .then((result) => {
+        console.log("API Response:", result.data); // Log the entire response object
+        console.log(result.data.loginStatus);
         if (result.data.loginStatus) {
-          navigate("/managerdashboard");
+          console.log("Manager Name:", result.data.managerName); // Check this again
+          localStorage.setItem("manager_ID", result.data.manager_ID);
+          localStorage.setItem("managerName", result.data.managerName); // Store the manager name
+          localStorage.setItem("role", result.data.role); // Store the role
+
+          navigate("/managerdashboard", {
+            state: { managerName: result.data.managerName },
+          });
         } else {
           setError(result.data.Error);
         }
       })
       .catch((err) => console.log(err));
-    //console.log('Login data:', formData);
   };
 
   return (

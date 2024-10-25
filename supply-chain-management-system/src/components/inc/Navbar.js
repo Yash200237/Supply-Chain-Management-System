@@ -5,15 +5,41 @@ import "./NavBar.css"; // Import your custom CSS for extra styling
 function NavBar() {
   const navigate = useNavigate();
 
-  // Logout function
+  // Logout function with role-based clearing
   const handleLogout = () => {
+    // Retrieve the user's role from localStorage
+    const userRole = localStorage.getItem("role");
+
     // Just remove the token; leave the cart data intact
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-    // Optionally clear token in other storage (if used)
-    localStorage.removeItem("auth_token"); // If you're using additional storage for token
+    // Clear user-related details based on their role
+    if (userRole === "customer") {
+      // Remove customer details
+      localStorage.removeItem("customerName");
+      localStorage.removeItem("customer_ID");
+      localStorage.removeItem("fullName");
+      localStorage.removeItem("email");
+      localStorage.removeItem("phoneNumber");
+      localStorage.removeItem("address");
+      localStorage.removeItem("city");
+      localStorage.removeItem("role");
+    } else if (userRole === "driver" || userRole === "driverassistant") {
+      // Remove driver details
+      localStorage.removeItem("driverName");
+      localStorage.removeItem("driver_ID");
+      localStorage.removeItem("role");
+    } else if (userRole === "manager") {
+      // Remove manager details
+      localStorage.removeItem("managerName");
+      localStorage.removeItem("manager_ID");
+      localStorage.removeItem("role");
+    }
 
-    // Redirect to login page
+    // Optionally clear any additional token stored in localStorage
+    localStorage.removeItem("auth_token");
+
+    // Redirect to the login page
     navigate("/");
   };
 

@@ -1,13 +1,34 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const ManagerDashboard = ({ customerName }) => {
+const ManagerDashboard = () => {
   const navigate = useNavigate(); // Use the navigate hook from React Router
+  const location = useLocation();
+  const [managerName, setManagerName] = useState("");
 
-  const handleOrderProducts = () => {
-    navigate("/order-products"); // Navigate to the Order Products page
-  };
+  useEffect(() => {
+    // Check if managerName is passed via location.state
+    if (location.state && location.state.managerName) {
+      setManagerName(location.state.managerName);
+      localStorage.setItem("managerName", location.state.managerName);
+      console.log(
+        "Manager name from location state:",
+        location.state.managerName
+      );
+    } else {
+      // If no managerName in location.state, check localStorage
+      const storedManagerName = localStorage.getItem("managerName");
+      if (storedManagerName) {
+        setManagerName(storedManagerName);
+        console.log("Manager name from localStorage:", storedManagerName);
+      } else {
+        // No managerName found, redirect to login
+        console.log("No manager name found, redirecting to login...");
+        navigate("/managerlogin");
+      }
+    }
+  }, [location, navigate]);
 
   const handleTrackDelivery = () => {
     // Logic to track delivery (e.g., redirect to the tracking page)
@@ -17,7 +38,7 @@ const ManagerDashboard = ({ customerName }) => {
   return (
     <div className="dashboard">
       <header>
-        <h1>Welcome, {customerName}!</h1>
+        <h1>Welcome, {managerName}!</h1>
       </header>
       <div className="content-blocks">
         <div className="content-block registration">

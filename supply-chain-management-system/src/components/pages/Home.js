@@ -97,7 +97,7 @@ function Home() {
 
         {/* Button Group */}
         <div className="button-group primary-buttons">
-          <Link to="/start" className="button-link">
+          <Link to="/customerlogin" className="button-link">
             <Button variant="contained">Login</Button>
           </Link>
           <Link to="/signup" className="button-link">

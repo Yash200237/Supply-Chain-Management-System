@@ -24,16 +24,24 @@ const DriverLogin = () => {
     e.preventDefault();
     // Perform login logic here (e.g., API call)
     axios
-      .post("http://localhost:5000/start/driverlogin", formData)
+      .post("http://localhost:5000/driverlogin", formData)
       .then((result) => {
+        console.log("API Response:", result.data); // Log the entire response object
+        console.log(result.data.loginStatus);
         if (result.data.loginStatus) {
-          navigate("/driverdashboard");
+          console.log("Driver Name:", result.data.driverName); // Check this again
+          localStorage.setItem("driver_ID", result.data.driver_ID);
+          localStorage.setItem("driverName", result.data.driverName); // Store the driver name
+          localStorage.setItem("role", result.data.role); // Store the driver name
+
+          navigate("/driverdashboard", {
+            state: { driverName: result.data.driverName },
+          });
         } else {
           setError(result.data.Error);
         }
       })
       .catch((err) => console.log(err));
-    //console.log('Login data:', formData);
   };
 
   return (

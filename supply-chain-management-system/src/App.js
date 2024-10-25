@@ -7,7 +7,6 @@ import Home from "./components/pages/Home";
 import ManagerLogin from "./components/pages/ManagerLogin";
 import CustomerLogin from "./components/pages/CustomerLogin";
 import DriverLogin from "./components/pages/DriverLogin";
-import Start from "./components/pages/Start";
 import Signup from "./components/pages/SignUp";
 import CustomerDashboard from "./components/customer/CustomerDashboard";
 import TrainSchedule from "./components/manager/TrainSchedule";
@@ -28,10 +27,9 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/start" element={<Start />} />
-          <Route path="/start/customerlogin" element={<CustomerLogin />} />
-          <Route path="/start/managerlogin" element={<ManagerLogin />} />
-          <Route path="/start/driverlogin" element={<DriverLogin />} />
+          <Route path="/customerlogin" element={<CustomerLogin />} />
+          <Route path="/managerlogin" element={<ManagerLogin />} />
+          <Route path="/driverlogin" element={<DriverLogin />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/customerdashboard" element={<CustomerDashboard />} />
@@ -39,7 +37,11 @@ function App() {
           <Route path="/managerdashboard" element={<ManagerDashboard />} />
           <Route path="/trainschedule" element={<TrainSchedule />} />
           <Route path="/order-products" element={<ProductList />} />
-          <Route path="/track-orders" element={<Tracking />} />
+          <Route
+            path="/track-orders/:customer_ID"
+            element={<Tracking />}
+          />{" "}
+          {/* Updated route */}
           <Route path="/registration" element={<Registration />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>

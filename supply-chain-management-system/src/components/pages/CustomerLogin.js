@@ -29,8 +29,12 @@ const CustomerLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform login logic here (e.g., API call)
+
+    // Debugging step - ensure the login form data is correct
+    console.log("Login form data:", formData);
+
     axios
-      .post("http://localhost:5000/start/customerlogin", formData)
+      .post("http://localhost:5000/customerlogin", formData)
       .then((result) => {
         if (result.data.loginStatus) {
           const token = result.data.token;
@@ -45,6 +49,7 @@ const CustomerLogin = () => {
           // Check if there's an existing cart for this customer
           let storedCart = localStorage.getItem(`cart_${hashedCustomerID}`);
           if (!storedCart) {
+            console.log(`Initialized a new cart for user: ${hashedCustomerID}`);
             // Initialize a new empty cart if none exists
             storedCart = [];
             localStorage.setItem(
@@ -60,13 +65,39 @@ const CustomerLogin = () => {
           // Save the new token in cookies
           document.cookie = `token=${token}; path=/;`;
 
-          // Navigate to the customer dashboard after login
           navigate("/customerdashboard");
+
+          // Store customer details in localStorage
+          localStorage.setItem("customer_ID", result.data.customer_ID);
+          localStorage.setItem("role", result.data.role); // Store the role
+
+          localStorage.setItem("customerName", result.data.customerName); // Store the customer name
+          localStorage.setItem("fullName", result.data.fullName); // Full Name
+          localStorage.setItem("email", result.data.email); // Email
+          localStorage.setItem("phoneNumber", result.data.phoneNumber); // Phone Number
+          localStorage.setItem("address", result.data.address); // Address
+          localStorage.setItem("city", result.data.city); // City
+
+          // Navigate to dashboard and pass state
+          navigate("/customerdashboard", {
+            state: {
+              customerName: result.data.customerName,
+              customer_ID: result.data.customer_ID,
+              fullName: result.data.fullName,
+              email: result.data.email,
+              phoneNumber: result.data.phoneNumber,
+              address: result.data.address,
+              city: result.data.city,
+            },
+          });
         } else {
           setError(result.data.Error);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setError("An error occurred while logging in.");
+      });
   };
 
   return (

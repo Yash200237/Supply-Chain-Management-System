@@ -1,22 +1,46 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const DriverDashboard = ({ customerName }) => {
-  const navigate = useNavigate(); // Use the navigate hook from React Router
+const DriverDashboard = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [driverName, setDriverName] = useState("");
+
+  useEffect(() => {
+    // Check if driverName is passed via location.state
+    if (location.state && location.state.driverName) {
+      setDriverName(location.state.driverName);
+      localStorage.setItem("driverName", location.state.driverName);
+      console.log(
+        "Driver name from location state:",
+        location.state.driverName
+      );
+    } else {
+      // If no driverName in location.state, check localStorage
+      const storedDriverName = localStorage.getItem("driverName");
+      if (storedDriverName) {
+        setDriverName(storedDriverName);
+        console.log("Driver name from localStorage:", storedDriverName);
+      } else {
+        // No driverName found, redirect to login
+        console.log("No driver name found, redirecting to login...");
+        navigate("/driverlogin");
+      }
+    }
+  }, [location, navigate]);
 
   const handleOrderProducts = () => {
-    navigate("/order-products"); // Navigate to the Order Products page
+    navigate("/order-products");
   };
 
   const handleTrackDelivery = () => {
-    // Logic to track delivery (e.g., redirect to the tracking page)
-    console.log("Track delivery button clicked");
+    navigate("/track-orders");
   };
 
   return (
     <div className="dashboard">
       <header>
-        <h1>Welcome, {customerName}!</h1>
+        <h1>Welcome, {driverName || "Driver"}!</h1>
       </header>
       <div className="content-blocks">
         <div className="content-block order-products">

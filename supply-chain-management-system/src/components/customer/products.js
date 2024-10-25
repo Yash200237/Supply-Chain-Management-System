@@ -15,8 +15,17 @@ const ProductList = () => {
 
   // Fetch products from the backend
   useEffect(() => {
+    const token = getTokenFromCookies(); // Retrieve token from cookies
+    if (!token) {
+      console.error("User not logged in");
+      return; // If no token, stop further execution
+    }
     axios
-      .get("http://localhost:5000/api/products") // Call the API endpoint
+      .get("http://localhost:5000/api/products", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Ensure token is attached
+        },
+      }) // Call the API endpoint
       .then((response) => {
         setProducts(response.data.products); // Set the fetched products in state
         const initialQuantities = {};
@@ -28,13 +37,6 @@ const ProductList = () => {
       .catch((error) => {
         console.error("Error fetching products: ", error);
       });
-
-    // Load cart from local storage on mount using customer-specific key
-    const token = getTokenFromCookies();
-    if (!token) {
-      console.error("User not logged in");
-      return;
-    }
 
     const decodedToken = JSON.parse(atob(token.split(".")[1]));
     const customerID = decodedToken.customer_ID;
@@ -60,6 +62,8 @@ const ProductList = () => {
     const token = document.cookie
       .split("; ")
       .find((row) => row.startsWith("token="));
+    console.log("Token found in cookies:", token); // Log token for debugging
+
     return token ? token.split("=")[1] : null;
   };
 
