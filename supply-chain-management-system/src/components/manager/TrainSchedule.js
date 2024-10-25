@@ -42,7 +42,7 @@ export default function TrainScheduleTable() {
     axios
       .get("http://localhost:5000/api/TrainSchedule")
       .then((response) => {
-        console.log("Train Data Response:", response.data); // Add this line
+        console.log("Train Data Response:", response.data);
         setRows(response.data);
         setLoading(false);
       })
@@ -64,7 +64,7 @@ export default function TrainScheduleTable() {
     axios
       .get("http://localhost:5000/api/TrainCityMap")
       .then((response) => {
-        console.log("Train City Map Response:", response.data); // Add this line
+        console.log("Train City Map Response:", response.data);
         setCityTrainMap(response.data);
       })
       .catch((error) => {
@@ -74,7 +74,7 @@ export default function TrainScheduleTable() {
     axios
       .get("http://localhost:5000/api/AvailableTrainsCount")
       .then((response) => {
-        console.log("Available Trains Count Response:", response.data); // Add this line
+        console.log("Available Trains Count Response:", response.data);
         setAvailableTrainsCount(response.data);
       })
       .catch((error) => {
@@ -96,7 +96,6 @@ export default function TrainScheduleTable() {
       ...prev,
       [city]: trainId
     }));
-    // Reset the scheduled state for this city when a new train is selected
     setScheduledTrains((prev) => ({
       ...prev,
       [city]: false
@@ -104,10 +103,39 @@ export default function TrainScheduleTable() {
   };
 
   const handleScheduleNow = (city) => {
-    setScheduledTrains((prev) => ({
-      ...prev,
-      [city]: true
-    }));
+    const trainId = selectedTrains[city];
+    if (!trainId) return;
+
+    // Check for pending orders before assigning
+    if (!pendingOrders[city] || pendingOrders[city] === 0) {
+      alert("No Pending Orders"); // Alert user when there are no pending orders
+      return;
+    }
+
+    console.log(`Assigning orders for city: ${city}, trainId: ${trainId}`);
+
+    axios
+      .post("http://localhost:5000/api/AssignOrders", { city, train_ID: trainId })
+      .then((response) => {
+        console.log("Orders assigned successfully:", response.data);
+        setScheduledTrains((prev) => ({
+          ...prev,
+          [city]: true
+        }));
+
+        // Update pending orders
+        axios
+          .get("http://localhost:5000/api/PendingOrders")
+          .then((response) => {
+            setPendingOrders(response.data);
+          })
+          .catch((error) => {
+            console.error("Error fetching pending orders data", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error assigning orders:", error);
+      });
   };
 
   const cities = ["Colombo", "Negombo", "Galle", "Matara", "Jaffna", "Trincomalee"];
@@ -205,48 +233,34 @@ export default function TrainScheduleTable() {
                           value={pendingOrders[city] || 0}
                           text={`${pendingOrders[city] || 0}`}
                           styles={buildStyles({
-                            pathTransition: "none",
-                            textColor: "#f88",
-                            pathColor: "#d33",
-                            trailColor: "#eee"
+                            pathColor: `#3e98c7`,
+                            textColor: "#3e98c7",
+                            trailColor: "#d6d6d6",
                           })}
                         />
                       );
                     }}
                   </AnimatedProgressProvider>
                 </div>
-                <Typography variant="body1" style={{ marginTop: '10px' }}>
+                <Typography style={{ marginTop: 10 }}>
                   Pending Orders: {pendingOrders[city] || 0}
                 </Typography>
-
-                <Typography variant="body2" style={{ marginTop: '15px', fontWeight: 'bold' }}>
-                  Available Trains: {cityTrains.length}
-                </Typography>
-
                 <Select
-                  fullWidth
-                  style={{ marginTop: '10px' }}
-                  value={selectedTrains[city] || ''}
-                  onChange={(e) => handleTrainSelect(city, e.target.value)}
+                  value={selectedTrains[city] || ""}
+                  onChange={(event) => handleTrainSelect(city, event.target.value)}
                   displayEmpty
-                  renderValue={(selected) => {
-                    if (!selected) {
-                      return "Select Train ID";
-                    }
-                    const selectedTrain = rows.find(train => train.train_ID === selected);
-                    return selectedTrain ? formatTrainInfo(selectedTrain) : "Select Train ID";
-                  }}
+                  style={{ marginTop: 10, width: "100%" }}
                 >
+                  <MenuItem value="" disabled>Select Train</MenuItem>
                   {cityTrains.map((train) => (
                     <MenuItem key={train.train_ID} value={train.train_ID}>
                       {formatTrainInfo(train)}
                     </MenuItem>
                   ))}
                 </Select>
-
-                <Tooltip title={!selectedTrains[city] ? "Select a train before assigning orders" : ""}>
+                <Tooltip title={pendingOrders[city] === 0 ? "No Pending Orders" : ""}>
                   <span>
-                    <Button
+                  <Button
                       variant="contained"
                       style={{
                         marginTop: '15px',

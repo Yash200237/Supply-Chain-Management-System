@@ -1,11 +1,11 @@
 import express from "express";
-import con from "../utils/db.js";  // Ensure your database connection is properly set up in db.js
+import con from "../utils/db.js"; // Ensure your database connection is properly set up in db.js
 
 const router = express.Router();
 
 // Route to get train schedule
 router.get("/api/TrainSchedule", (req, res) => {
-  const sql = "SELECT * FROM Train";  // Adjust the table name if necessary
+  const sql = "SELECT train_ID, day, time, capacity, destination FROM Train"; // Adjust the table name if necessary
   con.query(sql, (err, result) => {
     if (err) {
       console.error("Error fetching train data: ", err);
@@ -71,12 +71,12 @@ router.get("/api/AvailableTrainsCount", (req, res) => {
 // Route to get pending orders for each city
 router.get("/api/PendingOrders", (req, res) => {
   const sql = `
-    SELECT 
-      c.city,
-      COUNT(o.order_id) AS pending_orders
+    SELECT c.city, COUNT(o.order_id) AS pending_orders
     FROM \`order\` o
     INNER JOIN customer c ON o.customer_id = c.customer_id
-    WHERE o.schedule_ID IS NULL
+    LEFT JOIN TrainSchedule ts ON o.order_id = ts.order_ID
+    WHERE ts.order_ID IS NULL
+    AND c.city != 'Kandy'
     GROUP BY c.city
   `;
 
@@ -95,6 +95,108 @@ router.get("/api/PendingOrders", (req, res) => {
     res.json(pendingOrdersCount);
   });
 });
+
+
+// Route to assign orders to a train
+router.post("/api/AssignOrders", (req, res) => {
+  const { city, train_ID } = req.body;
+  const manager_ID = 1; // Assume Kandy manager ID is hard-coded for now
+
+  // Step 1: Check if there are pending orders for the city
+  const checkPendingOrdersSql = `
+    SELECT COUNT(*) AS pendingCount
+    FROM \`order\` o
+    INNER JOIN customer c ON o.customer_id = c.customer_id
+    WHERE o.schedule_ID IS NULL AND c.city = ?
+  `;
+
+  con.query(checkPendingOrdersSql, [city], (err, result) => {
+    if (err) {
+      console.error("Error checking pending orders:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const pendingCount = result[0].pendingCount;
+    if (pendingCount === 0) {
+      // If no pending orders, return an error response
+      return res.status(400).json({ error: "No more pending orders" });
+    }
+
+    // Step 2: Fetch pending orders for the city
+    const fetchPendingOrdersSql = `
+      SELECT o.order_id, o.total_volume
+      FROM \`order\` o
+      INNER JOIN customer c ON o.customer_id = c.customer_id
+      WHERE o.schedule_ID IS NULL AND c.city = ?
+    `;
+
+    con.query(fetchPendingOrdersSql, [city], (err, orders) => {
+      if (err) {
+        console.error("Error fetching pending orders:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      // Step 3: Fetch train capacity
+      const fetchTrainCapacitySql = `
+        SELECT capacity, day, time
+        FROM Train
+        WHERE train_ID = ?
+      `;
+
+      con.query(fetchTrainCapacitySql, [train_ID], (err, train) => {
+        if (err) {
+          console.error("Error fetching train capacity:", err);
+          return res.status(500).json({ error: "Database error" });
+        }
+
+        const trainCapacity = train[0].capacity;
+        const trainDepartureDay = train[0].day;
+        const trainDepartureTime = train[0].time;
+        let totalVolume = 0;
+        const assignedOrders = [];
+
+        // Step 4: Assign orders to the train until capacity is reached
+        for (const order of orders) {
+          if (totalVolume + order.total_volume <= trainCapacity) {
+            totalVolume += order.total_volume;
+            assignedOrders.push(order.order_id);
+          } else {
+            break;
+          }
+        }
+
+        if (assignedOrders.length === 0) {
+          // No orders can be assigned due to capacity constraints
+          return res.status(400).json({ error: "No orders can be assigned to this train due to capacity constraints" });
+        }
+
+        // Step 5: Insert assigned orders into TrainSchedule table
+        const insertTrainScheduleSql = `
+          INSERT INTO TrainSchedule (train_ID, order_ID, manager_ID)
+          VALUES ?
+        `;
+
+        const trainScheduleValues = assignedOrders.map(order_id => [train_ID, order_id, manager_ID]);
+
+        con.query(insertTrainScheduleSql, [trainScheduleValues], (err) => {
+          if (err) {
+            console.error("Error inserting into TrainSchedule:", err);
+            return res.status(500).json({ error: "Database error" });
+          }
+
+          res.json({ 
+            message: "Orders assigned successfully", 
+            assignedOrders,
+            trainDepartureDay,
+            trainDepartureTime
+          });
+        });
+      });
+    });
+  });
+});
+
+
 
 // Export the router
 export { router as trainScheduleRouter };
