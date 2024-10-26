@@ -33,6 +33,7 @@ const ManagerLogin = () => {
           localStorage.setItem("manager_ID", result.data.manager_ID);
           localStorage.setItem("managerName", result.data.managerName); // Store the manager name
           localStorage.setItem("role", result.data.role); // Store the role
+          localStorage.setItem("managerStoreID", result.data.store_ID);
 
           navigate("/managerdashboard", {
             state: { managerName: result.data.managerName },

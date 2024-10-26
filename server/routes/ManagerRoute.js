@@ -17,6 +17,7 @@ router.post("/managerlogin", (req, res) => {
       const email = result[0].email;
       const manager_ID = result[0].manager_ID; // Extract manager_ID
       const managerName = result[0].first_name; // Extract first_name
+      const store_ID = result[0].store_ID; // Manager's store ID
 
       // Generate the JWT token
       const token = jwt.sign(
@@ -30,9 +31,9 @@ router.post("/managerlogin", (req, res) => {
       // Return the manager's ID and name
       return res.json({
         loginStatus: true,
-        manager_ID: manager_ID, // Correct reference
-        managerName: managerName, // Correct reference
-        role: "manager", // Example role
+        manager_ID: manager_ID,
+        managerName: managerName,
+        store_ID: store_ID, // Pass the store ID to the frontend
       });
     } else {
       return res.json({ loginStatus: false, Error: "wrong email or password" });

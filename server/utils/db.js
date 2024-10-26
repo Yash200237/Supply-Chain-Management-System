@@ -5,6 +5,7 @@ const con = mysql.createConnection({
   user: "root",
   password: "yashodha",
   database: "supply_chain_management_system",
+  multipleStatements: true, // Enables multiple result sets
 });
 
 con.connect(function (err) {

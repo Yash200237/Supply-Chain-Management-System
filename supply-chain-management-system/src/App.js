@@ -16,6 +16,7 @@ import ProductList from "./components/customer/products";
 import Tracking from "./components/customer/Tracking";
 import Registration from "./components/manager/Registration";
 import Cart from "./components/customer/Cart";
+import TruckSchedule from "./components/manager/TruckSchedule";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/managerdashboard" element={<ManagerDashboard />} />
           <Route path="/trainschedule" element={<TrainSchedule />} />
           <Route path="/order-products" element={<ProductList />} />
+          <Route path="/truckschedule" element={<TruckSchedule />} />
           <Route
             path="/track-orders/:customer_ID"
             element={<Tracking />}
