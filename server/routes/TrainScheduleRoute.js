@@ -97,6 +97,7 @@ router.get("/api/PendingOrders", (req, res) => {
 });
 
 
+
 // Route to assign orders to a train
 router.post("/api/AssignOrders", (req, res) => {
   const { city, train_ID } = req.body;
@@ -195,6 +196,40 @@ router.post("/api/AssignOrders", (req, res) => {
     });
   });
 });
+
+// In TrainScheduleRoute.js (your Express route file)
+
+router.get("/api/TrainFilledPercentage", async (req, res) => {
+  try {
+    const [trains] = await con.query("SELECT train_ID, capacity FROM Train");
+    const [orders] = await con.query(`
+      SELECT train_ID, SUM(total_volume) AS total_volume
+      FROM Orders
+      WHERE train_ID IS NOT NULL
+      GROUP BY train_ID
+    `);
+
+    // Calculate filled percentages
+    const filledPercentages = trains.map((train) => {
+      const order = orders.find((o) => o.train_ID === train.train_ID);
+      const totalVolume = order ? order.total_volume : 0;
+      const filledPercentage = (totalVolume / train.capacity) * 100;
+      return {
+        train_ID: train.train_ID,
+        filledPercentage: Math.min(filledPercentage, 100), // Cap at 100%
+      };
+    });
+
+    res.json(filledPercentages);
+  } catch (error) {
+    console.error("Error calculating filled percentage:", error);
+    res.status(500).send("Server error");
+  }
+});
+
+
+
+
 
 
 

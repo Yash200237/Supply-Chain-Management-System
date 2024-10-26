@@ -13,11 +13,17 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import AnimatedProgressProvider from "./AnimatedProgressProvider";
 import { easeQuadInOut } from "d3-ease";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const columns = [
   { id: "train_ID", label: "Train ID", minWidth: 170, align: "left" },
@@ -37,49 +43,44 @@ export default function TrainScheduleTable() {
   const [availableTrainsCount, setAvailableTrainsCount] = useState({});
   const [selectedTrains, setSelectedTrains] = useState({});
   const [scheduledTrains, setScheduledTrains] = useState({});
+  const [filledPercentage, setFilledPercentage] = useState({});
+  const [noOrdersDialogOpen, setNoOrdersDialogOpen] = useState(false); // State to control dialog
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/TrainSchedule")
-      .then((response) => {
-        console.log("Train Data Response:", response.data);
-        setRows(response.data);
+    // Fetch all data on component mount
+    const fetchData = async () => {
+      try {
+        // Fetch train schedule data
+        const trainSchedule = await axios.get("http://localhost:5000/api/TrainSchedule");
+        setRows(trainSchedule.data);
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching train data", error);
+
+        // Fetch pending orders
+        const pendingOrdersData = await axios.get("http://localhost:5000/api/PendingOrders");
+        setPendingOrders(pendingOrdersData.data);
+
+        // Fetch city-train mapping
+        const cityTrainMapping = await axios.get("http://localhost:5000/api/TrainCityMap");
+        setCityTrainMap(cityTrainMapping.data);
+
+        // Fetch available trains count
+        const availableTrainsData = await axios.get("http://localhost:5000/api/AvailableTrainsCount");
+        setAvailableTrainsCount(availableTrainsData.data);
+
+        // Fetch filled percentages for each train
+        const filledDataResponse = await axios.get("http://localhost:5000/api/TrainFilledPercentage");
+        const filledData = filledDataResponse.data.reduce((acc, item) => {
+          acc[item.train_ID] = item.filledPercentage;
+          return acc;
+        }, {});
+        setFilledPercentage(filledData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
         setLoading(false);
-      });
+      }
+    };
 
-    axios
-      .get("http://localhost:5000/api/PendingOrders")
-      .then((response) => {
-        console.log("Pending Orders Response:", response.data);
-        setPendingOrders(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching pending orders data", error);
-      });
-
-    axios
-      .get("http://localhost:5000/api/TrainCityMap")
-      .then((response) => {
-        console.log("Train City Map Response:", response.data);
-        setCityTrainMap(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching city-train map data", error);
-      });
-
-    axios
-      .get("http://localhost:5000/api/AvailableTrainsCount")
-      .then((response) => {
-        console.log("Available Trains Count Response:", response.data);
-        setAvailableTrainsCount(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching available trains count data", error);
-      });
+    fetchData();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -106,24 +107,18 @@ export default function TrainScheduleTable() {
     const trainId = selectedTrains[city];
     if (!trainId) return;
 
-    // Check for pending orders before assigning
     if (!pendingOrders[city] || pendingOrders[city] === 0) {
-      alert("No Pending Orders"); // Alert user when there are no pending orders
+      setNoOrdersDialogOpen(true); // Open the dialog if no pending orders
       return;
     }
 
-    console.log(`Assigning orders for city: ${city}, trainId: ${trainId}`);
-
     axios
       .post("http://localhost:5000/api/AssignOrders", { city, train_ID: trainId })
-      .then((response) => {
-        console.log("Orders assigned successfully:", response.data);
+      .then(() => {
         setScheduledTrains((prev) => ({
           ...prev,
           [city]: true
         }));
-
-        // Update pending orders
         axios
           .get("http://localhost:5000/api/PendingOrders")
           .then((response) => {
@@ -134,15 +129,17 @@ export default function TrainScheduleTable() {
           });
       })
       .catch((error) => {
-        console.error("Error assigning orders:", error);
+        if (error.response && error.response.data.error === "No more pending orders") {
+          setNoOrdersDialogOpen(true);
+        } else {
+          console.error("Error assigning orders:", error);
+        }
       });
   };
 
   const cities = ["Colombo", "Negombo", "Galle", "Matara", "Jaffna", "Trincomalee"];
 
-  const formatTrainInfo = (train) => {
-    return `Train ${train.train_ID} (${train.day} - ${train.time})`;
-  };
+  const formatTrainInfo = (train) => `Train ${train.train_ID} (${train.day} - ${train.time})`;
 
   const backgroundColors = {
     Colombo: '#f0e68c',
@@ -158,6 +155,26 @@ export default function TrainScheduleTable() {
       <Typography variant="h2" align="center" style={{ margin: '20px 0' }}>
         Weekly Train Schedule
       </Typography>
+      {/* Dialog for No Pending Orders */}
+      <Dialog
+        open={noOrdersDialogOpen}
+        onClose={() => setNoOrdersDialogOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">No Pending Orders</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            There are no pending orders available.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setNoOrdersDialogOpen(false)} color="primary" autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <TableContainer sx={{ maxHeight: 440, marginTop: 2 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -212,7 +229,7 @@ export default function TrainScheduleTable() {
       <Typography variant="h3" align="center" style={{ margin: '20px 0' }}>
         Assign pending orders to trains
       </Typography>
-      
+
       <Grid container spacing={3} style={{ marginTop: '20px' }}>
         {cities.map((city, index) => {
           const cityTrains = rows.filter(train => train.destination === city);
@@ -227,19 +244,17 @@ export default function TrainScheduleTable() {
                     duration={1.4}
                     easingFunction={easeQuadInOut}
                   >
-                    {(value) => {
-                      return (
-                        <CircularProgressbar
-                          value={pendingOrders[city] || 0}
-                          text={`${pendingOrders[city] || 0}`}
-                          styles={buildStyles({
-                            pathColor: `#3e98c7`,
-                            textColor: "#3e98c7",
-                            trailColor: "#d6d6d6",
-                          })}
-                        />
-                      );
-                    }}
+                    {(value) => (
+                      <CircularProgressbar
+                        value={pendingOrders[city] || 0}
+                        text={`${pendingOrders[city] || 0}`}
+                        styles={buildStyles({
+                          pathColor: `#F95454`,
+                          textColor: "#F95454",
+                          trailColor: "#d6d6d6",
+                        })}
+                      />
+                    )}
                   </AnimatedProgressProvider>
                 </div>
                 <Typography style={{ marginTop: 10 }}>
@@ -249,7 +264,41 @@ export default function TrainScheduleTable() {
                 <Typography variant="body2" style={{ marginTop: '15px', fontWeight: 'bold' }}>
                   Available Trains: {cityTrains.length}
                 </Typography>
-                
+                {cityTrains.map((train) => (
+                  <div key={train.train_ID} style={{ marginBottom: '15px', marginTop: '10px' }}>
+                    <Typography variant="body2" style={{ fontWeight: 'bold' }}>
+                      Train {train.train_ID}
+                    </Typography>
+                    <div style={{ width: '100%', marginTop: 5 }}>
+                      <AnimatedProgressProvider
+                        valueStart={0}
+                        valueEnd={filledPercentage[train.train_ID] || 0}
+                        duration={1.4}
+                        easingFunction={easeQuadInOut}
+                      >
+                        {(value) => (
+                          <LinearProgress
+                            variant="determinate"
+                            value={filledPercentage[train.train_ID] || 0}
+                            sx={{
+                              height: 10,
+                              borderRadius: 5,
+                              width: '100%',
+                              backgroundColor: '#d6d6d6',
+                              '& .MuiLinearProgress-bar': {
+                                backgroundColor: '#3e98c7'
+                              }
+                            }}
+                          />
+                        )}
+                      </AnimatedProgressProvider>
+                      <Typography variant="caption" style={{ textAlign: "right", display: "block", marginTop: 5 }}>
+                        {Math.round(filledPercentage[train.train_ID] || 0)}%
+                      </Typography>
+                    </div>
+                  </div>
+                ))}
+
                 <Select
                   value={selectedTrains[city] || ""}
                   onChange={(event) => handleTrainSelect(city, event.target.value)}
@@ -265,7 +314,7 @@ export default function TrainScheduleTable() {
                 </Select>
                 <Tooltip title={pendingOrders[city] === 0 ? "No Pending Orders" : ""}>
                   <span>
-                  <Button
+                    <Button
                       variant="contained"
                       style={{
                         marginTop: '15px',
@@ -276,7 +325,7 @@ export default function TrainScheduleTable() {
                         cursor: 'pointer',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
-                        textOverflow: 'ellipsis'
+                        textOverflow: 'ellipsis',
                       }}
                       onClick={() => handleScheduleNow(city)}
                       disabled={!selectedTrains[city]}
