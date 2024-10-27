@@ -98,7 +98,10 @@ CREATE TABLE `TruckSchedule` (
   `time` TIME NOT NULL,
   `date` DATE NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
+HEAD
+  `status` ENUM('scheduled','on progress','completed'),
   `status` ENUM('scheduled', 'on progress', 'completed'),  -- Added 'on progress'
+main
   PRIMARY KEY (`schedule_ID`),
   FOREIGN KEY (`driverA_ID`) REFERENCES `DriverAssistant`(`driverA_ID`),
   FOREIGN KEY (`route_ID`) REFERENCES `Route`(`route_ID`),

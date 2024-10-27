@@ -29,6 +29,9 @@ const CustomerLogin = () => {
         console.log("API Response:", result.data); // Log the entire response object
 
         if (result.data.loginStatus) {
+HEAD
+          navigate("/customerdashboard");
+
           // Store customer details in localStorage
           localStorage.setItem("customer_ID", result.data.customer_ID);
           localStorage.setItem("customerName", result.data.customerName); // Store the customer name
@@ -50,6 +53,7 @@ const CustomerLogin = () => {
               city: result.data.city
             } 
           });
+main
         } else {
           setError(result.data.Error);
         }
