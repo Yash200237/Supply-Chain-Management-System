@@ -23,7 +23,7 @@ const Tracking = () => {
   }, [customer_ID]);
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif", minHeight: "100vh-80px"}}>
       <h1 style={{ color: "#333", textAlign: "center"}}>Your Orders</h1>
       {error && <p style={{ color: "red" }}>{error}</p>} {/* Display error message if any */}
       

@@ -26,3 +26,18 @@ SELECT
     city AS `City`,
     password
 FROM customer; 
+
+--ManagerDetails
+CREATE OR REPLACE VIEW ManagerDetails AS
+SELECT 
+	first_name as `First Name`,
+    manager_ID,
+    CONCAT(first_name, ' ', last_name) AS `Full Name`, 
+    email AS `Email`, 
+    phone_number AS `Phone Number`, 
+    s.city as "City",
+    password
+FROM manager m
+join store s on m.store_ID = s.store_ID; 
+
+--DriverDetails

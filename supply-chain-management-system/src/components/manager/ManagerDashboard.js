@@ -1,86 +1,139 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Button from '@mui/material/Button';
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+import "./Manager.css"; // Optional for additional styling
+import profilePicture from "../../images/profilepicture.jpg";
+import { FaPhone, FaEnvelope, FaStore } from "react-icons/fa"; // Icons for style
 
 const ManagerDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [managerName, setManagerName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [city, setCity] = useState("");
 
   useEffect(() => {
-    // Check if managerName is passed via location.state
-    if (location.state && location.state.managerName) {
-      setManagerName(location.state.managerName);
-      localStorage.setItem("managerName", location.state.managerName);
-      console.log("Manager name from location state:", location.state.managerName);
+    console.log("Location state:", location.state);
+    if (location.state) {
+      const { managerName, fullName, email, phoneNumber, city } =
+        location.state;
+
+      setManagerName(managerName);
+      setFullName(fullName);
+      setEmail(email);
+      setPhoneNumber(phoneNumber);
+      setCity(city);
+
+      localStorage.setItem("managerName", managerName);
+      localStorage.setItem("fullName", fullName);
+      localStorage.setItem("email", email);
+      localStorage.setItem("phoneNumber", phoneNumber);
+      localStorage.setItem("city", city);
     } else {
-      // If no managerName in location.state, check localStorage
-      const storedManagerName = localStorage.getItem("managerName");
-      if (storedManagerName) {
-        setManagerName(storedManagerName);
-        console.log("Manager name from localStorage:", storedManagerName);
+      const storedName = localStorage.getItem("managerName");
+      const storedFullName = localStorage.getItem("fullName");
+      const storedEmail = localStorage.getItem("email");
+      const storedPhoneNumber = localStorage.getItem("phoneNumber");
+      const storedCity = localStorage.getItem("city");
+
+      if (
+        storedName &&
+        storedFullName &&
+        storedEmail &&
+        storedPhoneNumber &&
+        storedCity
+      ) {
+        setManagerName(storedName);
+        setFullName(storedFullName);
+        setEmail(storedEmail);
+        setPhoneNumber(storedPhoneNumber);
+        setCity(storedCity);
       } else {
-        // No managerName found, redirect to login
-        console.log("No manager name found, redirecting to login...");
         navigate("/managerlogin");
       }
     }
   }, [location, navigate]);
 
-  const handleOrderProducts = () => {
-    navigate("/order-products"); // Navigate to the Order Products page
-  };
-
-  const handleTrackDelivery = () => {
-    // Logic to track delivery (e.g., redirect to the tracking page)
-    console.log("Track delivery button clicked");
-  };
-
   return (
     <div className="dashboard">
-      <header>
-        <h1>Welcome, {managerName}!</h1>
-      </header>
-      <div className="content-blocks">
-        <div className="content-block registration">
-          <h2>Registration</h2>
-          <p>Register Drivers and Assistant drivers</p>
-          <Link to="/registration" className="button-link">
-          <Button variant="contained" disableElevation>
-              Register
-            </Button>
-          </Link>
+      <div className="dashboard-container">
+        {/* Left side: Manager Details */}
+        <div className="manager-details">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={profilePicture}
+              alt="Customer Profile"
+              className="profile-picture"
+            />
+            <h2>{fullName}</h2>
+            <ul style={{ textAlign: "left", listStyleType: "none" }}>
+            <li style={{ paddingBottom: "10px" }}>
+                <FaEnvelope /> {email}
+              </li>
+              <li style={{ paddingBottom: "10px" }}>
+                <FaPhone /> {phoneNumber}
+              </li>
+              <li style={{ paddingBottom: "10px" }}>
+                <FaStore /> {city} Branch Manager
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="content-block train-schedule">
-          <h2>Schedule Orders to Trains </h2>
-          <p>Check train schedule and assign orders to trains</p>
-          <Link to="/trainschedule" className="button-link">
-          <Button variant="contained" disableElevation>
-              Assign Orders
-            </Button>
-          </Link>
-        </div>
-
-        <div className="content-block truck-schedule">
-          <h2>Create Truck Schedules</h2>
-          <p>Schedule trucks for order delivery.</p>
-          <Link to="/truckschedule" className="button-link">
-              <Button variant="contained" disableElevation>
-              Schedule Trucks
-              </Button>
-          </Link>
-        </div>
-
-        <div className="content-block reports">
-          <h2>Reports</h2>
-          <p>Sales reports, Working Hours reports, Customer-order reports</p>
-          <Link to="/reports" className="button-link">
-            <Button variant="contained" disableElevation>
-            Generate Reports
-            </Button>
-          </Link>
+        {/* Right side: Content */}
+        <div className="content">
+          <header>
+            <h1>Welcome, {managerName}!</h1>
+          </header>
+          <div className="content-blocks" style={{gridTemplateColumns: "repeat(2, 1fr)"}}>
+            <div className="content-block registration">
+              <h2>Registration</h2>
+              <p>Register Drivers and Assistant drivers</p>
+              <Link to="/registration" className="button-link">
+                <Button variant="contained" disableElevation>
+                  Register
+                </Button>
+              </Link>
+            </div>
+            <div className="content-block train-schedule">
+              <h2>Schedule Orders to Trains</h2>
+              <p>Check train schedule and assign orders to trains</p>
+              <Link to="/trainschedule" className="button-link">
+                <Button variant="contained" disableElevation>
+                  Assign Orders
+                </Button>
+              </Link>
+            </div>
+            <div className="content-block truck-schedule">
+              <h2>Create Truck Schedules</h2>
+              <p>Schedule trucks for order delivery.</p>
+              <Link to="/truckschedule" className="button-link">
+                <Button variant="contained" disableElevation>
+                  Schedule Trucks
+                </Button>
+              </Link>
+            </div>
+            <div className="content-block reports">
+              <h2>Reports</h2>
+              <p>
+                Sales reports, Working Hours reports, Customer-order reports
+              </p>
+              <Link to="/reports" className="button-link">
+                <Button variant="contained" disableElevation>
+                  Generate Reports
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

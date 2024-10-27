@@ -33,7 +33,7 @@ const Start = () => {
       >
         <Paper elevation={4} sx={{ p: 4, width: 350, borderRadius: 3 }}>
           <Typography variant="h4" align="center">
-            Login As
+            Login
           </Typography>
 
           <Typography variant="subtitle1" align="center">
