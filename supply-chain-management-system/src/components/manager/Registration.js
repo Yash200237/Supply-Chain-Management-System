@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Registration.css";
 import axios from "axios";
 
 const Registration = () => {
@@ -43,9 +42,8 @@ const Registration = () => {
     }
     if (!formData.closestcity) newErrors.closestcity = "City is required";
     if (!formData.phone) newErrors.phone = "Phone number is required";
-    if (!formData.Type) newErrors.Type = "Customer type is required";
-    if (!formData.monthlysalary)
-      newErrors.monthlysalary = "monthlysalary is required";
+    if (!formData.Type) newErrors.Type = "Employee type is required";
+    if (!formData.monthlysalary) newErrors.monthlysalary = "Monthly salary is required";
 
     return newErrors;
   };
@@ -62,8 +60,6 @@ const Registration = () => {
         .post("http://localhost:5000/registration", formData)
         .then((res) => {
           if (res.data.signupStatus) {
-            // If signup is successful, display success message and reset the form
-            console.log("data:", formData);
             setSuccessMessage("Registration successful!");
             setFormData({
               firstname: "",
@@ -79,104 +75,74 @@ const Registration = () => {
           }
         })
         .catch((err) => {
-          // Check if the error response from the backend contains an error message
           if (err.response && err.response.data && err.response.data.Error) {
             setErrors({ form: err.response.data.Error });
           } else {
-            setErrors({
-              signupError:
-                "An unexpected error occurred during signup. Please try again later.",
-            });
+            setErrors({ signupError: "An unexpected error occurred during signup. Please try again later." });
           }
-          setSuccessMessage(""); // Clear success message if there's an error
+          setSuccessMessage("");
         });
     }
   };
 
   return (
-    <div className="signup-container">
-      <h2>Registration</h2>
-      {successMessage && <p className="success-message">{successMessage}</p>}
+    <div
+      className="signup-container"
+      style={{
+        maxWidth: "500px",
+        margin: "50px auto",
+        padding: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+        backgroundColor: "#f9f9f9",
+      }}
+    >
+      <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Registration</h2>
+      {successMessage && <p style={{ color: "green", marginBottom: "10px" }}>{successMessage}</p>}
       {errors.form && <p style={{ color: "red" }}>{errors.form}</p>}
-      {errors.signupError && (
-        <p style={{ color: "red" }}>{errors.signupError}</p>
-      )}
+      {errors.signupError && <p style={{ color: "red" }}>{errors.signupError}</p>}
 
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstname">First Name:</label>
-          <input
-            type="text"
-            id="firstname"
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleChange}
-            required
-          />
-          {errors.firstname && (
-            <span className="error">{errors.firstname}</span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="lastname">Last Name:</label>
-          <input
-            type="text"
-            id="lastname"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleChange}
-            required
-          />
-          {errors.lastname && <span className="error">{errors.lastname}</span>}
-        </div>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-          {errors.username && <span className="error">{errors.username}</span>}
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          {errors.email && <span className="error">{errors.email}</span>}
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          {errors.password && <span className="error">{errors.password}</span>}
-        </div>
+        {[
+          { label: "First Name", id: "firstname", type: "text" },
+          { label: "Last Name", id: "lastname", type: "text" },
+          { label: "Username", id: "username", type: "text" },
+          { label: "Email", id: "email", type: "email" },
+          { label: "Password", id: "password", type: "password" },
+          { label: "Phone Number", id: "phone", type: "text" },
+          { label: "Monthly Salary", id: "monthlysalary", type: "number" },
+        ].map((field) => (
+          <div key={field.id} style={{ marginBottom: "15px" }}>
+            <label htmlFor={field.id} style={{ display: "block", marginBottom: "5px" }}>
+              {field.label}:
+            </label>
+            <input
+              type={field.type}
+              id={field.id}
+              name={field.id}
+              value={formData[field.id]}
+              onChange={handleChange}
+              required
+              style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
+            />
+            {errors[field.id] && <span style={{ color: "red", fontSize: "12px" }}>{errors[field.id]}</span>}
+          </div>
+        ))}
 
-        <div>
-          <label htmlFor="closestcity">Closest City:</label>
+        <div style={{ marginBottom: "15px" }}>
+          <label htmlFor="closestcity" style={{ display: "block", marginBottom: "5px" }}>
+            Closest City:
+          </label>
           <select
             id="closestcity"
             name="closestcity"
             value={formData.closestcity}
             onChange={handleChange}
             required
+            style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
           >
-            <option value="">Select the closest city</option>{" "}
-            {/* Default option */}
+            <option value="">Select the closest city</option>
             <option value="Kandy">Kandy</option>
             <option value="Colombo">Colombo</option>
             <option value="Negombo">Negombo</option>
@@ -185,55 +151,43 @@ const Registration = () => {
             <option value="Jaffna">Jaffna</option>
             <option value="Trincomalee">Trincomalee</option>
           </select>
-          {errors.city && <span className="error">{errors.city}</span>}
+          {errors.closestcity && <span style={{ color: "red", fontSize: "12px" }}>{errors.closestcity}</span>}
         </div>
 
-        <div>
-          <label htmlFor="phone">Phone Number:</label>
-          <input
-            type="text"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-          {errors.phone && <span className="error">{errors.phone}</span>}
-        </div>
-
-        <div>
-          <label htmlFor="Type">Type:</label>
+        <div style={{ marginBottom: "15px" }}>
+          <label htmlFor="Type" style={{ display: "block", marginBottom: "5px" }}>
+            Type:
+          </label>
           <select
             id="Type"
             name="Type"
             value={formData.Type}
             onChange={handleChange}
             required
+            style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
           >
-            <option value="">Select employee type</option>{" "}
-            {/* Default option */}
+            <option value="">Select employee type</option>
             <option value="driver">Driver</option>
             <option value="driverassistant">Driver Assistant</option>
           </select>
-          {errors.Type && <span className="error">{errors.Type}</span>}
+          {errors.Type && <span style={{ color: "red", fontSize: "12px" }}>{errors.Type}</span>}
         </div>
 
-        <div>
-          <label htmlFor="monthlysalary">Monthly Salary:</label>
-          <input
-            type="number"
-            id="monthlysalary"
-            name="monthlysalary"
-            value={formData.monthlysalary}
-            onChange={handleChange}
-            required
-          />
-          {errors.monthlysalary && (
-            <span className="error">{errors.monthlysalary}</span>
-          )}
-        </div>
-
-        <button type="submit">Register</button>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "10px",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+          }}
+        >
+          Register
+        </button>
       </form>
     </div>
   );

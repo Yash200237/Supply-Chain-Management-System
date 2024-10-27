@@ -1,44 +1,78 @@
+// Start.js
 import React from "react";
-import "./Start.css";
 import { useNavigate } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Box, Button, Paper, Typography, Divider } from "@mui/material";
+import "./Start.css"; // Your custom CSS
+
+// Define a custom Material UI theme
+const theme = createTheme({
+  palette: {
+    primary: { main: "#1976d2" },
+    success: { main: "#2e7d32" },
+    info: { main: "#0288d1" },
+    background: { default: "#f5f5f5" },
+  },
+  typography: {
+    h4: { fontWeight: 600, marginBottom: "5px" },
+    subtitle1: { color: "#757575", fontSize: "0.9rem", marginBottom: "20px" },
+  },
+});
 
 const Start = () => {
   const navigate = useNavigate();
+
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
-      <div className="p-3 rounded w-25 border loginForm">
-        <h2 className="text-center">Login As</h2>
-        <div className="d-flex justify-content-between mt-5 mb-2">
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => {
-              navigate("/start/customerlogin");
-            }}
-          >
-            Customer
-          </button>
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={() => {
-              navigate("/start/driverlogin");
-            }}
-          >
-            Driver/Driver Assistant
-          </button>
-          <button
-            type="button"
-            className="btn btn-info"
-            onClick={() => {
-              navigate("/start/managerlogin");
-            }}
-          >
-            Manager
-          </button>
-        </div>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+        sx={{ backgroundColor: theme.palette.background.default }}
+      >
+        <Paper elevation={4} sx={{ p: 4, width: 350, borderRadius: 3 }}>
+          <Typography variant="h4" align="center">
+            Login
+          </Typography>
+
+          <Typography variant="subtitle1" align="center">
+            Welcome, please log in to continue
+          </Typography>
+
+          <Divider sx={{ my: 2 }} />
+
+          <Box display="flex" flexDirection="column" gap={2} mt={3}>
+            <Button
+              variant="contained"
+              disableElevation
+              onClick={() => navigate("/start/customerlogin")}
+              fullWidth
+            >
+              Customer
+            </Button>
+
+            <Button
+              variant="contained"
+              disableElevation
+              onClick={() => navigate("/start/driverlogin")}
+              fullWidth
+            >
+              Driver/Driver Assistant
+            </Button>
+
+            <Button
+              variant="contained"
+              disableElevation
+              onClick={() => navigate("/start/managerlogin")}
+              fullWidth
+            >
+              Manager
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </ThemeProvider>
   );
 };
 

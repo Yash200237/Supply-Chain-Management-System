@@ -13,6 +13,7 @@ router.post("/driverlogin", (req, res) => {
   WHERE email = ? AND password = SHA2(?, 256)`;
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
     if (err) return res.json({ loginStatus: false, Error: "Query error" });
+    
     if (result.length > 0) {
       const driver = result[0];
       const email = result[0].email;
