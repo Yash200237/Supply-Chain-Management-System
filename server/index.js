@@ -9,6 +9,7 @@ import { productRouter } from "./routes/ProductRoute.js"; // Import the product 
 import { cartRouter } from "./routes/CartRoute.js"; // Import the cart router
 import { productTrackingRouter } from "./routes/ProductTrackingRoute.js"; // Import the tracking router
 import { truckScheduleRouter } from "./routes/TruckScheduleRoute.js"; // Import the tracking router
+import { reportRouter } from "./routes/ReportRoute.js"; // Import the tracking router
 
 //import con from './utils/db.js';
 
@@ -30,6 +31,7 @@ app.use("/api", productRouter);
 app.use("/cart", cartRouter); // Use the cart router
 app.use("/api", productTrackingRouter); // Use the product tracking router
 app.use("/api", truckScheduleRouter); // Use the product tracking router
+app.use("/api", reportRouter);
 
 app.listen(5000, () => {
   console.log("server is running on port 5000");

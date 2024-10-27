@@ -17,6 +17,12 @@ import Tracking from "./components/customer/Tracking";
 import Registration from "./components/manager/Registration";
 import Cart from "./components/customer/Cart";
 import TruckSchedule from "./components/manager/TruckSchedule";
+import Reports from "./components/manager/reports/Reports";
+import QuarterlySalesReport from "./components/manager/reports/QuarterlySalesReport";
+import ItemsMostOrdersReport from "./components/manager/reports/ItemsMostOrdersReport";
+import SalesByCityRouteReport from "./components/manager/reports/SalesByCityRouteReport";
+import WorkingHoursReport from "./components/manager/reports/WorkingHoursReport";
+import CustomerOrderReport from "./components/manager/reports/CustomerOrderReport";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -46,6 +52,24 @@ function App() {
           {/* Updated route */}
           <Route path="/registration" element={<Registration />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route
+            path="/quarterly-sales-report"
+            element={<QuarterlySalesReport />}
+          />
+          <Route
+            path="/items-most-orders"
+            element={<ItemsMostOrdersReport />}
+          />
+          <Route
+            path="/sales-by-city-route"
+            element={<SalesByCityRouteReport />}
+          />
+          <Route path="/working-hours" element={<WorkingHoursReport />} />
+          <Route
+            path="/customer-order-report"
+            element={<CustomerOrderReport />}
+          />
         </Routes>
 
         <Footer />
