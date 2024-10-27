@@ -1,6 +1,7 @@
 import express from "express";
 import con from "../utils/db.js"; // Ensure your database connection is properly set up in db.js
 
+
 const router = express.Router();
 
 // Route to get train schedule
@@ -20,8 +21,8 @@ router.get("/api/TrainCityMap", (req, res) => {
   const sql = `
     SELECT city, train_ID
     FROM Train
-    ORDER BY city
-  `; // Query to get train IDs grouped by city
+    ORDER BY city`
+  ; // Query to get train IDs grouped by city
 
   con.query(sql, (err, result) => {
     if (err) {
@@ -48,8 +49,8 @@ router.get("/api/AvailableTrainsCount", (req, res) => {
   const sql = `
     SELECT city, COUNT(*) as count
     FROM Train
-    GROUP BY city
-  `; // Query to get the count of available trains for each city
+    GROUP BY city`
+  ; // Query to get the count of available trains for each city
 
   con.query(sql, (err, result) => {
     if (err) {
@@ -77,8 +78,8 @@ router.get("/api/PendingOrders", (req, res) => {
     LEFT JOIN TrainSchedule ts ON o.order_id = ts.order_ID
     WHERE ts.order_ID IS NULL
     AND c.city != 'Kandy'
-    GROUP BY c.city
-  `;
+    GROUP BY c.city`
+  ;
 
   con.query(sql, (err, result) => {
     if (err) {
@@ -108,8 +109,8 @@ router.post("/api/AssignOrders", (req, res) => {
     SELECT COUNT(*) AS pendingCount
     FROM \`order\` o
     INNER JOIN customer c ON o.customer_id = c.customer_id
-    WHERE o.schedule_ID IS NULL AND c.city = ?
-  `;
+    WHERE o.schedule_ID IS NULL AND c.city = ?`
+  ;
 
   con.query(checkPendingOrdersSql, [city], (err, result) => {
     if (err) {
@@ -126,10 +127,10 @@ router.post("/api/AssignOrders", (req, res) => {
     // Step 2: Fetch pending orders for the city
     const fetchPendingOrdersSql = `
       SELECT o.order_id, o.total_volume
-      FROM \`order\` o
+      FROM \`Order\` o
       INNER JOIN customer c ON o.customer_id = c.customer_id
-      WHERE o.schedule_ID IS NULL AND c.city = ?
-    `;
+      WHERE o.schedule_ID IS NULL AND c.city = ?`
+    ;
 
     con.query(fetchPendingOrdersSql, [city], (err, orders) => {
       if (err) {
@@ -141,8 +142,8 @@ router.post("/api/AssignOrders", (req, res) => {
       const fetchTrainCapacitySql = `
         SELECT capacity, day, time
         FROM Train
-        WHERE train_ID = ?
-      `;
+        WHERE train_ID = ?`
+      ;
 
       con.query(fetchTrainCapacitySql, [train_ID], (err, train) => {
         if (err) {
@@ -174,8 +175,8 @@ router.post("/api/AssignOrders", (req, res) => {
         // Step 5: Insert assigned orders into TrainSchedule table
         const insertTrainScheduleSql = `
           INSERT INTO TrainSchedule (train_ID, order_ID, manager_ID)
-          VALUES ?
-        `;
+          VALUES ?`
+        ;
 
         const trainScheduleValues = assignedOrders.map(order_id => [train_ID, order_id, manager_ID]);
 
@@ -204,10 +205,10 @@ router.get("/api/TrainFilledPercentage", async (req, res) => {
     const [trains] = await con.query("SELECT train_ID, capacity FROM Train");
     const [orders] = await con.query(`
       SELECT train_ID, SUM(total_volume) AS total_volume
-      FROM Orders
+      FROM \`Order\`
       WHERE train_ID IS NOT NULL
-      GROUP BY train_ID
-    `);
+      GROUP BY train_ID`
+    );
 
     // Calculate filled percentages
     const filledPercentages = trains.map((train) => {
@@ -226,12 +227,6 @@ router.get("/api/TrainFilledPercentage", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-
-
-
-
-
 
 // Export the router
 export { router as trainScheduleRouter };

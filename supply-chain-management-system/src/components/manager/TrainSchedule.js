@@ -45,6 +45,7 @@ export default function TrainScheduleTable() {
   const [scheduledTrains, setScheduledTrains] = useState({});
   const [filledPercentage, setFilledPercentage] = useState({});
   const [noOrdersDialogOpen, setNoOrdersDialogOpen] = useState(false); // State to control dialog
+  const [capacityAlertOpen, setCapacityAlertOpen] = useState(false); // State to control capacity alert
 
   useEffect(() => {
     // Fetch all data on component mount
@@ -74,6 +75,10 @@ export default function TrainScheduleTable() {
           return acc;
         }, {});
         setFilledPercentage(filledData);
+
+        // Log filled capacity of each train
+        console.log("Filled Capacity of Each Train:", filledData); // Added console.log statement
+
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
@@ -129,8 +134,8 @@ export default function TrainScheduleTable() {
           });
       })
       .catch((error) => {
-        if (error.response && error.response.data.error === "No more pending orders") {
-          setNoOrdersDialogOpen(true);
+        if (error.response && error.response.data.error === "No orders can be assigned to this train due to capacity constraints") {
+          setCapacityAlertOpen(true); // Open the capacity alert dialog
         } else {
           console.error("Error assigning orders:", error);
         }
@@ -170,6 +175,26 @@ export default function TrainScheduleTable() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setNoOrdersDialogOpen(false)} color="primary" autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Dialog for Capacity Alert */}
+      <Dialog
+        open={capacityAlertOpen}
+        onClose={() => setCapacityAlertOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Capacity Alert</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            No orders can be assigned to this train due to capacity constraints.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setCapacityAlertOpen(false)} color="primary" autoFocus>
             OK
           </Button>
         </DialogActions>
