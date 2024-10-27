@@ -1,9 +1,11 @@
-1. Deep Blue (#1A73E8): For headers, main buttons, and key elements. Represents reliability and professionalism.
+1. #0b86f1 - Bright Blue: Use this as the main accent color to draw attention. It can highlight buttons, call-to-action elements, links, and active states. The bright tone makes it ideal for clickable items or important notifications.
 
-2. Green (#34A853): Accent color for buttons, icons, and highlights. Represents sustainability and growth.
+2. #141c23 - Dark Navy: Serve this as the background for headers, footers, and navigation bars, providing a sleek, professional look. This can also work well as a main background color for sections needing contrast.
 
-3. Light Blue (#E8F0FE): Background color or for secondary buttons and sections. Creates a clean, approachable feel.
+3. #0f5cce - Medium Blue: This color can be applied to secondary elements like sidebars, hover effects, and borders to complement the primary accent color. It's also suitable for less critical buttons or informational cards, creating harmony with the accent blue without competing with it.
 
-4. Gray (#757575): For text, borders, and subtle UI elements. Neutral and easy on the eyes, complementing the primary colors.
+5. #24242a - Charcoal: Use this for text and backgrounds. The softer, neutral tone is excellent for body text, titles, and larger blocks of content. It provides enough contrast against lighter backgrounds without appearing too harsh.
 
-5. White (#FFFFFF): Main background color for a clean and modern look.
+Buttons: Primary (#0b86f1), hover (#0f5cce), and secondary buttons (#24242a).
+Backgrounds: Use #141c23 for headers and footers, and #24242a or lighter variations as a background for cards and content areas.
+Text: #24242a for body text and #0f5cce for header text or highlighted information
