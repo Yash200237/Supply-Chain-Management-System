@@ -1,182 +1,79 @@
-/* Home.css */
-
 .home-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #ffffff;
-  
-    box-sizing: border-box;
-  }
-  
-  .main-content {
-    background-color: #020e4b;
-  
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: fit-content;
-    width: 100%;
-    
-    padding: 30px; /* Adjusted padding to accommodate carousel */
-    text-align: center;
-    position: relative;
-  }
-  
-  .title {
-    color: #ffffff;
-    font-size: 36px;
-    margin-bottom: 30px;
-    font-weight: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .description {
-    color: #ffffff;
-    line-height: 1.8;
-    font-size: 15px;
-    text-align: center;
-    margin-bottom: 30px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-  }
-  
-  .primary-buttons .btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #fff;
-    transition: background-color 0.3s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .btn-login {
-    background-color: #2980b9;
-  }
-  
-  .btn-login:hover {
-    background-color: #3498db;
-  }
-  
-  .btn-signup {
-    background-color: #27ae60;
-  }
-  
-  .btn-signup:hover {
-    background-color: #2ecc71;
-  }
-  
-  .secondary-buttons .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #fff;
-    transition: background-color 0.3s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .btn-customer {
-    background-color: #ffffff;
-  }
-  
-  .btn-customer:hover {
-    background-color: #d35400;
-  }
-  
-  
-  /* Carousel Styles */
-  .carousel {
-    position: relative;
-    max-width: 100%;
-    margin: 20px auto; /* Adjusted margin for spacing */
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .carousel-slides {
-    display: flex;
-    height: 500px;
-    transition: transform 0.5s ease-in-out;
-  }
-  
-  .carousel-slide {
-    min-width: 100%;
-    box-sizing: border-box;
-    position: relative;
-  }
-  
-  .carousel-slide img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-  }
-  
-  .carousel-caption {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-    font-size: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  .carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 1;
-    font-size: 18px;
-  }
-  
-  .carousel-button.prev {
-    left: 10px;
-  }
-  
-  .carousel-button.next {
-    right: 10px;
-  }
-  
-  
-  
-  .carousel-indicators {
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  .indicator {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 5px;
-    border-radius: 50%;
-    background-color: #ccc;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .indicator.active {
-    background-color: #007bff;
-  }
+  display: flex;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.left-half {
+  position: relative;
+  flex: 1; /* Take half of the available space */
+  overflow: hidden; /* Hide any overflow */
+  height: 100vh; /* Set height to full viewport height */
+}
+
+.background-image {
+  width: 100%; /* Full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 100%; /* Prevent overflow */
+  object-fit: cover; /* Cover the entire area */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  color: white; /* White text */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  padding: 20px; /* Add some padding */
+  text-align: center; /* Center text */
+}
+
+.right-half {
+  flex: 1; /* Take half of the available space */
+  background-color: white; /* White background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  padding: 20px; /* Add some padding */
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.primary-buttons .btn {
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  padding: 12px 25px; /* Standard padding */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 16px;
+  color: #ffffff; /* White text color */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #007bff; /* Primary blue background */
+  transition: background-color 0.3s ease; /* Smooth transition for color change */
+  height: 45px; /* Fixed height for buttons */
+}
+
+.primary-buttons .btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+.button-link {
+  text-decoration: none; /* Remove underline from links */
+}

@@ -24,7 +24,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <div>
+      <div style={{margin:"0"}}>
         <NavBar />
 
         <Routes>
@@ -40,7 +40,7 @@ function App() {
           <Route path="/managerdashboard" element={<ManagerDashboard />} />
           <Route path="/trainschedule" element={<TrainSchedule />} />
           <Route path="/order-products" element={<ProductList />} />
-          <Route path="/track-orders/:customer_ID" element={<Tracking />} /> {/* Updated route */}
+          <Route path="/track-orders/:customer_ID" element={<Tracking />} /> 
           <Route path="/registration" element={<Registration />} />
           <Route path="/cart" element={<Cart />} />
 

@@ -1,10 +1,12 @@
 .dashboard-container {
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 70px); /* Adjust height to account for the NavBar's height */
+    /* padding-top: 70px; Offset content by the height of the NavBar */
+    
 }
 
 .customer-details {
-    flex: 1; /* 1/8 of the screen */
+    width: 250px; /* Match NavBar's width */
     background-color: #f4f4f4;
     padding: 20px;
     border-right: 2px solid #ddd;
@@ -12,6 +14,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: sticky;
+    /* top: 70px; Keeps it aligned with NavBar */
 }
 
 .customer-details h2 {
@@ -23,15 +27,22 @@
     margin-bottom: 10px;
 }
 
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 30px;
+  }
+  
 .content {
-    flex: 7; /* 7/8 of the screen */
-    padding: 20px;
+    flex: 1;
+    padding: 40px;
 }
 
 .dashboard {
     text-align: center;
-    padding: 20px;
-    height: 100vh;
+    margin: 0;
+
 }
 
 header {
@@ -58,14 +69,6 @@ header {
     transition: transform 0.2s;
 }
 
-.order-products {
-    /* Additional styling specific to Order Products can go here */
-}
-
-.track-delivery {
-    /* Additional styling specific to Track Delivery can go here */
-}
-
 .content-block:hover {
     transform: scale(1.02); /* Scale effect on hover */
 }
@@ -79,12 +82,7 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.order-products .button {
-    background-color: #28a745; /* Green for Order Products */
-    color: white;
-}
-
-.track-delivery .button {
+.button {
     background-color: #007bff; /* Blue for Track Delivery */
     color: white;
 }
