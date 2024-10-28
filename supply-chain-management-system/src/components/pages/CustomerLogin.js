@@ -29,7 +29,7 @@ const CustomerLogin = () => {
         console.log("API Response:", result.data); // Log the entire response object
 
         if (result.data.loginStatus) {
-HEAD
+
           navigate("/customerdashboard");
 
           // Store customer details in localStorage
@@ -53,7 +53,7 @@ HEAD
               city: result.data.city
             } 
           });
-main
+
         } else {
           setError(result.data.Error);
         }
