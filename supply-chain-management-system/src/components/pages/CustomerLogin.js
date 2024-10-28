@@ -43,20 +43,19 @@ const CustomerLogin = () => {
       .post("http://localhost:5000/start/customerlogin", formData)
       .then((result) => {
         if (result.data.loginStatus) {
-          // Store customer details in localStorage
-          localStorage.setItem("customer_ID", result.data.customer_ID);
-          localStorage.setItem("customerName", result.data.customerName); // Store the customer name
-          localStorage.setItem("fullName", result.data.fullName); // Full Name
-          localStorage.setItem("email", result.data.email); // Email
-          localStorage.setItem("phoneNumber", result.data.phoneNumber); // Phone Number
-          localStorage.setItem("address", result.data.address); // Address
-          localStorage.setItem("city", result.data.city); // City
+          const { customer_ID, customerName, fullName, email, phoneNumber, address, city } = result.data;
 
-          // Navigate to dashboard and pass state
+          localStorage.setItem("customer_ID", customer_ID);
+          localStorage.setItem("customerName", customerName);
+          localStorage.setItem("fullName", fullName);
+          localStorage.setItem("email", email);
+          localStorage.setItem("phoneNumber", phoneNumber);
+          localStorage.setItem("address", address);
+          localStorage.setItem("city", city);
+
           navigate("/customerdashboard", { 
             state: { customerName, customer_ID, fullName, email, phoneNumber, address, city } 
           });
-
         } else {
           setError(result.data.Error || "Login failed. Please try again.");
         }
