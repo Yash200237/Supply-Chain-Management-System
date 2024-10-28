@@ -95,34 +95,6 @@
     background-color: #d35400;
   }
   
-  .btn-driver {
-    background-color: #ffffff;
-  }
-  
-  .btn-driver:hover {
-    background-color: #ffffff;
-  }
-  
-  .btn-manager {
-    background-color: #ffffff;
-  }
-  
-  .btn-manager:hover {
-    background-color: #e74c3c;
-  }
-  
-  .button-link {
-    text-decoration: none;
-  }
-  
-  .footer {
-    margin-top: auto;
-    padding: 20px;
-    background-color: #000000;
-    color: #ffffff;
-    text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
   
   /* Carousel Styles */
   .carousel {
@@ -187,9 +159,7 @@
     right: 10px;
   }
   
-  .carousel-button:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
+  
   
   .carousel-indicators {
     text-align: center;

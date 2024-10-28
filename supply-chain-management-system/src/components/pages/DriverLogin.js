@@ -1,76 +1,132 @@
 import React, { useState } from "react";
-import axios from "axios";
+import {
+  TextField,
+  Box,
+  Typography,
+  Alert,
+  Divider,
+  Paper,
+  Button,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const DriverLogin = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+const theme = createTheme({
+  palette: {
+    primary: { main: "#1976d2" },
+    success: { main: "#2e7d32" },
+    info: { main: "#0288d1" },
+    background: { default: "#f5f5f5" },
+  },
+  typography: {
+    h4: { fontWeight: 600, marginBottom: "5px" },
+    subtitle1: { color: "#757575", fontSize: "0.9rem", marginBottom: "20px" },
+  },
+});
 
-  const [error, setError] = useState(null);
+const CustomerLogin = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState(null);
+
   axios.defaults.withCredentials = true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform login logic here (e.g., API call)
     axios
-    .post("http://localhost:5000/start/driverlogin", formData)
-    .then((result) => {
-      console.log("API Response:", result.data); // Log the entire response object
-      console.log(result.data.loginStatus);
-      if (result.data.loginStatus) {
-        console.log("Driver Name:", result.data.driverName); // Check this again
-        localStorage.setItem("driver_ID", result.data.driver_ID);
-        localStorage.setItem("driverName", result.data.driverName); // Store the driver name
-        navigate("/driverdashboard", { state: { driverName: result.data.driverName } });
-      } else {
-        setError(result.data.Error);
-      }
-    })
-    .catch((err) => console.log(err));
+      .post("http://localhost:5000/start/customerlogin", formData)
+      .then((result) => {
+        if (result.data.loginStatus) {
+          const { customer_ID, customerName, fullName, email, phoneNumber, address, city } = result.data;
+
+          localStorage.setItem("customer_ID", customer_ID);
+          localStorage.setItem("customerName", customerName);
+          localStorage.setItem("fullName", fullName);
+          localStorage.setItem("email", email);
+          localStorage.setItem("phoneNumber", phoneNumber);
+          localStorage.setItem("address", address);
+          localStorage.setItem("city", city);
+
+          navigate("/customerdashboard", { 
+            state: { customerName, customer_ID, fullName, email, phoneNumber, address, city } 
+          });
+        } else {
+          setError(result.data.Error || "Login failed. Please try again.");
+        }
+      })
+      .catch(() => setError("An error occurred while logging in."));
   };
 
   return (
-    <div className="login">
-      <div className="text-danger">{error && error}</div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="80vh"
+        sx={{ backgroundColor: theme.palette.background.default }}
+      >
+        <Paper elevation={4} sx={{ p: 4, width: 350, borderRadius: 3 }}>
+          <Typography variant="h4" align="center">
+            Login
+          </Typography>
+
+          <Typography variant="subtitle1" align="center">
+            Welcome back! Please log in to continue
+          </Typography>
+
+          <Divider sx={{ my: 0 }} />
+
+          {error && <Alert severity="error">{error}</Alert>}
+
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            display="flex"
+            flexDirection="column"
+            gap={2}
+            mt={2}
+          >
+            <TextField
+              label="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+
+            {/* Login Button */}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 1 }}
+            >
+              Log In
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </ThemeProvider>
   );
 };
 
-export default DriverLogin;
+export default CustomerLogin;

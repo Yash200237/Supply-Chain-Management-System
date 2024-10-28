@@ -28,7 +28,7 @@ const Start = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
+        minHeight="80vh"
         sx={{ backgroundColor: theme.palette.background.default }}
       >
         <Paper elevation={4} sx={{ p: 4, width: 350, borderRadius: 3 }}>

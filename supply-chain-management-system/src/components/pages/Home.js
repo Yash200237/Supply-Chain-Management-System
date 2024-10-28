@@ -67,22 +67,10 @@ function Home() {
             {slides.map((slide, index) => (
               <div className="carousel-slide" key={index}>
                 <img src={slide.image} alt={`Slide ${index + 1}`} />
-                <div className="carousel-caption">{slide.caption}</div>
+               
               </div>
             ))}
           </div>
-          <button
-            className="carousel-button prev"
-            onClick={() => changeSlide(-1)}
-          >
-            &#10094;
-          </button>
-          <button
-            className="carousel-button next"
-            onClick={() => changeSlide(1)}
-          >
-            &#10095;
-          </button>
           <div className="carousel-indicators">
             {slides.map((_, index) => (
               <span
