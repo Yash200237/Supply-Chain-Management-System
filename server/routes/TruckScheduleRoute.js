@@ -122,8 +122,8 @@ router.put("/assign-orders/:schedule_ID", (req, res) => {
   const { schedule_ID } = req.params;
 
   con.query(
-    `CALL AssignOrdersToSchedule(?, @pending_orders);
-     SELECT @pending_orders AS pending_orders;`,
+    `CALL AssignOrdersToSchedule(?, @pending_orders, @already_assigned);
+     SELECT @pending_orders AS pending_orders, @already_assigned AS already_assigned;`,
     [schedule_ID],
     (err, results) => {
       if (err) {
@@ -133,12 +133,23 @@ router.put("/assign-orders/:schedule_ID", (req, res) => {
           .json({ success: false, error: "Database error" });
       }
 
-      // Assuming results[0] contains assigned order IDs, and results[2] contains pending orders
+      // Fetch values for pending orders and already assigned flag
+      const pendingOrders = results[1][0].pending_orders;
+      const alreadyAssigned = results[1][0].already_assigned;
+
+      // If orders are already assigned, handle accordingly
+      if (alreadyAssigned === 1) {
+        return res.status(200).json({
+          success: false,
+          message: "Orders already assigned to this schedule.",
+          alreadyAssigned: true,
+        });
+      }
+
+      // Process assigned order IDs and return
       const assignedOrderIDs = results[0]
         ? results[0].map((row) => row.order_ID)
         : [];
-      const pendingOrders =
-        results[2] && results[2][0] ? results[2][0].pending_orders : 0;
 
       res.status(200).json({ success: true, pendingOrders, assignedOrderIDs });
     }

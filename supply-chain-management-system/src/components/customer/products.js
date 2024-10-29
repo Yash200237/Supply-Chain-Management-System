@@ -50,13 +50,6 @@ const ProductList = () => {
     }
   }, []);
 
-  // Handle quantity change
-  const handleQuantityChange = (product_ID, newQuantity) => {
-    setQuantities({
-      ...quantities,
-      [product_ID]: newQuantity,
-    });
-  };
   // Helper to get customer ID from JWT stored in cookies
   const getTokenFromCookies = () => {
     const token = document.cookie
@@ -147,25 +140,6 @@ const ProductList = () => {
                 : Number(product.price).toFixed(2)}
             </p>
             <p>Discount: {product.discount}%</p>
-            <p>Volume: {product.volume}L</p>
-            {/* Quantity input */}
-            <div>
-              <label htmlFor={`quantity-${product.product_ID}`}>
-                Quantity:{" "}
-              </label>
-              <input
-                type="number"
-                id={`quantity-${product.product_ID}`}
-                value={quantities[product.product_ID]}
-                min="1"
-                onChange={(e) =>
-                  handleQuantityChange(
-                    product.product_ID,
-                    parseInt(e.target.value)
-                  )
-                }
-              />
-            </div>
             <button
               className={`order-button ${
                 isInCart(product.product_ID) ? "added" : ""

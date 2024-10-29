@@ -137,4 +137,24 @@ router.get("/products", (req, res) => {
   });
 });
 
+// Backend route to fetch items with most orders and total quantity
+router.get("/items-most-orders", (req, res) => {
+  const { manager_id, year, month } = req.query;
+
+  const query = `
+    SELECT ProductName, OrderCount, TotalQuantity
+    FROM ItemsMostOrders
+    WHERE manager_ID = ? AND OrderYear = ? AND OrderMonth = ?
+    ORDER BY OrderCount DESC LIMIT 10;
+  `;
+
+  con.query(query, [manager_id, year, month], (err, results) => {
+    if (err) {
+      console.error("Error fetching items with most orders:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json(results);
+  });
+});
+
 export { router as reportRouter };

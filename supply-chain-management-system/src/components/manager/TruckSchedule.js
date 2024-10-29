@@ -16,14 +16,12 @@ const TruckSchedule = () => {
   const [recentSchedules, setRecentSchedules] = useState([]);
   const [isScheduledSuccessful, setIsScheduledSuccessful] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState(null); // State to store feedback messages
-  //////////
+  const [assignedOrders, setAssignedOrders] = useState({});
   const [pendingOrders, setPendingOrders] = useState({});
   const [assigned, setAssigned] = useState({});
-  const [assignedOrders, setAssignedOrders] = useState({}); // State to store assigned order_IDs
 
   const [managerID] = useState(localStorage.getItem("manager_ID")); // Read `manager_ID` from localStorage on component mount
 
-  // Define `fetchRecentSchedules` using `useCallback`
   const fetchRecentSchedules = useCallback(async () => {
     try {
       const res = await axios.get(
@@ -32,12 +30,26 @@ const TruckSchedule = () => {
           params: { manager_ID: managerID },
         }
       );
-      setRecentSchedules(res.data.schedules);
+
+      const schedules = res.data.schedules;
+
+      // Update assigned state based on the `already_assigned` field
+      const assignedStatus = {};
+      const assignedOrdersList = {};
+      schedules.forEach((schedule) => {
+        assignedStatus[schedule.schedule_ID] = schedule.already_assigned === 1;
+        if (schedule.already_assigned === 1) {
+          assignedOrdersList[schedule.schedule_ID] =
+            schedule.assignedOrderIDs || [];
+        }
+      });
+      setRecentSchedules(schedules);
+      setAssigned(assignedStatus);
+      setAssignedOrders(assignedOrdersList);
     } catch (error) {
       console.error("Error fetching recent schedules:", error);
     }
   }, [managerID]);
-
   // Fetch schedules every minute to sync with backend cron job updates
   useEffect(() => {
     fetchRecentSchedules(); // Initial fetch
@@ -141,19 +153,23 @@ const TruckSchedule = () => {
       const response = await axios.put(
         `http://localhost:5000/api/assign-orders/${scheduleID}`
       );
-      const pendingOrdersCount = response.data.pendingOrders;
-      const assignedOrderIDs = response.data.assignedOrderIDs; // Assuming this is returned by backend
+      if (response.data.alreadyAssigned) {
+        // Disable the button and show a message
+        setAssigned((prev) => ({ ...prev, [scheduleID]: true }));
+      } else {
+        const { pendingOrders, assignedOrderIDs } = response.data;
 
-      // Update state to show pending orders and disable the button
-      setPendingOrders((prev) => ({
-        ...prev,
-        [scheduleID]: pendingOrdersCount,
-      }));
-      setAssignedOrders((prev) => ({
-        ...prev,
-        [scheduleID]: assignedOrderIDs, // Save assigned order IDs
-      }));
-      setAssigned((prev) => ({ ...prev, [scheduleID]: true }));
+        // Update state to show assigned orders and pending orders
+        setPendingOrders((prev) => ({
+          ...prev,
+          [scheduleID]: pendingOrders,
+        }));
+        setAssignedOrders((prev) => ({
+          ...prev,
+          [scheduleID]: assignedOrderIDs,
+        }));
+        setAssigned((prev) => ({ ...prev, [scheduleID]: true }));
+      }
     } catch (error) {
       console.error("Error assigning orders:", error);
     }

@@ -6,12 +6,21 @@ const ManagerDashboard = () => {
   const navigate = useNavigate(); // Use the navigate hook from React Router
   const location = useLocation();
   const [managerName, setManagerName] = useState("");
+  const [storeID, setStoreID] = useState(null);
 
   useEffect(() => {
     // Check if managerName is passed via location.state
-    if (location.state && location.state.managerName) {
+    if (
+      location.state &&
+      location.state.managerName &&
+      location.state.store_ID
+    ) {
       setManagerName(location.state.managerName);
+      setStoreID(location.state.store_ID);
+
       localStorage.setItem("managerName", location.state.managerName);
+      localStorage.setItem("store_ID", location.state.store_ID);
+
       console.log(
         "Manager name from location state:",
         location.state.managerName
@@ -19,8 +28,12 @@ const ManagerDashboard = () => {
     } else {
       // If no managerName in location.state, check localStorage
       const storedManagerName = localStorage.getItem("managerName");
-      if (storedManagerName) {
+      const storedStoreID = localStorage.getItem("store_ID");
+
+      if (storedManagerName && storedStoreID) {
         setManagerName(storedManagerName);
+        setStoreID(parseInt(storedStoreID));
+
         console.log("Manager name from localStorage:", storedManagerName);
       } else {
         // No managerName found, redirect to login
@@ -51,15 +64,16 @@ const ManagerDashboard = () => {
           </Link>
         </div>
 
-        <div className="content-block train-schedule">
-          <h2>Schedule Orders to Trains </h2>
-          <p>Check train schedule and assign orders to trains</p>
-          <Link to="/trainschedule" className="button-link">
-            <button className="button" onClick={handleTrackDelivery}>
-              Assign Orders
-            </button>
-          </Link>
-        </div>
+        {/* Conditional rendering of "Schedule Orders to Trains" based on storeID */}
+        {storeID === 1 && (
+          <div className="content-block train-schedule">
+            <h2>Schedule Orders to Trains </h2>
+            <p>Check train schedule and assign orders to trains</p>
+            <Link to="/trainschedule" className="button-link">
+              <button className="button">Assign Orders</button>
+            </Link>
+          </div>
+        )}
 
         <div className="content-block truck-schedule">
           <h2>Create Truck Schedules</h2>
