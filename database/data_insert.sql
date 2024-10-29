@@ -513,5 +513,19 @@ INSERT INTO `OrderProduct` (order_id, product_id, quantity) VALUES
 (50, 9, 4), 
 (50, 15, 4);
 
+--------------------------------------------------------------------------------------------------
 
-
+-- Insert new entries into TruckSchedule for the past week
+INSERT INTO TruckSchedule (driver_ID, driverA_ID, truck_Id, route_ID, time, date, manager_ID, status) VALUES
+(15, 4, 13, 15, '08:00:00', '2024-10-22', 6, 'completed'),  -- October 22, 2024
+(1, 18, 3, 1, '08:00:00', '2024-10-22', 1, 'completed'),    -- October 22, 2024
+(4, 15, 5, 4, '08:30:00', '2024-10-23', 2, 'completed'),    -- October 23, 2024
+(2, 17, 2, 2, '09:00:00', '2024-10-23', 1, 'completed'),    -- October 23, 2024
+(5, 14, 6, 5, '09:30:00', '2024-10-24', 2, 'completed'),    -- October 24, 2024
+(10, 9, 10, 10, '09:00:00', '2024-10-25', 4, 'completed'),  -- October 25, 2024
+(7, 12, 9, 7, '08:00:00', '2024-10-25', 3, 'completed'),    -- October 25, 2024
+(3, 16, 1, 3, '08:30:00', '2024-10-26', 2, 'completed'),    -- October 26, 2024
+(18, 1, 16, 18, '08:30:00', '2024-10-27', 7, 'completed'),  -- October 27, 2024
+(13, 6, 14, 13, '08:00:00', '2024-10-27', 5, 'completed'),  -- October 27, 2024
+(9, 10, 7, 9, '09:00:00', '2024-10-28', 4, 'completed'),    -- October 28, 2024
+(12, 7, 11, 12, '08:30:00', '2024-10-28', 5, 'completed');  -- October 28, 2024

@@ -93,3 +93,22 @@ JOIN `Order` o ON op.order_ID = o.order_ID
 JOIN Customer c ON o.customer_ID = c.customer_ID
 JOIN Route r ON o.route_ID = r.route_ID
 JOIN Manager m ON r.store_ID = m.store_ID;
+
+------------------------------------------------------------------------------------------------
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `scms`.`truckweeklyhours` AS
+    SELECT 
+        `t`.`truck_Id` AS `truck_id`,
+        `t`.`truck_plate_no` AS `truck_plate_no`,
+        SUM(`r`.`duration`) AS `weekly_hours`
+    FROM
+        ((`scms`.`truck` `t`
+        JOIN `scms`.`truckschedule` `ts` ON ((`t`.`truck_Id` = `ts`.`truck_Id`)))
+        JOIN `scms`.`route` `r` ON ((`ts`.`route_ID` = `r`.`route_ID`)))
+    WHERE
+        (`ts`.`date` BETWEEN (CURDATE() - INTERVAL 7 DAY) AND CURDATE())
+    GROUP BY `t`.`truck_Id` , `t`.`truck_plate_no`
