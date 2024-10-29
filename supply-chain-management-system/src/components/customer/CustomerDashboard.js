@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Customer.css";
+import profilePicture from "../../images/profilepicture.jpg";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaCity } from "react-icons/fa"; // Icons for style
+//import { Margin } from "@mui/icons-material";
 
 const CustomerDashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +20,6 @@ const CustomerDashboard = () => {
 
   useEffect(() => {
     console.log("Location state:", location.state);
-    // Check if customer details are passed via location.state
     if (location.state) {
       const {
         customerName: name,
@@ -37,7 +39,6 @@ const CustomerDashboard = () => {
       setAddress(address);
       setCity(city);
 
-      // Save to localStorage for persistence
       localStorage.setItem("customerName", name);
       localStorage.setItem("customer_ID", id);
       localStorage.setItem("fullName", fullName);
@@ -46,7 +47,6 @@ const CustomerDashboard = () => {
       localStorage.setItem("address", address);
       localStorage.setItem("city", city);
     } else {
-      // If no data in location.state, try to get from localStorage
       const storedName = localStorage.getItem("customerName");
       const storedID = localStorage.getItem("customer_ID");
       const storedFullName = localStorage.getItem("fullName");
@@ -72,7 +72,6 @@ const CustomerDashboard = () => {
         setAddress(storedAddress);
         setCity(storedCity);
       } else {
-        // Redirect to login if no data is found
         navigate("/customerlogin");
       }
     }
@@ -91,28 +90,44 @@ const CustomerDashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    <div className="dashboard" style={{ flex: "1" }}>
       <div className="dashboard-container">
         {/* Left side: Customer Details */}
         <div className="customer-details">
-          <h2>{fullName}</h2>
-          <ul style={{ textAlign: "left", listStyleType: "none" }}>
-            <li>
-              <strong>Full Name:</strong>{" "}
-            </li>
-            <li>
-              <strong>Email:</strong> {email}
-            </li>
-            <li>
-              <strong>Phone Number:</strong> {phoneNumber}
-            </li>
-            <li>
-              <strong>City:</strong> {city}
-            </li>
-            <li>
-              <strong>Address:</strong> {address}
-            </li>
-          </ul>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={profilePicture}
+              alt="Customer Profile"
+              className="profile-picture"
+            />
+            <h2>{fullName}</h2>
+            <ul
+              style={{
+                textAlign: "left",
+                listStyleType: "none",
+                paddingLeft: "10px",
+              }}
+            >
+              <li style={{ paddingBottom: "10px" }}>
+                <FaEnvelope /> {email}
+              </li>
+              <li style={{ paddingBottom: "10px" }}>
+                <FaPhone /> {phoneNumber}
+              </li>
+              <li style={{ paddingBottom: "10px" }}>
+                <FaCity /> {city}
+              </li>
+              <li style={{ paddingBottom: "10px" }}>
+                <FaMapMarkerAlt /> {address}
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Right side: Content */}
@@ -121,7 +136,7 @@ const CustomerDashboard = () => {
             <h1>Welcome, {customerName || "Customer"}!</h1>
           </header>
           <div className="content-blocks">
-            <div className="content-block order-products">
+            <div className="content-block order-products" style={{marginTop: "20px"}}>
               <h2>Order Products</h2>
               <p>
                 Browse our catalog and place orders for your favorite products.
@@ -130,7 +145,7 @@ const CustomerDashboard = () => {
                 Order Products
               </button>
             </div>
-            <div className="content-block track-delivery">
+            <div className="content-block track-delivery" style={{marginTop: "20px"}}>
               <h2>Track Delivery</h2>
               <p>Check the status of your orders and delivery timelines.</p>
               <button className="button" onClick={handleTrackDelivery}>

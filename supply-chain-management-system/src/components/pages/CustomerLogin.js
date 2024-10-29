@@ -8,14 +8,13 @@ const CustomerLogin = () => {
     email: "",
     password: "",
   });
-
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
   // Helper to hash the customer ID
   const hashCustomerID = (customerID) => {
-    return CryptoJS.SHA256(String(customerID)).toString(); // Ensure it's a string
+    return CryptoJS.SHA256(String(customerID)).toString();
   };
 
   const handleChange = (e) => {
@@ -28,14 +27,12 @@ const CustomerLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform login logic here (e.g., API call)
-
-    // Debugging step - ensure the login form data is correct
-    console.log("Login form data:", formData);
+    console.log("Login form data:", formData); // Debugging
 
     axios
       .post("http://localhost:5000/customerlogin", formData)
       .then((result) => {
+        console.log("API Response:", result.data); // Debugging API response
         if (result.data.loginStatus) {
           const token = result.data.token;
 
@@ -43,42 +40,36 @@ const CustomerLogin = () => {
           const decodedToken = JSON.parse(atob(token.split(".")[1]));
           const customerID = decodedToken.customer_ID;
           const hashedCustomerID = hashCustomerID(customerID);
-          console.log("Customer ID after login:", customerID);
+          console.log("Customer ID:", customerID);
           console.log("Hashed customer ID:", hashedCustomerID);
 
-          // Check if there's an existing cart for this customer
+          // Check or initialize the customer's cart in localStorage
           let storedCart = localStorage.getItem(`cart_${hashedCustomerID}`);
           if (!storedCart) {
             console.log(`Initialized a new cart for user: ${hashedCustomerID}`);
-            // Initialize a new empty cart if none exists
             storedCart = [];
             localStorage.setItem(
               `cart_${hashedCustomerID}`,
               JSON.stringify(storedCart)
             );
-            console.log(`Initialized a new cart for user: ${hashedCustomerID}`);
           } else {
-            // Cart exists, load it from localStorage
-            console.log("Cart loaded for user:", JSON.parse(storedCart));
+            console.log("Cart loaded:", JSON.parse(storedCart));
           }
 
-          // Save the new token in cookies
+          // Set the token in cookies
           document.cookie = `token=${token}; path=/;`;
-
-          navigate("/customerdashboard");
 
           // Store customer details in localStorage
           localStorage.setItem("customer_ID", result.data.customer_ID);
-          localStorage.setItem("role", result.data.role); // Store the role
+          localStorage.setItem("role", result.data.role);
+          localStorage.setItem("customerName", result.data.customerName);
+          localStorage.setItem("fullName", result.data.fullName);
+          localStorage.setItem("email", result.data.email);
+          localStorage.setItem("phoneNumber", result.data.phoneNumber);
+          localStorage.setItem("address", result.data.address);
+          localStorage.setItem("city", result.data.city);
 
-          localStorage.setItem("customerName", result.data.customerName); // Store the customer name
-          localStorage.setItem("fullName", result.data.fullName); // Full Name
-          localStorage.setItem("email", result.data.email); // Email
-          localStorage.setItem("phoneNumber", result.data.phoneNumber); // Phone Number
-          localStorage.setItem("address", result.data.address); // Address
-          localStorage.setItem("city", result.data.city); // City
-
-          // Navigate to dashboard and pass state
+          // Navigate to the dashboard with state
           navigate("/customerdashboard", {
             state: {
               customerName: result.data.customerName,
@@ -95,18 +86,41 @@ const CustomerLogin = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error("Login error:", err);
         setError("An error occurred while logging in.");
       });
   };
 
   return (
-    <div className="login">
-      <div className="text-danger">{error && error}</div>
-      <h2>Login</h2>
+    <div
+      className="login"
+      style={{
+        maxWidth: "400px",
+        margin: "50px auto",
+        padding: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+        backgroundColor: "#f9f9f9",
+      }}
+    >
+      <div
+        className="text-danger"
+        style={{ color: "red", marginBottom: "10px" }}
+      >
+        {error && error}
+      </div>
+      <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>
+        Login
+      </h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div style={{ marginBottom: "15px" }}>
+          <label
+            htmlFor="email"
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            Email:
+          </label>
           <input
             type="email"
             id="email"
@@ -114,10 +128,21 @@ const CustomerLogin = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            style={{
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+            }}
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div style={{ marginBottom: "15px" }}>
+          <label
+            htmlFor="password"
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            Password:
+          </label>
           <input
             type="password"
             id="password"
@@ -125,9 +150,29 @@ const CustomerLogin = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            style={{
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+            }}
           />
         </div>
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "10px",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+          }}
+        >
+          Login
+        </button>
       </form>
     </div>
   );

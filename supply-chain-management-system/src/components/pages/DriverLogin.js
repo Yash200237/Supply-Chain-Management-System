@@ -32,11 +32,7 @@ const DriverLogin = () => {
           console.log("Driver Name:", result.data.driverName); // Check this again
           localStorage.setItem("driver_ID", result.data.driver_ID);
           localStorage.setItem("driverName", result.data.driverName); // Store the driver name
-          localStorage.setItem("role", result.data.role); // Store the driver name
-
-          navigate("/driverdashboard", {
-            state: { driverName: result.data.driverName },
-          });
+          navigate("/driverdashboard", { state: { driverName: result.data.driverName } });
         } else {
           setError(result.data.Error);
         }
@@ -45,12 +41,12 @@ const DriverLogin = () => {
   };
 
   return (
-    <div className="login">
-      <div className="text-danger">{error && error}</div>
-      <h2>Login</h2>
+    <div className="login" style={{ maxWidth: "400px", margin: "50px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", backgroundColor: "#f9f9f9" }}>
+      <div className="text-danger" style={{ color: "red", marginBottom: "10px" }}>{error && error}</div>
+      <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div style={{ marginBottom: "15px" }}>
+          <label htmlFor="email" style={{ display: "block", marginBottom: "5px" }}>Email:</label>
           <input
             type="email"
             id="email"
@@ -58,10 +54,11 @@ const DriverLogin = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div style={{ marginBottom: "15px" }}>
+          <label htmlFor="password" style={{ display: "block", marginBottom: "5px" }}>Password:</label>
           <input
             type="password"
             id="password"
@@ -69,9 +66,10 @@ const DriverLogin = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" style={{ width: "100%", padding: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer", fontSize: "16px" }}>Login</button>
       </form>
     </div>
   );
