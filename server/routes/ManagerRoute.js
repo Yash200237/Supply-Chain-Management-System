@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/managerlogin", (req, res) => {
   const sql =
     "SELECT * FROM ManagerDetails WHERE email = ? AND password = SHA2(?, 256)";
-  
+
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
     if (err) {
       return res.json({ loginStatus: false, Error: "Query error" });
@@ -34,6 +34,8 @@ router.post("/managerlogin", (req, res) => {
         email: managerDetails.Email,
         phoneNumber: managerDetails["Phone Number"],
         city: managerDetails.City,
+        store_ID: managerDetails.store_ID,
+        role: "manager",
       });
     } else {
       return res.json({ loginStatus: false, Error: "wrong email or password" });
