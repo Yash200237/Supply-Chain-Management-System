@@ -115,20 +115,20 @@ const Signup = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
+        minHeight="130vh"
         sx={{ backgroundColor: theme.palette.background.default }}
-        gap={2} mt={5}
+        gap={2} mt={0}
       >
         <Paper elevation={5} sx={{ p: 4, width: 400, borderRadius: 3 }}>
           <Typography variant="h4" align="center">
-            Signup
+            Sign up
           </Typography>
 
           <Typography variant="subtitle1" align="center">
             Welcome, please sign up to continue
           </Typography>
 
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 0 }} />
 
           {successMessage && <Alert severity="success">{successMessage}</Alert>}
           {errors.form && <Alert severity="error">{errors.form}</Alert>}
@@ -142,7 +142,7 @@ const Signup = () => {
               error={!!errors.firstname}
               helperText={errors.firstname}
               fullWidth
-              margin="none"
+              margin="normal"
             />
 
             <TextField
@@ -153,7 +153,7 @@ const Signup = () => {
               error={!!errors.lastname}
               helperText={errors.lastname}
               fullWidth
-              margin="none"
+              margin="normal"
             />
 
             <TextField
@@ -164,7 +164,7 @@ const Signup = () => {
               error={!!errors.username}
               helperText={errors.username}
               fullWidth
-              margin="none"
+              margin="normal"
             />
 
             <TextField
@@ -175,7 +175,7 @@ const Signup = () => {
               error={!!errors.email}
               helperText={errors.email}
               fullWidth
-              margin="none"
+              margin="normal"
             />
 
             <TextField
@@ -187,7 +187,7 @@ const Signup = () => {
               error={!!errors.password}
               helperText={errors.password}
               fullWidth
-              margin="none"
+              margin="normal"
             />
 
             <TextField
@@ -198,10 +198,10 @@ const Signup = () => {
               error={!!errors.address}
               helperText={errors.address}
               fullWidth
-              margin="none"
+              margin="normal"
             />
 
-            <FormControl fullWidth margin="none" error={!!errors.closestcity}>
+            <FormControl fullWidth margin="normal" error={!!errors.closestcity}>
               <InputLabel>Closest City</InputLabel>
               <Select
                 name="closestcity"
@@ -225,7 +225,7 @@ const Signup = () => {
               error={!!errors.phone}
               helperText={errors.phone}
               fullWidth
-              margin="none"
+              margin="normal"
             />
 
             <FormControl fullWidth margin="normal" error={!!errors.customerType}>

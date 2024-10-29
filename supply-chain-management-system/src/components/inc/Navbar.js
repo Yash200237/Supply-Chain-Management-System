@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaInfoCircle, FaHome } from "react-icons/fa"; // Icons for style
+import { FaInfoCircle, FaHome, FaUser} from "react-icons/fa"; // Icons for style
+
 
 function NavBar() {
   return (
@@ -39,6 +40,11 @@ function NavBar() {
             <li className="nav-item">
               <Link to="/about" className="nav-link text-light d-flex align-items-center gap-1">
                 <FaInfoCircle /> About
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/start" className="nav-link text-light d-flex align-items-center gap-1">
+                <FaUser /> Log in
               </Link>
             </li>
           </ul>

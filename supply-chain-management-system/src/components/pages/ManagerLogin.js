@@ -1,93 +1,138 @@
 import React, { useState } from "react";
-import axios from "axios";
+import {
+  TextField,
+  Box,
+  Typography,
+  Alert,
+  Divider,
+  Paper,
+  Button,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const ManagerLogin = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+const theme = createTheme({
+  palette: {
+    primary: { main: "#1976d2" },
+    success: { main: "#2e7d32" },
+    info: { main: "#0288d1" },
+    background: { default: "#f5f5f5" },
+  },
+  typography: {
+    h4: { fontWeight: 600, marginBottom: "5px" },
+    subtitle1: { color: "#757575", fontSize: "0.9rem", marginBottom: "20px" },
+  },
+});
 
-  const [error, setError] = useState(null);
+const CustomerLogin = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState(null);
+
   axios.defaults.withCredentials = true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform login logic here (e.g., API call)
     axios
-      .post("http://localhost:5000/start/managerlogin", formData)
+      .post("http://localhost:5000/start/customerlogin", formData)
       .then((result) => {
-        console.log("API Response:", result.data); // Log the entire response object
-        
-          if (result.data.loginStatus) {
-          // Store manager details in localStorage
-          localStorage.setItem("managerr_ID", result.data.manager_ID);
-          localStorage.setItem("managerName", result.data.managerName); // Store the customer name
-          localStorage.setItem("fullName", result.data.fullName); // Full Name
-          localStorage.setItem("email", result.data.email); // Email
-          localStorage.setItem("phoneNumber", result.data.phoneNumber); // Phone Number
-          localStorage.setItem("city", result.data.city); // City
+        if (result.data.loginStatus) {
+          const { customer_ID, customerName, fullName, email, phoneNumber, address, city } = result.data;
 
-          // Navigate to dashboard and pass state
-          navigate("/managerdashboard", { state: { 
-            managerName: result.data.managerName,
-            manager_ID: result.data.manager_ID,
-            fullName: result.data.fullName,
-            email: result.data.email,
-            phoneNumber: result.data.phoneNumber,
-            city: result.data.city
-          }  });
+          localStorage.setItem("customer_ID", customer_ID);
+          localStorage.setItem("customerName", customerName);
+          localStorage.setItem("fullName", fullName);
+          localStorage.setItem("email", email);
+          localStorage.setItem("phoneNumber", phoneNumber);
+          localStorage.setItem("address", address);
+          localStorage.setItem("city", city);
+
+          navigate("/customerdashboard", { 
+            state: { customerName, customer_ID, fullName, email, phoneNumber, address, city } 
+          });
         } else {
-          setError(result.data.Error);
+          setError(result.data.Error || "Login failed. Please try again.");
         }
       })
-      .catch((err) => console.log(err));
+      .catch(() => setError("An error occurred while logging in."));
   };
 
   return (
-    <div style={{height: "100vh-80px"}}>
-      <div className="login" style={{ maxWidth: "400px", margin: "50px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", backgroundColor: "#f9f9f9" , minHeight: "100vh-80px"}}>
-        <div className="text-danger" style={{ color: "red", marginBottom: "10px" }}>{error && error}</div>
-        <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: "15px" }}>
-            <label htmlFor="email" style={{ display: "block", marginBottom: "5px" }}>Email:</label>
-            <input
-              type="email"
-              id="email"
+    <ThemeProvider theme={theme}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="80vh"
+        sx={{ backgroundColor: theme.palette.background.default }}
+      >
+        <Paper elevation={4} sx={{ p: 4, width: 350, borderRadius: 3 }}>
+          <Typography variant="h4" align="center">
+            Login
+          </Typography>
+
+          <Typography variant="subtitle1" align="center">
+            Welcome back! Please log in to continue
+          </Typography>
+
+          <Divider sx={{ my: 0 }} />
+
+          {error && <Alert severity="error">{error}</Alert>}
+
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            display="flex"
+            flexDirection="column"
+            gap={2}
+            mt={2}
+          >
+            <TextField
+              label="Email"
               name="email"
               value={formData.email}
               onChange={handleChange}
+              fullWidth
               required
-              style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
             />
-          </div>
-          <div style={{ marginBottom: "15px" }}>
-            <label htmlFor="password" style={{ display: "block", marginBottom: "5px" }}>Password:</label>
-            <input
-              type="password"
-              id="password"
+
+            <TextField
+              label="Password"
               name="password"
+              type="password"
               value={formData.password}
               onChange={handleChange}
+              fullWidth
               required
-              style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }}
             />
-          </div>
-          <button type="submit" style={{ width: "100%", padding: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer", fontSize: "16px" }}>Login</button>
-        </form>
-      </div>
-    </div>
+
+            {/* Login Button */}
+            <Button
+              type="submit"
+              variant="text" // Use "text" variant to allow only the text color to change
+              fullWidth
+              sx={{ 
+                mt: 1, 
+                color: "#1976d2", // Set blue color to text
+                fontWeight: "bold", // Optional: Make the text bold
+                '&:hover': { 
+                  backgroundColor: 'rgba(25, 118, 210, 0.1)' // Add light blue hover effect
+                }
+              }}
+            >
+              Log In
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </ThemeProvider>
   );
 };
 
-export default ManagerLogin;
+export default CustomerLogin;

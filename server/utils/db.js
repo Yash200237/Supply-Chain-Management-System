@@ -3,12 +3,13 @@ import mysql from "mysql2";
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "MySQL123987",
-  database: "supply_chain_management_system",
+  password: "220039Amora@2929",
+  database: "scms",
 });
 
 con.connect(function (err) {
   if (err) {
+    console.log(err)
     console.log("connection error");
   } else {
     console.log("connected");

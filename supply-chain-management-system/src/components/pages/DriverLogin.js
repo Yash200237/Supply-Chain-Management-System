@@ -115,10 +115,16 @@ const CustomerLogin = () => {
             {/* Login Button */}
             <Button
               type="submit"
-              variant="contained"
-              color="primary"
+              variant="text" // Use "text" variant to allow only the text color to change
               fullWidth
-              sx={{ mt: 1 }}
+              sx={{ 
+                mt: 1, 
+                color: "#1976d2", // Set blue color to text
+                fontWeight: "bold", // Optional: Make the text bold
+                '&:hover': { 
+                  backgroundColor: 'rgba(25, 118, 210, 0.1)' // Add light blue hover effect
+                }
+              }}
             >
               Log In
             </Button>

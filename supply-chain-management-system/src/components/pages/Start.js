@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box, Button, Paper, Typography, Divider } from "@mui/material";
 import "./Start.css"; // Your custom CSS
-
+import { Link } from "react-router-dom";
 // Define a custom Material UI theme
 const theme = createTheme({
   palette: {
@@ -23,15 +23,16 @@ const Start = () => {
   const navigate = useNavigate();
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
+    <ThemeProvider  class="loginPage" theme={theme}>
+       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="80vh"
-        sx={{ backgroundColor: theme.palette.background.default }}
-      >
-        <Paper elevation={4} sx={{ p: 4, width: 350, borderRadius: 3 }}>
+        minHeight="70vh"
+        margin={"10vh"}
+        bgcolor={"white"}
+      > 
+        <Paper elevation={10} sx={{pt:8,pb:5,pl:12,pr:12, width: 500, borderRadius: 3, height: 600, }} >
           <Typography variant="h4" align="center">
             Login
           </Typography>
@@ -40,9 +41,9 @@ const Start = () => {
             Welcome, please log in to continue
           </Typography>
 
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ mt:5 }} />
 
-          <Box display="flex" flexDirection="column" gap={2} mt={3}>
+          <Box display="flex" flexDirection="column" gap={2} mt={6}>
             <Button
               variant="contained"
               disableElevation
@@ -69,9 +70,29 @@ const Start = () => {
             >
               Manager
             </Button>
+              <Typography variant="subtitle1" align="center"   sx={{ mt: 10 }}>
+            Don't have an account? Sign up first!
+            </Typography>
+            <Link to="/signup" className="button-link">
+  <Button
+    type="submit"
+    variant="text" // Use "text" variant for styling the text only
+    fullWidth
+    sx={{ 
+      mt: -9, 
+      color: "none", // Blue color
+      fontWeight: "bold", // Optional: Make the text bold
+      '&:hover': { 
+        backgroundColor: 'rgba(25, 118, 210, 0.1)' // Light blue hover effect
+      }
+    }}
+  >
+    Sign up
+  </Button>
+</Link>
           </Box>
         </Paper>
-      </Box>
+       </Box> 
     </ThemeProvider>
   );
 };
