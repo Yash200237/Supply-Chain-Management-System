@@ -36,6 +36,8 @@ const ManagerLogin = () => {
           localStorage.setItem("email", result.data.email); // Email
           localStorage.setItem("phoneNumber", result.data.phoneNumber); // Phone Number
           localStorage.setItem("city", result.data.city); // City
+          localStorage.setItem("managerStoreID", result.data.store_ID);
+          localStorage.setItem("role", result.data.role); // Store the role
 
           // Navigate to dashboard and pass state
           navigate("/managerdashboard", { state: { 
@@ -44,7 +46,8 @@ const ManagerLogin = () => {
             fullName: result.data.fullName,
             email: result.data.email,
             phoneNumber: result.data.phoneNumber,
-            city: result.data.city
+            city: result.data.city,
+            store_ID: result.data.store_ID,
           }  });
         } else {
           setError(result.data.Error);

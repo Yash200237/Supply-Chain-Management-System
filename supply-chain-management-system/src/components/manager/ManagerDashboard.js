@@ -14,11 +14,12 @@ const ManagerDashboard = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [city, setCity] = useState("");
+  const [storeID, setStoreID] = useState(null);
 
   useEffect(() => {
     console.log("Location state:", location.state);
     if (location.state) {
-      const { managerName, fullName, email, phoneNumber, city } =
+      const { managerName, fullName, email, phoneNumber, city, store_ID } =
         location.state;
 
       setManagerName(managerName);
@@ -26,31 +27,36 @@ const ManagerDashboard = () => {
       setEmail(email);
       setPhoneNumber(phoneNumber);
       setCity(city);
+      setStoreID(store_ID);
 
       localStorage.setItem("managerName", managerName);
       localStorage.setItem("fullName", fullName);
       localStorage.setItem("email", email);
       localStorage.setItem("phoneNumber", phoneNumber);
       localStorage.setItem("city", city);
+      localStorage.setItem("storeID", store_ID);
     } else {
       const storedName = localStorage.getItem("managerName");
       const storedFullName = localStorage.getItem("fullName");
       const storedEmail = localStorage.getItem("email");
       const storedPhoneNumber = localStorage.getItem("phoneNumber");
       const storedCity = localStorage.getItem("city");
+      const storedStoreID = localStorage.getItem("store_ID");
 
       if (
         storedName &&
         storedFullName &&
         storedEmail &&
         storedPhoneNumber &&
-        storedCity
+        storedCity &&
+        storedStoreID
       ) {
         setManagerName(storedName);
         setFullName(storedFullName);
         setEmail(storedEmail);
         setPhoneNumber(storedPhoneNumber);
         setCity(storedCity);
+        setStoreID(parseInt(storedStoreID));
       } else {
         navigate("/managerlogin");
       }
@@ -76,7 +82,7 @@ const ManagerDashboard = () => {
             />
             <h2>{fullName}</h2>
             <ul style={{ textAlign: "left", listStyleType: "none" }}>
-            <li style={{ paddingBottom: "10px" }}>
+              <li style={{ paddingBottom: "10px" }}>
                 <FaEnvelope /> {email}
               </li>
               <li style={{ paddingBottom: "10px" }}>
@@ -94,7 +100,10 @@ const ManagerDashboard = () => {
           <header>
             <h1>Welcome, {managerName}!</h1>
           </header>
-          <div className="content-blocks" style={{gridTemplateColumns: "repeat(2, 1fr)"}}>
+          <div
+            className="content-blocks"
+            style={{ gridTemplateColumns: "repeat(2, 1fr)" }}
+          >
             <div className="content-block registration">
               <h2>Registration</h2>
               <p>Register Drivers and Assistant drivers</p>
@@ -104,15 +113,20 @@ const ManagerDashboard = () => {
                 </Button>
               </Link>
             </div>
-            <div className="content-block train-schedule">
-              <h2>Schedule Orders to Trains</h2>
-              <p>Check train schedule and assign orders to trains</p>
-              <Link to="/trainschedule" className="button-link">
-                <Button variant="contained" disableElevation>
-                  Assign Orders
-                </Button>
-              </Link>
-            </div>
+
+            {/* Conditional rendering of "Schedule Orders to Trains" based on storeID */}
+            {storeID === 1 && (
+              <div className="content-block train-schedule">
+                <h2>Schedule Orders to Trains</h2>
+                <p>Check train schedule and assign orders to trains</p>
+                <Link to="/trainschedule" className="button-link">
+                  <Button variant="contained" disableElevation>
+                    Assign Orders
+                  </Button>
+                </Link>
+              </div>
+            )}
+
             <div className="content-block truck-schedule">
               <h2>Create Truck Schedules</h2>
               <p>Schedule trucks for order delivery.</p>
@@ -122,6 +136,7 @@ const ManagerDashboard = () => {
                 </Button>
               </Link>
             </div>
+
             <div className="content-block reports">
               <h2>Reports</h2>
               <p>

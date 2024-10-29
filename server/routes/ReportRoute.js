@@ -137,10 +137,31 @@ router.get("/products", (req, res) => {
   });
 });
 
+// Backend route to fetch items with most orders and total quantity
+router.get("/items-most-orders", (req, res) => {
+  const { manager_id, year, month } = req.query;
+
+  const query = `
+    SELECT ProductName, OrderCount, TotalQuantity
+    FROM ItemsMostOrders
+    WHERE manager_ID = ? AND OrderYear = ? AND OrderMonth = ?
+    ORDER BY OrderCount DESC LIMIT 10;
+  `;
+
+  con.query(query, [manager_id, year, month], (err, results) => {
+    if (err) {
+      console.error("Error fetching items with most orders:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json(results);
+  });
+});
+
 // Driver Working Hours
 router.get("/reports/workinghours/driverworkinghoursreport", (req, res) => {
   const { driver_ID, driver_name } = req.query;
-  let query = "SELECT driver_ID, CONCAT(first_name, ' ', last_name) AS driver_name, weekly_hours FROM Driver";
+  let query =
+    "SELECT driver_ID, CONCAT(first_name, ' ', last_name) AS driver_name, weekly_hours FROM Driver";
   const params = [];
 
   // Add filtering if driver_ID or driver_name is provided
@@ -162,37 +183,42 @@ router.get("/reports/workinghours/driverworkinghoursreport", (req, res) => {
 });
 
 // Endpoint to get Driver Assistant Working Hours
-router.get("/reports/workinghours/driverassistantworkinghoursreport", (req, res) => {
-  const { driverA_ID, driverA_name } = req.query;
-  let query = "SELECT driverA_ID, CONCAT(first_name, ' ', last_name) AS driverA_name, weekly_hours FROM DriverAssistant";
-  const params = [];
-  console.log("InBackend")
+router.get(
+  "/reports/workinghours/driverassistantworkinghoursreport",
+  (req, res) => {
+    const { driverA_ID, driverA_name } = req.query;
+    let query =
+      "SELECT driverA_ID, CONCAT(first_name, ' ', last_name) AS driverA_name, weekly_hours FROM DriverAssistant";
+    const params = [];
+    console.log("InBackend");
 
-  // Add filtering if driverA_ID or driverA_name is provided
-  if (driverA_ID) {
-    query += " WHERE driverA_ID = ?";
-    params.push(driverA_ID);
-  } else if (driverA_name) {
-    query += " WHERE CONCAT(first_name, ' ', last_name) LIKE ?";
-    params.push(`%${driverA_name}%`);
-  }
-
-  con.query(query, params, (err, results) => {
-    if (err) {
-      console.error("Error fetching driver assistant working hours:", err);
-      return res.status(500).json({ error: "Database error" });
+    // Add filtering if driverA_ID or driverA_name is provided
+    if (driverA_ID) {
+      query += " WHERE driverA_ID = ?";
+      params.push(driverA_ID);
+    } else if (driverA_name) {
+      query += " WHERE CONCAT(first_name, ' ', last_name) LIKE ?";
+      params.push(`%${driverA_name}%`);
     }
-    res.json(results);
-  });
-});
+
+    con.query(query, params, (err, results) => {
+      if (err) {
+        console.error("Error fetching driver assistant working hours:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+      res.json(results);
+    });
+  }
+);
 
 // Endpoint to get truck working hours report
 router.get("/reports/workinghours/truckworkinghoursreport", (req, res) => {
   const { truck_id, truck_plate_no } = req.query;
 
-  let query = "SELECT truck_Id, truck_plate_no, weekly_hours FROM Truckweeklyhours";
+  let query =
+    "SELECT truck_Id, truck_plate_no, weekly_hours FROM Truckweeklyhours";
   const params = [];
-  console.log("inBackend")
+  console.log("inBackend");
 
   if (truck_id) {
     query += " WHERE truck_Id = ?";
@@ -210,7 +236,5 @@ router.get("/reports/workinghours/truckworkinghoursreport", (req, res) => {
     res.json(results);
   });
 });
-
-
 
 export { router as reportRouter };
