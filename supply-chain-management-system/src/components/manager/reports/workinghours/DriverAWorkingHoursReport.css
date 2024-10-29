@@ -1,0 +1,70 @@
+/* Center the report container */
+.report-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* Style the title */
+  .report-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Style the filter container */
+  .filter-container {
+    margin-bottom: 20px;
+  }
+  
+  .filter-container input {
+    padding: 10px;
+    font-size: 1rem;
+    width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .filter-container input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Style for the table container */
+  .table-container {
+    display: flex;
+    margin-left: 200px;
+  }
+  
+  /* Shared styling for driver and assistant tables */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 800px;
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  /* Center and enlarge the chart */
+  .chart-container {
+    margin-top: 20px;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
