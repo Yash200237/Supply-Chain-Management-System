@@ -23,8 +23,11 @@ import ItemsMostOrdersReport from "./components/manager/reports/ItemsMostOrdersR
 import SalesByCityRouteReport from "./components/manager/reports/SalesByCityRouteReport";
 import WorkingHoursReport from "./components/manager/reports/WorkingHoursReport";
 import CustomerOrderReport from "./components/manager/reports/CustomerOrderReport";
+import DriverWorkingHoursReport from "./components/manager/reports/workinghours/DriverWorkingHoursReport";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import DriverAssistantWorkingHoursReport from "./components/manager/reports/workinghours/DriverAWorkingHoursReport";
+import TruckWorkingHoursReport from "./components/manager/reports/workinghours/TruckWorkingHoursReport";
 
 function App() {
   return (
@@ -66,6 +69,10 @@ function App() {
             element={<SalesByCityRouteReport />}
           />
           <Route path="/working-hours" element={<WorkingHoursReport />} />
+          <Route path="/working-hours/driverworkinghours" element={<DriverWorkingHoursReport />} />
+          <Route path="/working-hours/driverassistantworkinghours" element={<DriverAssistantWorkingHoursReport />} />
+          <Route path="/working-hours/truckworkinghours" element={<TruckWorkingHoursReport />} />
+
           <Route
             path="/customer-order-report"
             element={<CustomerOrderReport />}

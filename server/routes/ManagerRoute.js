@@ -6,34 +6,34 @@ const router = express.Router();
 
 router.post("/managerlogin", (req, res) => {
   const sql =
-    "SELECT * FROM manager WHERE email = ? AND password = SHA2(?, 256)";
-
+    "SELECT * FROM ManagerDetails WHERE email = ? AND password = SHA2(?, 256)";
+  
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
     if (err) {
       return res.json({ loginStatus: false, Error: "Query error" });
     }
 
     if (result.length > 0) {
-      const email = result[0].email;
-      const manager_ID = result[0].manager_ID; // Extract manager_ID
-      const managerName = result[0].first_name; // Extract first_name
-      const store_ID = result[0].store_ID; // Manager's store ID
-
-      // Generate the JWT token
+      const managerDetails = result[0]; // Get the first manager record from ManagerDetails
       const token = jwt.sign(
-        { role: "manager", email: email },
+        {
+          role: "manager",
+          email: managerDetails.Email,
+          manager_ID: managerDetails.manager_ID,
+        },
         "jwt_secret_key",
         { expiresIn: "1d" }
       );
-
       res.cookie("token", token);
 
-      // Return the manager's ID and name
       return res.json({
         loginStatus: true,
-        manager_ID: manager_ID,
-        managerName: managerName,
-        store_ID: store_ID, // Pass the store ID to the frontend
+        manager_ID: managerDetails.manager_ID,
+        managerName: managerDetails["First Name"], // First name for welcome message
+        fullName: managerDetails["Full Name"], // Full name for sidebar
+        email: managerDetails.Email,
+        phoneNumber: managerDetails["Phone Number"],
+        city: managerDetails.City,
       });
     } else {
       return res.json({ loginStatus: false, Error: "wrong email or password" });

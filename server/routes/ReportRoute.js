@@ -157,4 +157,84 @@ router.get("/items-most-orders", (req, res) => {
   });
 });
 
+// Driver Working Hours
+router.get("/reports/workinghours/driverworkinghoursreport", (req, res) => {
+  const { driver_ID, driver_name } = req.query;
+  let query =
+    "SELECT driver_ID, CONCAT(first_name, ' ', last_name) AS driver_name, weekly_hours FROM Driver";
+  const params = [];
+
+  // Add filtering if driver_ID or driver_name is provided
+  if (driver_ID) {
+    query += " WHERE driver_ID = ?";
+    params.push(driver_ID);
+  } else if (driver_name) {
+    query += " WHERE CONCAT(first_name, ' ', last_name) LIKE ?";
+    params.push(`%${driver_name}%`);
+  }
+
+  con.query(query, params, (err, results) => {
+    if (err) {
+      console.error("Error fetching driver working hours:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json(results);
+  });
+});
+
+// Endpoint to get Driver Assistant Working Hours
+router.get(
+  "/reports/workinghours/driverassistantworkinghoursreport",
+  (req, res) => {
+    const { driverA_ID, driverA_name } = req.query;
+    let query =
+      "SELECT driverA_ID, CONCAT(first_name, ' ', last_name) AS driverA_name, weekly_hours FROM DriverAssistant";
+    const params = [];
+    console.log("InBackend");
+
+    // Add filtering if driverA_ID or driverA_name is provided
+    if (driverA_ID) {
+      query += " WHERE driverA_ID = ?";
+      params.push(driverA_ID);
+    } else if (driverA_name) {
+      query += " WHERE CONCAT(first_name, ' ', last_name) LIKE ?";
+      params.push(`%${driverA_name}%`);
+    }
+
+    con.query(query, params, (err, results) => {
+      if (err) {
+        console.error("Error fetching driver assistant working hours:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+      res.json(results);
+    });
+  }
+);
+
+// Endpoint to get truck working hours report
+router.get("/reports/workinghours/truckworkinghoursreport", (req, res) => {
+  const { truck_id, truck_plate_no } = req.query;
+
+  let query =
+    "SELECT truck_Id, truck_plate_no, weekly_hours FROM Truckweeklyhours";
+  const params = [];
+  console.log("inBackend");
+
+  if (truck_id) {
+    query += " WHERE truck_Id = ?";
+    params.push(truck_id);
+  } else if (truck_plate_no) {
+    query += " WHERE truck_plate_no LIKE ?";
+    params.push(`%${truck_plate_no}%`);
+  }
+
+  con.query(query, params, (err, results) => {
+    if (err) {
+      console.error("Error fetching truck working hours:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+    res.json(results);
+  });
+});
+
 export { router as reportRouter };
