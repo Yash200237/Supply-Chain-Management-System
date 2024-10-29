@@ -40,7 +40,8 @@ SELECT
     email AS `Email`, 
     phone_number AS `Phone Number`, 
     s.city as "City",
-    password
+    password,
+    m.store_ID
 FROM manager m
 join store s on m.store_ID = s.store_ID; 
 
