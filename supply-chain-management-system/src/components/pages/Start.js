@@ -31,6 +31,7 @@ const Start = () => {
         minHeight="70vh"
         margin={"10vh"}
         bgcolor={"white"}
+      
       > 
         <Paper elevation={10} sx={{pt:8,pb:5,pl:12,pr:12, width: 500, borderRadius: 3, height: 600, }} >
           <Typography variant="h4" align="center">
