@@ -98,6 +98,7 @@ CREATE TABLE `TruckSchedule` (
   `time` TIME NOT NULL,
   `date` DATE NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
+  `filled_capacity` DECIMAL(4,2) DEFAULT 0,
   `status` ENUM('scheduled','on progress','completed'),
   PRIMARY KEY (`schedule_ID`),
   FOREIGN KEY (`driverA_ID`) REFERENCES `DriverAssistant`(`driverA_ID`),
