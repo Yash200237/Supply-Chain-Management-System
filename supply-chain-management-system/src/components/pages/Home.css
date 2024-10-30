@@ -6,9 +6,10 @@
 
 .left-half {
   position: relative;
-  flex: 1; /* Take half of the available space */
+  /*flex:70%; /* Take half of the available space */
   overflow: hidden; /* Hide any overflow */
   height: 100vh; /* Set height to full viewport height */
+  width: 65%;
 }
 
 .background-image {
@@ -30,7 +31,7 @@
   flex-direction: column;
   justify-content: center; /* Center vertically */
   align-items: center; /* Center horizontally */
-  padding: 20px; /* Add some padding */
+  padding:20px; /* Add some padding */
   text-align: center; /* Center text */
 }
 
@@ -41,15 +42,15 @@
   flex-direction: column;
   justify-content: center; /* Center content vertically */
   align-items: center; /* Center content horizontally */
-  padding: 20px; /* Add some padding */
+  padding:0px; /* Add some padding */
 }
 
 .button-group {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 0px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 
 .primary-buttons .btn {
