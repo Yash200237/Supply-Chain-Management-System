@@ -1,0 +1,77 @@
+.dashboard-container {
+  display: flex;
+  height: calc(100vh - 70px);
+}
+
+.driver-details {
+  width: 250px; /* Match NavBar's width */
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-right: 2px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0; /* Keeps it aligned with NavBar when scrolling */
+}
+
+.driver-details h2 {
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 30px;
+}
+
+.content {
+  flex: 1;
+  padding: 40px;
+}
+
+.greeting {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.schedule-section h2 {
+  font-size: 1.8em;
+  color: #555;
+  margin: 20px 0;
+}
+
+.trip-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.trip-table th,
+.trip-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 1em;
+}
+
+.trip-table th {
+  background-color: #f2f2f2;
+  color: #555;
+  font-weight: bold;
+}
+
+.trip-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.trip-table tr.completed-row {
+  background-color: #e0e0e0;
+}
+
+.trip-table td {
+  color: #333;
+}

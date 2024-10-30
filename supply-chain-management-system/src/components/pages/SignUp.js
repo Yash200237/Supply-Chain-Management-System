@@ -1,5 +1,6 @@
+// Signup.js
 import React, { useState } from "react";
-import "./SignUp.css"; // Assuming you'll create a CSS file for styling
+import "./SignUp.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -64,8 +65,6 @@ const Signup = () => {
         .post("http://localhost:5000/auth/signup", formData)
         .then((res) => {
           if (res.data.signupStatus) {
-            // If signup is successful, display success message and reset the form
-            console.log("Signup data:", formData);
             setSuccessMessage("Signup successful!");
             setFormData({
               firstname: "",
@@ -82,7 +81,6 @@ const Signup = () => {
           }
         })
         .catch((err) => {
-          // Check if the error response from the backend contains an error message
           if (err.response && err.response.data && err.response.data.Error) {
             setErrors({ form: err.response.data.Error });
           } else {
@@ -91,7 +89,7 @@ const Signup = () => {
                 "An unexpected error occurred during signup. Please try again later.",
             });
           }
-          setSuccessMessage(""); // Clear success message if there's an error
+          setSuccessMessage("");
         });
     }
   };
@@ -100,13 +98,11 @@ const Signup = () => {
     <div className="signup-container">
       <h2>Signup</h2>
       {successMessage && <p className="success-message">{successMessage}</p>}
-      {errors.form && <p style={{ color: "red" }}>{errors.form}</p>}
-      {errors.signupError && (
-        <p style={{ color: "red" }}>{errors.signupError}</p>
-      )}
+      {errors.form && <p className="error-message">{errors.form}</p>}
+      {errors.signupError && <p className="error-message">{errors.signupError}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="form-grid">
+        <div className="form-field">
           <label htmlFor="firstname">First Name:</label>
           <input
             type="text"
@@ -116,11 +112,9 @@ const Signup = () => {
             onChange={handleChange}
             required
           />
-          {errors.firstname && (
-            <span className="error">{errors.firstname}</span>
-          )}
+          {errors.firstname && <span className="error">{errors.firstname}</span>}
         </div>
-        <div>
+        <div className="form-field">
           <label htmlFor="lastname">Last Name:</label>
           <input
             type="text"
@@ -132,7 +126,7 @@ const Signup = () => {
           />
           {errors.lastname && <span className="error">{errors.lastname}</span>}
         </div>
-        <div>
+        <div className="form-field">
           <label htmlFor="username">Username:</label>
           <input
             type="text"
@@ -144,7 +138,7 @@ const Signup = () => {
           />
           {errors.username && <span className="error">{errors.username}</span>}
         </div>
-        <div>
+        <div className="form-field">
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -156,7 +150,7 @@ const Signup = () => {
           />
           {errors.email && <span className="error">{errors.email}</span>}
         </div>
-        <div>
+        <div className="form-field">
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -168,8 +162,7 @@ const Signup = () => {
           />
           {errors.password && <span className="error">{errors.password}</span>}
         </div>
-
-        <div>
+        <div className="form-field">
           <label htmlFor="address">Address:</label>
           <input
             type="text"
@@ -181,8 +174,7 @@ const Signup = () => {
           />
           {errors.address && <span className="error">{errors.address}</span>}
         </div>
-
-        <div>
+        <div className="form-field">
           <label htmlFor="closestcity">Closest City:</label>
           <select
             id="closestcity"
@@ -191,8 +183,7 @@ const Signup = () => {
             onChange={handleChange}
             required
           >
-            <option value="">Select your closest city</option>{" "}
-            {/* Default option */}
+            <option value="">Select your closest city</option>
             <option value="Kandy">Kandy</option>
             <option value="Colombo">Colombo</option>
             <option value="Negombo">Negombo</option>
@@ -201,10 +192,9 @@ const Signup = () => {
             <option value="Jaffna">Jaffna</option>
             <option value="Trincomalee">Trincomalee</option>
           </select>
-          {errors.city && <span className="error">{errors.city}</span>}
+          {errors.closestcity && <span className="error">{errors.closestcity}</span>}
         </div>
-
-        <div>
+        <div className="form-field">
           <label htmlFor="phone">Phone Number:</label>
           <input
             type="text"
@@ -216,8 +206,7 @@ const Signup = () => {
           />
           {errors.phone && <span className="error">{errors.phone}</span>}
         </div>
-
-        <div>
+        <div className="form-field">
           <label htmlFor="customerType">Customer Type:</label>
           <select
             id="customerType"
@@ -226,18 +215,15 @@ const Signup = () => {
             onChange={handleChange}
             required
           >
-            <option value="">Select customer type</option>{" "}
-            {/* Default option */}
+            <option value="">Select customer type</option>
             <option value="retailer">Retailer</option>
             <option value="wholesaler">Wholesaler</option>
             <option value="end customer">End Customer</option>
           </select>
-          {errors.customerType && (
-            <span className="error">{errors.customerType}</span>
-          )}
+          {errors.customerType && <span className="error">{errors.customerType}</span>}
         </div>
 
-        <button type="submit">Signup</button>
+        <button type="submit" className="submit-button">Signup</button>
       </form>
     </div>
   );

@@ -47,6 +47,33 @@ join store s on m.store_ID = s.store_ID;
 
 ------------------------------------------------------------------------------------------------
 
+CREATE OR REPLACE VIEW DriverDetails AS
+SELECT 
+    email AS `Email`, 
+    password, 
+    first_name AS `First Name`, 
+    CONCAT(first_name, ' ', last_name) AS `Full Name`, 
+    phone_number AS `Phone Number`,
+    driver_ID AS `driver_ID`, 
+    'driver' AS `Role`,
+    city as 'City'
+FROM 
+    driver 
+UNION 
+SELECT 
+    email AS `Email`, 
+    password,
+    first_name AS `First Name`, 
+    CONCAT(first_name, ' ', last_name) AS `Full Name`, 
+    phone_number AS `Phone Number`,
+    driverA_ID AS `driver_ID`, 
+    'driverassistant' AS `Role`,
+    city as 'City'
+FROM 
+    driverassistant;
+
+----------------------------------------------------------------------------------------------------------
+
 
 CREATE OR REPLACE VIEW RouteSpecificSales AS
 SELECT 
@@ -101,15 +128,40 @@ CREATE
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 
     SQL SECURITY DEFINER
-VIEW `scms`.`truckweeklyhours` AS
+VIEW `supply_chain_management_system`.`truckweeklyhours` AS
     SELECT 
         `t`.`truck_Id` AS `truck_id`,
         `t`.`truck_plate_no` AS `truck_plate_no`,
         SUM(`r`.`duration`) AS `weekly_hours`
     FROM
-        ((`scms`.`truck` `t`
-        JOIN `scms`.`truckschedule` `ts` ON ((`t`.`truck_Id` = `ts`.`truck_Id`)))
-        JOIN `scms`.`route` `r` ON ((`ts`.`route_ID` = `r`.`route_ID`)))
+        ((`supply_chain_management_system`.`truck` `t`
+        JOIN `supply_chain_management_system`.`truckschedule` `ts` ON ((`t`.`truck_Id` = `ts`.`truck_Id`)))
+        JOIN `supply_chain_management_system`.`route` `r` ON ((`ts`.`route_ID` = `r`.`route_ID`)))
     WHERE
         (`ts`.`date` BETWEEN (CURDATE() - INTERVAL 7 DAY) AND CURDATE())
-    GROUP BY `t`.`truck_Id` , `t`.`truck_plate_no`
+    GROUP BY `t`.`truck_Id` , `t`.`truck_plate_no`;
+
+
+    ---------------------------------------------------------------------------------------------
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost`
+    SQL SECURITY DEFINER
+VIEW supply_chain_management_system.driverschedules AS
+    SELECT 
+        ts.schedule_ID AS schedule_ID,
+        ts.driver_ID AS driver_ID,
+        ts.date AS trip_date,
+        ts.time AS trip_time,
+        t.truck_Id AS truck_Id,
+        t.truck_plate_no AS truck_number_plate,
+        da.driverA_ID AS driverA_ID,
+        CONCAT(da.first_name, ' ', da.last_name) AS driver_assistant_name,
+        r.route_ID AS route_ID,
+        r.path_description AS path_description,
+        ts.status AS status
+    FROM
+        (((supply_chain_management_system.truckschedule ts
+        JOIN supply_chain_management_system.truck t ON ((ts.truck_Id = t.truck_Id)))
+        JOIN supply_chain_management_system.driverassistant da ON ((ts.driverA_ID = da.driverA_ID)))
+        JOIN supply_chain_management_system.route r ON ((ts.route_ID = r.route_ID)))
