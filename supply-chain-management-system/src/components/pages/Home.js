@@ -12,7 +12,7 @@ function Home() {
       <div className="left-half" >
         <img src={frontpage} alt="Front Page" className="background-image" />
         <div className="overlay">
-          <h1 className="title">Welcome to SmartDelivery!</h1>
+          <h1 className="title">Welcome to SMARTDELIVERY!</h1>
           <p className="description">
             <strong>SmartDelivery</strong>, your trusted partner in supply chain
             management and product procurement. We specialize in optimizing and

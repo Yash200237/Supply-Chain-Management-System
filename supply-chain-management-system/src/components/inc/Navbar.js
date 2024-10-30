@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaInfoCircle, FaHome, FaUser} from "react-icons/fa"; // Icons for style
-
-
+import img1 from "../../img/logo.png"
+import "./Navbar.css"
 function NavBar() {
   return (
     <>
@@ -13,10 +13,12 @@ function NavBar() {
     }
     `}
     </style>
-    <nav className="navbar navbar-expand-lg bg-dark navbar-dark py-3 shadow">
+    <nav className="navbar navbar-expand-lg bg-dark navbar-dark py-4 shadow">
       <div className="container">
         <Link to="/" className="navbar-brand fs-3 fw-bold text-light">
-          SmartDelivery
+        <img class="logo" src={img1} alt="Logo" />
+  
+        
         </Link>
         <button
           className="navbar-toggler"
