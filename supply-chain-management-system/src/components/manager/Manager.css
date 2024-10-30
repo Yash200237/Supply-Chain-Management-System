@@ -8,9 +8,9 @@
 
 .manager-details {
   width: 250px; /* Match NavBar's width */
-  background-color: #f4f4f4;
+  background-color: #ffe1d2;
   padding: 20px;
-  border-right: 2px solid #ddd;
+  border-right: 2px solid #ffe1d2;
   display: flex;
   flex-direction: column;
   justify-content: center;

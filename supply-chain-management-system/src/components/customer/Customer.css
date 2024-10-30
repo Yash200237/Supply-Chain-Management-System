@@ -1,5 +1,7 @@
 .dashboard-container {
     display: flex;
+    background:white;
+    
     height: calc(100vh - 70px); /* Adjust height to account for the NavBar's height */
     /* padding-top: 70px; Offset content by the height of the NavBar */
     
@@ -7,9 +9,9 @@
 
 .customer-details {
     width: 250px; /* Match NavBar's width */
-    background-color: #f4f4f4;
+    background-color:#ffe1d2;
     padding: 20px;
-    border-right: 2px solid #ddd;
+    border-right: 2px solid #b7dcdc;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,8 +30,8 @@
 }
 
 .profile-picture {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     margin-bottom: 30px;
   }
@@ -42,6 +44,7 @@
 .dashboard {
     text-align: center;
     margin: 0;
+  
 
 }
 
@@ -55,22 +58,25 @@ header {
     align-items: stretch;   /* Ensure blocks stretch to fill container */
     gap: 20px;              /* Space between blocks */
     margin-top: 20px;
+    
+
 }
 
 .content-block {
-    background: #f9f9f9; /* Light background for blocks */
+    background: white; /* Light background for blocks */
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     width: 100%; /* Make the width 100% to fill the container */
     max-width: 1000px; /* Optional: Set a max width for larger screens */
     margin: 0 auto; /* Center the block horizontally */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s;
 }
 
 .content-block:hover {
-    transform: scale(1.02); /* Scale effect on hover */
+    transform: scale(1.02);
+    color:black; /* Scale effect on hover */
 }
 
 .button {
@@ -79,16 +85,17 @@ header {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 1000s ease;
 }
 
 .button {
-    background-color: #007bff; /* Blue for Track Delivery */
+    background-color: #f85606; /* Blue for Track Delivery */
     color: white;
 }
 
 .button:hover {
-    opacity: 0.9; /* Slight opacity change on hover */
+    opacity: 0.4;
+    color:#ffe1d2; /* Slight opacity change on hover */
 }
 
 .product-list {
@@ -124,27 +131,30 @@ header {
     cursor: pointer;
     width: 100%; /* This will make the button take up the full width of its container */
     max-width: 200px; /* You can set a maximum width if you don't want it too wide */
+    transition: background-color 1000s ease
 }
 
 .order-button:hover {
-    opacity: 0.9; /* Slight opacity change on hover */
+    opacity: 0.9;
+    color:#ffe1d2; /* Slight opacity change on hover */
 }
 
 .product-list-header {
     display: flex;
     justify-content: center; /* Centers the content horizontally */
     align-items: center; /* Centers the content vertically */
-    gap: 20px; /* Adds space between the heading and the cart icon */
+    gap: 20px;
+     /* Adds space between the heading and the cart icon */
 }
 
 .cart-icon {
     font-size: 24px;
     cursor: pointer;
-    color: #000; /* You can change the color */
+    color: #f85606; /* You can change the color */
 }
 
 .cart-icon:hover {
-    color: #007bff; /* Add a hover effect */
+    color: #ffe1d2; /* Add a hover effect */
 }
 
 .product-image {

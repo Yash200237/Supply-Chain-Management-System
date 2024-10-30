@@ -91,6 +91,7 @@ const CustomerDashboard = () => {
 
   return (
     <div className="dashboard" style={{ flex: "1" }}>
+      
       <div className="dashboard-container">
         {/* Left side: Customer Details */}
         <div className="customer-details">

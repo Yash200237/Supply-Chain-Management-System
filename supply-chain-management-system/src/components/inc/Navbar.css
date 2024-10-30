@@ -3,11 +3,11 @@
   top:0px; /* Align to the top */
   left: 30px; /* Align to the left */
   width: 140px; /* Adjust size as needed */
-  height: 90px; /* Maintain aspect ratio */
+  height: 100px; /* Maintain aspect ratio */
   max-height: 100%; /* Prevent overflow */
   object-fit: cover; /* Keep the image aspect ratio intact */
   margin: 0; /* Remove any margin */
-  padding:0.7%; /* Ensure no padding interferes */
+  padding:0.15%; /* Ensure no padding interferes */
 }
 
 
