@@ -42,7 +42,7 @@ function NavBar() {
     <style type="text/css">
     {`
     .navbar {
-      background-color: Blue !important;
+      background-color: #f85606 !important;
     }
     `}
     </style>

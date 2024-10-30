@@ -14,6 +14,8 @@ import {
 import img1 from "../../images/logo2.png"; // Import the logo image
 import "./SignUp"
 import { Link } from "react-router-dom";
+import { orange } from '@mui/material/colors';
+
 
 
 
@@ -170,8 +172,9 @@ const CustomerLogin = () => {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            
             sx={{ mt: 2 }}
+            style={{ backgroundColor: "#f85606", color: "#fff" }}
           >
             Login
           </Button>
@@ -188,12 +191,13 @@ const CustomerLogin = () => {
           fullWidth
           sx={{ 
           mt: 0, 
-          color: "none", // Blue color
+           // Blue color
             fontWeight: "bold", // Optional: Make the text bold
           '&:hover': { 
           backgroundColor: 'rgba(25, 118, 210, 0.1)' // Light blue hover effect
         }
         }}
+        style={{ backgroundColor: "#fff", color:"#f85606" }}
         >
         Sign up
       </Button>
