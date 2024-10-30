@@ -2,48 +2,48 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js"; // Import CryptoJS for hashing
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Alert,
+  Divider,
+} from "@mui/material";
+import img1 from "../../images/logo2.png"; // Import the logo image
 
 const CustomerLogin = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
-  // Helper to hash the customer ID
-  const hashCustomerID = (customerID) => {
-    return CryptoJS.SHA256(String(customerID)).toString();
-  };
+  const hashCustomerID = (customerID) =>
+    CryptoJS.SHA256(String(customerID)).toString();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login form data:", formData); // Debugging
+    console.log("Login form data:", formData);
 
     axios
       .post("http://localhost:5000/customerlogin", formData)
       .then((result) => {
-        console.log("API Response:", result.data); // Debugging API response
+        console.log("API Response:", result.data);
         if (result.data.loginStatus) {
           const token = result.data.token;
-
-          // Decode JWT to extract customer ID
           const decodedToken = JSON.parse(atob(token.split(".")[1]));
           const customerID = decodedToken.customer_ID;
           const hashedCustomerID = hashCustomerID(customerID);
+
           console.log("Customer ID:", customerID);
           console.log("Hashed customer ID:", hashedCustomerID);
 
-          // Check or initialize the customer's cart in localStorage
           let storedCart = localStorage.getItem(`cart_${hashedCustomerID}`);
           if (!storedCart) {
             console.log(`Initialized a new cart for user: ${hashedCustomerID}`);
@@ -56,10 +56,8 @@ const CustomerLogin = () => {
             console.log("Cart loaded:", JSON.parse(storedCart));
           }
 
-          // Set the token in cookies
           document.cookie = `token=${token}; path=/;`;
 
-          // Store customer details in localStorage
           localStorage.setItem("customer_ID", result.data.customer_ID);
           localStorage.setItem("role", result.data.role);
           localStorage.setItem("customerName", result.data.customerName);
@@ -69,7 +67,6 @@ const CustomerLogin = () => {
           localStorage.setItem("address", result.data.address);
           localStorage.setItem("city", result.data.city);
 
-          // Navigate to the dashboard with state
           navigate("/customerdashboard", {
             state: {
               customerName: result.data.customerName,
@@ -92,89 +89,91 @@ const CustomerLogin = () => {
   };
 
   return (
-    <div
-      className="login"
-      style={{
-        maxWidth: "400px",
-        margin: "109px auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-        backgroundColor: "#f9f9f9",
-      }}
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="80vh"
+      bgcolor="white"
+
     >
-      <div
-        className="text-danger"
-        style={{ color: "red", marginBottom: "10px" }}
+      <Paper
+        elevation={8}
+        sx={{
+          p: 4,
+          width: 400,
+          borderRadius: 3,
+          backgroundColor: "#fff",
+        }}
       >
-        {error && error}
-      </div>
-      <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>
-        Login
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label
-            htmlFor="email"
-            style={{ display: "block", marginBottom: "5px" }}
-          >
-            Email:
-          </label>
-          <input
-            type="email"
+        {/* Logo at the top center */}
+        <Box display="flex" justifyContent="center" mb={2}>
+          <img src={img1} alt="Logo" style={{ maxWidth: "80px", height: "60px" }} />
+        </Box>
+
+        <Typography 
+        variant="h4" 
+        align="center" 
+        gutterBottom
+        sx={{mb:0}}>
+          Login
+        </Typography>
+
+        <Typography
+          variant="subtitle1"
+          align="center"
+          sx={{ color: "text.secondary", mb: 2}}
+        >
+          Welcome, please login to continue
+        </Typography>
+
+        <Divider sx={{ my: 0 }} />
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <Divider sx={{ mb: 3 }} />
+
+        <form onSubmit={handleSubmit}>
+          <TextField
+            fullWidth
             id="email"
             name="email"
+            label="Email"
             value={formData.email}
             onChange={handleChange}
             required
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
+            margin="none"
+            sx={{ mb: 2 }}
           />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label
-            htmlFor="password"
-            style={{ display: "block", marginBottom: "5px" }}
-          >
-            Password:
-          </label>
-          <input
-            type="password"
+          <TextField
+            fullWidth
             id="password"
             name="password"
+            label="Password"
+            type="password"
             value={formData.password}
             onChange={handleChange}
             required
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
+            margin="none"
+            sx={{ mb: 2 }}
           />
-        </div>
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Login
-        </button>
-      </form>
-    </div>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+          >
+            Login
+          </Button>
+        </form>
+      </Paper>
+    </Box>
   );
 };
 
