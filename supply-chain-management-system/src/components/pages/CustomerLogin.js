@@ -95,6 +95,7 @@ const CustomerLogin = () => {
       alignItems="center"
       minHeight="80vh"
       bgcolor="white"
+
     >
       <Paper
         elevation={8}

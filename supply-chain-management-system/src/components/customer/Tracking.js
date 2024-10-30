@@ -28,8 +28,8 @@ const Tracking = () => {
   }, [fetchOrders]); // Pass the memoized fetchOrders function as a dependency
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ color: "#333", textAlign: "center" }}>Your Orders</h1>
+    <div style={{ paddingLeft: "20px", paddingRight: "20px", fontFamily: "Arial, sans-serif" , minHeight: "80vh"}}>
+      <h1 style={{ color: "#333", textAlign: "center" , paddingTop: "20px"}}>Your Orders</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}{" "}
       {/* Display error message if any */}
       {orders.length > 0 ? (

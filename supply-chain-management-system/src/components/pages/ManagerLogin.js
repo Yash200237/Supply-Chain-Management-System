@@ -58,7 +58,7 @@ const ManagerLogin = () => {
 
   return (
     <div style={{height: "100vh-80px"}}>
-      <div className="login" style={{ maxWidth: "400px", margin: "50px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", backgroundColor: "#f9f9f9" , minHeight: "100vh-80px"}}>
+      <div className="login" style={{ maxWidth: "400px", margin: "109px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", backgroundColor: "#f9f9f9" , minHeight: "100vh-80px"}}>
         <div className="text-danger" style={{ color: "red", marginBottom: "10px" }}>{error && error}</div>
         <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>Login</h2>
         <form onSubmit={handleSubmit}>
