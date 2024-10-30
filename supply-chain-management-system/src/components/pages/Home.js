@@ -1,10 +1,10 @@
 // Home.js
 import React from "react";
 import CustomerLogin from "./CustomerLogin";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import "./Home.css"; // Import the CSS file
 import frontpage from "../../images/frontpage.jpeg"; // Import the front page image
-import { Button } from "@mui/material";
+//import { Button } from "@mui/material";
 function Home() {
   return (
     <div className="home-container">
