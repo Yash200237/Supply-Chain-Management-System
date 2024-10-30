@@ -147,6 +147,7 @@ CREATE TABLE `Train` (
   `time` TIME NOT NULL,
   `day` VARCHAR(15),
   `capacity` NUMERIC(8,2),
+  `remainingCapacity` NUMERIC(8,2),
   `destination` VARCHAR(50),
   PRIMARY KEY (`train_ID`)
 );
@@ -155,6 +156,7 @@ CREATE TABLE `TrainSchedule` (
   `train_ID` INT UNSIGNED NOT NULL,
   `order_ID` INT UNSIGNED NOT NULL,
   `manager_ID` INT UNSIGNED NOT NULL,
+  `departureDate` DATE,
   FOREIGN KEY (`train_ID`) REFERENCES `Train`(`train_ID`),
   FOREIGN KEY (`manager_ID`) REFERENCES `Manager`(`manager_ID`)
 );
