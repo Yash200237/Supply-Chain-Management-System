@@ -99,7 +99,7 @@ router.get("/driverdetails/:driverID", (req, res) => {
   const driverID = req.params.driverID; // Get driver ID from request parameters
 
   // SQL query to fetch the driver's details
-  const sql = `SELECT * FROM DriverDetails WHERE driver_ID = ?`;
+  const sql = `SELECT * FROM DriverDetails WHERE Email = ?`;
 
   // Execute the query
   con.query(sql, [driverID], (err, results) => {

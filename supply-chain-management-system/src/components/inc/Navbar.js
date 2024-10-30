@@ -28,6 +28,7 @@ function NavBar() {
       localStorage.removeItem("driver_ID");
       localStorage.removeItem("role");
       localStorage.removeItem("token");
+      localStorage.removeItem("email");
     } else if (userRole === "manager") {
       localStorage.removeItem("managerName");
       localStorage.removeItem("manager_ID");

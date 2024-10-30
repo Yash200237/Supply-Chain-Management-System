@@ -31,6 +31,7 @@ const DriverLogin = () => {
           localStorage.setItem("driverName", result.data.driverName);
           localStorage.setItem("token", result.data.token); // Store token
           localStorage.setItem("role", result.data.role);
+          localStorage.setItem("email", result.data.email);
 
           navigate("/driverdashboard", {
             state: {
