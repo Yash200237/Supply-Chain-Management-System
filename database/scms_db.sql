@@ -150,6 +150,7 @@ CREATE TABLE `Train` (
   `day` VARCHAR(15),
   `capacity` NUMERIC(8,2),
   `destination` VARCHAR(50),
+  `remainingCapacity` NUMERIC(8,2),
   PRIMARY KEY (`train_ID`)
 );
 

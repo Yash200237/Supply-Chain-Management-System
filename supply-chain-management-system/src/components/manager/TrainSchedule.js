@@ -24,6 +24,11 @@ import "react-circular-progressbar/dist/styles.css";
 import AnimatedProgressProvider from "./AnimatedProgressProvider";
 import { easeQuadInOut } from "d3-ease";
 import LinearProgress from "@mui/material/LinearProgress";
+import TextField from '@mui/material/TextField';
+
+
+
+
 
 const columns = [
   { id: "train_ID", label: "Train ID", minWidth: 170, align: "left" },
@@ -46,6 +51,7 @@ export default function TrainScheduleTable() {
   const [filledPercentage, setFilledPercentage] = useState({});
   const [noOrdersDialogOpen, setNoOrdersDialogOpen] = useState(false); // State to control dialog
   const [capacityAlertOpen, setCapacityAlertOpen] = useState(false); // State to control capacity alert
+  const [departureDates, setDepartureDates] = useState({}); // hold the selected departure date
 
   useEffect(() => {
     // Fetch all data on component mount
@@ -329,6 +335,17 @@ export default function TrainScheduleTable() {
                     </MenuItem>
                   ))}
                 </Select>
+                        {/* Date Selector */}
+                <TextField
+                  label="Select Departure Date"
+                  type="date"
+                  value={departureDates[city] || ""}
+                  onChange={(e) => setDepartureDates({ ...departureDates, [city]: e.target.value })}
+                  InputLabelProps={{ shrink: true }}
+                  style={{ marginTop: 15, width: '100%' }}
+                />
+                
+
                 <Tooltip title={pendingOrders[city] === 0 ? "No Pending Orders" : ""}>
                   <span>
                     <Button
