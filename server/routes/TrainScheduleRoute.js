@@ -1,6 +1,6 @@
 import express from "express";
 import con from "../utils/db.js";
-import schedule from "node-schedule";
+import cron from "node-cron"; // Import node-cron
 
 const router = express.Router();
 
@@ -87,10 +87,9 @@ router.get("/api/PendingOrders", (req, res) => {
   });
 });
 
-
 // Route to assign orders to a train
 router.post("/api/AssignOrders", (req, res) => {
-  const { city, train_ID } = req.body;
+  const { city, train_ID, departureDate } = req.body;
   const manager_ID = 1; // Assume Kandy manager ID is hard-coded for now
 
   // Check pending orders for the city
@@ -119,7 +118,8 @@ router.post("/api/AssignOrders", (req, res) => {
       FROM \`order\` o
       INNER JOIN customer c ON o.customer_id = c.customer_id
       WHERE c.city = ? 
-        AND o.status_ID = 1;
+        AND o.status_ID = 1
+      ORDER BY o.date ASC;
     `;
 
     con.query(fetchPendingOrdersSql, [city], (err, orders) => {
@@ -158,29 +158,27 @@ router.post("/api/AssignOrders", (req, res) => {
         if (trainDepartureDateTime - currentDateTime < twentyFourHoursInMillis) {
           return res.status(400).json({ error: "Cannot assign orders within 24 hours before train departure." });
         }
-        
+
         // Order assignment logic continues if within valid period
         const assignedOrders = [];
         for (const order of orders) {
           if (order.total_volume <= remainingCapacity) {
             assignedOrders.push(order.order_id);
             remainingCapacity -= order.total_volume;
-            console.log(`Assigned order ${order.order_id} with volume ${order.total_volume}. Remaining capacity: ${remainingCapacity}`);
           }
         }
 
         if (assignedOrders.length === 0) {
           return res.status(400).json({ error: "No orders can be assigned to this train due to capacity constraints" });
         }
-        console.log(`Final remaining capacity after assignment: ${remainingCapacity}`); // Log final capacity after assignment
 
         // Insert assigned orders into TrainSchedule
         const insertTrainScheduleSql = `
-          INSERT INTO TrainSchedule (train_ID, order_ID, manager_ID)
+          INSERT INTO TrainSchedule (train_ID, order_ID, manager_ID, departureDate)
           VALUES ?;
         `;
 
-        const trainScheduleValues = assignedOrders.map(order_id => [train_ID, order_id, manager_ID]);
+        const trainScheduleValues = assignedOrders.map(order_id => [train_ID, order_id, manager_ID, departureDate]);
 
         con.query(insertTrainScheduleSql, [trainScheduleValues], (err) => {
           if (err) {
@@ -219,7 +217,8 @@ router.post("/api/AssignOrders", (req, res) => {
                 message: "Orders assigned successfully", 
                 assignedOrders,
                 trainDepartureDay,
-                trainDepartureTime
+                trainDepartureTime,
+                departureDate
               });
             });
           });
@@ -237,46 +236,41 @@ router.get("/api/TrainFilledPercentage", (req, res) => {
     FROM Train t;
   `;
   
-  con.query(query, (err, results) => {
+  con.query(query, (err, result) => {
     if (err) {
-      return res.status(500).json({ error: err.message });
+      console.error("Error fetching filled percentages: ", err);
+      return res.status(500).json({ error: "Database error" });
     }
-    res.json(results);
+    res.json(result);
   });
 });
 
-// Scheduled task to reset train capacity at departure time
-schedule.scheduleJob("* * * * *", () => {  // This checks every minute
-  const fetchTrainSchedulesSql = `
-    SELECT train_ID, capacity, day, time 
-    FROM Train
+// Cron job to reset remaining capacity for trains leaving for a trip
+cron.schedule('* * * * *', () => {
+  const currentDateTime = new Date();
+  const sql = `
+    SELECT DISTINCT ts.train_ID 
+    FROM TrainSchedule ts
+    JOIN Train t ON ts.train_ID = t.train_ID
+    WHERE CONCAT(ts.departureDate, ' ', t.time) < NOW();
   `;
   
-  con.query(fetchTrainSchedulesSql, (err, trains) => {
+  con.query(sql, [currentDateTime], (err, results) => {
     if (err) {
-      console.error("Error fetching train schedules for resetting capacity: ", err);
+      console.error("Error fetching trains for reset: ", err);
       return;
     }
-
-    trains.forEach((train) => {
-      const trainDepartureDateTime = new Date(`${train.day}T${train.time}`);
-      const currentDateTime = new Date();
-
-      if (trainDepartureDateTime <= currentDateTime) {
-        const resetCapacitySql = `
-          UPDATE Train 
-          SET remainingCapacity = capacity
-          WHERE train_ID = ?;
-        `;
-        
-        con.query(resetCapacitySql, [train.train_ID], (err) => {
-          if (err) {
-            console.error("Error resetting remaining capacity for train: ", train.train_ID, err);
-          } else {
-            console.log("Remaining capacity reset for train:", train.train_ID);
-          }
-        });
-      }
+    results.forEach(train => {
+      const resetCapacitySql = `
+        UPDATE Train
+        SET remainingCapacity = capacity
+        WHERE train_ID = ?;
+      `;
+      con.query(resetCapacitySql, [train.train_ID], (err) => {
+        if (err) {
+          console.error("Error resetting capacity for train: ", err);
+        }
+      });
     });
   });
 });

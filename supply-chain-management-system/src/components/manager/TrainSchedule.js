@@ -116,6 +116,7 @@ export default function TrainScheduleTable() {
 
   const handleScheduleNow = (city) => {
     const trainId = selectedTrains[city];
+    const departureDate = departureDates[city]; // Get the selected departure date
     if (!trainId) return;
 
     if (!pendingOrders[city] || pendingOrders[city] === 0) {
@@ -123,8 +124,13 @@ export default function TrainScheduleTable() {
       return;
     }
 
+    if (!departureDate) {
+      alert("Please select a departure date"); // Ensure a date is selected
+      return;
+    }
+
     axios
-      .post("http://localhost:5000/api/AssignOrders", { city, train_ID: trainId })
+      .post("http://localhost:5000/api/AssignOrders", { city, train_ID: trainId, departureDate  })
       .then(() => {
         setScheduledTrains((prev) => ({
           ...prev,
