@@ -125,6 +125,7 @@ const ProductList = () => {
         {/* Cart Icon */}
         <FontAwesomeIcon
           icon={faShoppingCart}
+          align="right"
           className="cart-icon"
           onClick={goToCart} // Navigate to cart page when icon is clicked
         />

@@ -1,6 +1,6 @@
 .dashboard-container {
     display: flex;
-    background: #dde3e3;
+    background:white;
     
     height: calc(100vh - 70px); /* Adjust height to account for the NavBar's height */
     /* padding-top: 70px; Offset content by the height of the NavBar */
@@ -63,19 +63,20 @@ header {
 }
 
 .content-block {
-    background: #f9f9f9; /* Light background for blocks */
+    background: white; /* Light background for blocks */
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     width: 100%; /* Make the width 100% to fill the container */
     max-width: 1000px; /* Optional: Set a max width for larger screens */
     margin: 0 auto; /* Center the block horizontally */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s;
 }
 
 .content-block:hover {
-    transform: scale(1.02); /* Scale effect on hover */
+    transform: scale(1.02);
+    color:black; /* Scale effect on hover */
 }
 
 .button {
@@ -84,7 +85,7 @@ header {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 1000s ease;
 }
 
 .button {
@@ -93,7 +94,8 @@ header {
 }
 
 .button:hover {
-    opacity: 0.9; /* Slight opacity change on hover */
+    opacity: 0.4;
+    color:#ffe1d2; /* Slight opacity change on hover */
 }
 
 .product-list {
@@ -129,27 +131,30 @@ header {
     cursor: pointer;
     width: 100%; /* This will make the button take up the full width of its container */
     max-width: 200px; /* You can set a maximum width if you don't want it too wide */
+    transition: background-color 1000s ease
 }
 
 .order-button:hover {
-    opacity: 0.9; /* Slight opacity change on hover */
+    opacity: 0.9;
+    color:#ffe1d2; /* Slight opacity change on hover */
 }
 
 .product-list-header {
     display: flex;
     justify-content: center; /* Centers the content horizontally */
     align-items: center; /* Centers the content vertically */
-    gap: 20px; /* Adds space between the heading and the cart icon */
+    gap: 20px;
+     /* Adds space between the heading and the cart icon */
 }
 
 .cart-icon {
     font-size: 24px;
     cursor: pointer;
-    color: #000; /* You can change the color */
+    color: #f85606; /* You can change the color */
 }
 
 .cart-icon:hover {
-    color: #007bff; /* Add a hover effect */
+    color: #ffe1d2; /* Add a hover effect */
 }
 
 .product-image {

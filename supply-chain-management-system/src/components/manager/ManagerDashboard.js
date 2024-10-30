@@ -108,8 +108,10 @@ const ManagerDashboard = () => {
               <h2>Registration</h2>
               <p>Register Drivers and Assistant drivers</p>
               <Link to="/registration" className="button-link">
-                <Button variant="contained" disableElevation>
+                <Button variant="contained" disableElevation
+                style={{ backgroundColor: "#f85606", color: "#fff" }}>
                   Register
+                  
                 </Button>
               </Link>
             </div>
@@ -120,7 +122,8 @@ const ManagerDashboard = () => {
                 <h2>Schedule Orders to Trains</h2>
                 <p>Check train schedule and assign orders to trains</p>
                 <Link to="/trainschedule" className="button-link">
-                  <Button variant="contained" disableElevation>
+                  <Button variant="contained" disableElevation
+                  style={{ backgroundColor: "#f85606", color: "#fff" }}>
                     Assign Orders
                   </Button>
                 </Link>
@@ -131,7 +134,7 @@ const ManagerDashboard = () => {
               <h2>Create Truck Schedules</h2>
               <p>Schedule trucks for order delivery.</p>
               <Link to="/truckschedule" className="button-link">
-                <Button variant="contained" disableElevation>
+                <Button variant="contained" disableElevation style={{ backgroundColor: "#f85606", color: "#fff" }}>
                   Schedule Trucks
                 </Button>
               </Link>
@@ -143,7 +146,7 @@ const ManagerDashboard = () => {
                 Sales reports, Working Hours reports, Customer-order reports
               </p>
               <Link to="/reports" className="button-link">
-                <Button variant="contained" disableElevation>
+                <Button variant="contained" disableElevation style={{ backgroundColor: "#f85606", color: "#fff" }}>
                   Generate Reports
                 </Button>
               </Link>

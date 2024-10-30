@@ -124,7 +124,7 @@ const Signup = () => {
         <Box display="flex" justifyContent="center" mb={2}>
           <img src={img1} alt="Logo" style={{ maxWidth: "80px", height: "60px" }} />
         </Box>
-          <Typography variant="h4" align="center">
+          <Typography variant="h4" align="center" >
             Sign up
           </Typography>
 
@@ -255,6 +255,7 @@ const Signup = () => {
                 fontWeight: "bold",
                 '&:hover': { backgroundColor: 'rgba(25, 118, 210, 0.1)' }
               }}
+              style={{ backgroundColor: "#fff", color:"#f85606" }}
             >
               Sign up
             </Button>

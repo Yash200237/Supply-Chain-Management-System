@@ -1,27 +1,33 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Alert,
+  Divider,
+} from "@mui/material";
+import img1 from "../../images/logo2.png"; // Import your logo
+import { blue } from "@mui/material/colors";
 
 const DriverLogin = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Login form data:", formData);
+
     axios
       .post("http://localhost:5000/driverlogin", formData)
       .then((result) => {
@@ -42,80 +48,101 @@ const DriverLogin = () => {
         }
       })
       .catch((err) => {
+        console.error("Login error:", err);
         setError("Login failed. Please check your credentials.");
-        console.log(err);
       });
   };
 
   return (
-    <div
-      className="login"
-      style={{
-        maxWidth: "400px",
-        margin: "130px auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "5px",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-        backgroundColor: "#f9f9f9",
-      }}
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="80vh"
+      bgcolor="white"
     >
-      <div className="text-danger" style={{ color: "red", marginBottom: "10px" }}>
-        {error && error}
-      </div>
-      <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label htmlFor="email" style={{ display: "block", marginBottom: "5px" }}>Email:</label>
-          <input
-            type="email"
+      <Paper
+        elevation={8}
+        sx={{
+          p: 4,
+          width: 400,
+          borderRadius: 3,
+          backgroundColor: "#fff",
+        }}
+      >
+        {/* Logo at the top center */}
+        <Box display="flex" justifyContent="center" mb={2}>
+          <img src={img1} alt="Logo" style={{ maxWidth: "80px", height: "60px" }} />
+        </Box>
+
+        <Typography variant="h4" align="center" gutterBottom sx={{ mb: 0 }}>
+          Login
+        </Typography>
+
+        <Typography
+          variant="subtitle1"
+          align="center"
+          sx={{ color: "text.secondary", mb: 2 }}
+        >
+          Welcome back, please login to continue
+        </Typography>
+
+        <Divider sx={{ my: 0 }} />
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <Divider sx={{ mb: 3 }} />
+
+        <form onSubmit={handleSubmit}>
+          <TextField
+            fullWidth
             id="email"
             name="email"
+            label="Email"
             value={formData.email}
             onChange={handleChange}
             required
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
+            margin="none"
+            sx={{ mb: 2 }}
           />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label htmlFor="password" style={{ display: "block", marginBottom: "5px" }}>Password:</label>
-          <input
-            type="password"
+          <TextField
+            fullWidth
             id="password"
             name="password"
+            label="Password"
+            type="password"
             value={formData.password}
             onChange={handleChange}
             required
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-            }}
+            margin="none"
+            sx={{ mb: 2 }}
           />
-        </div>
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Login
-        </button>
-      </form>
-    </div>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 2,
+              backgroundColor: blue[600],
+              "&:hover": {
+                backgroundColor: blue[800],
+              },
+            }}
+            style={{ backgroundColor:"#f85606" , color:"#fff" }}
+          >
+          
+            Login
+          </Button>
+        </form>
+
+        
+      </Paper>
+    </Box>
   );
 };
 
