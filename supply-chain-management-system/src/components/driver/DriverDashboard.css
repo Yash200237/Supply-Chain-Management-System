@@ -1,0 +1,48 @@
+.driver-dashboard {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.greeting {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.schedule-section h2 {
+  font-size: 1.8em;
+  color: #555;
+  margin: 20px 0;
+}
+
+.trip-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.trip-table th, .trip-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 1em;
+}
+
+.trip-table th {
+  background-color: #f2f2f2;
+  color: #555;
+  font-weight: bold;
+}
+
+.trip-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.trip-table tr.completed-row {
+  background-color: #e0e0e0;
+}
+
+.trip-table td {
+  color: #333;
+}
