@@ -295,34 +295,26 @@ export default function TrainScheduleTable() {
                       Train {train.train_ID}
                     </Typography>
                     <div style={{ width: '100%', marginTop: 5 }}>
-                      <AnimatedProgressProvider
-                        valueStart={0}
-                        valueEnd={filledPercentage[train.train_ID] || 0}
-                        duration={1.4}
-                        easingFunction={easeQuadInOut}
-                      >
-                        {(value) => (
-                          <LinearProgress
-                            variant="determinate"
-                            value={filledPercentage[train.train_ID] || 0}
-                            sx={{
-                              height: 10,
-                              borderRadius: 5,
-                              width: '100%',
-                              backgroundColor: '#d6d6d6',
-                              '& .MuiLinearProgress-bar': {
-                                backgroundColor: '#3e98c7'
-                              }
-                            }}
-                          />
-                        )}
-                      </AnimatedProgressProvider>
+                      <LinearProgress
+                        variant="determinate"
+                        value={filledPercentage[train.train_ID] !== undefined ? filledPercentage[train.train_ID] : 0} // Use filledPercentage state for progress
+                        sx={{
+                          height: 10,
+                          borderRadius: 5,
+                          width: '100%',
+                          backgroundColor: '#d6d6d6',
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: '#3e98c7'
+                          }
+                        }}
+                      />
                       <Typography variant="caption" style={{ textAlign: "right", display: "block", marginTop: 5 }}>
-                        {Math.round(filledPercentage[train.train_ID] || 0)}%
+                        {filledPercentage[train.train_ID] !== undefined ? parseFloat(filledPercentage[train.train_ID]).toFixed(2) : 0 }% {/* Display filled percentage */}
                       </Typography>
                     </div>
                   </div>
                 ))}
+
 
                 <Select
                   value={selectedTrains[city] || ""}
