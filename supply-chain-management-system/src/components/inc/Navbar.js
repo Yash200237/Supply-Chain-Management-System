@@ -46,9 +46,9 @@ function NavBar() {
     }
     `}
     </style>
-    <nav className="navbar navbar-expand-lg bg-dark navbar-dark py-2 shadow">
+    <nav className="navbar navbar-expand-lg bg-dark navbar-dark py-4 shadow">
       <div className="container">
-        <Link to="/" className="navbar-brand fs-3 fw-bold text-light">
+        <Link to="/" className="navbar-brand fs-4 fw-bold text-light">
         <img class="logo" src={img1} alt="Logo" />
   
         

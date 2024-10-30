@@ -12,6 +12,10 @@ import {
   Divider,
 } from "@mui/material";
 import img1 from "../../images/logo2.png"; // Import the logo image
+import "./SignUp"
+import { Link } from "react-router-dom";
+
+
 
 const CustomerLogin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -172,6 +176,28 @@ const CustomerLogin = () => {
             Login
           </Button>
         </form>
+          <Typography variant="subtitle1"
+          align="center"
+          sx={{ color: "text.secondary", mt: 10}}>
+            Don't have an account? Sign up first!
+            </Typography>
+            <Link to="./SignUp" className="button-link">
+        <Button
+          type="submit"
+          variant="text" // Use "text" variant for styling the text only
+          fullWidth
+          sx={{ 
+          mt: 0, 
+          color: "none", // Blue color
+            fontWeight: "bold", // Optional: Make the text bold
+          '&:hover': { 
+          backgroundColor: 'rgba(25, 118, 210, 0.1)' // Light blue hover effect
+        }
+        }}
+        >
+        Sign up
+      </Button>
+      </Link>
       </Paper>
     </Box>
   );
