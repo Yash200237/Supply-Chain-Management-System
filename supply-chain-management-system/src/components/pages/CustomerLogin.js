@@ -96,7 +96,7 @@ const CustomerLogin = () => {
       className="login"
       style={{
         maxWidth: "400px",
-        margin: "50px auto",
+        margin: "109px auto",
         padding: "20px",
         border: "1px solid #ccc",
         borderRadius: "5px",
