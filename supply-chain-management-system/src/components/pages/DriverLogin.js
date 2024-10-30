@@ -30,6 +30,7 @@ const DriverLogin = () => {
           localStorage.setItem("driver_ID", result.data.driver_ID);
           localStorage.setItem("driverName", result.data.driverName);
           localStorage.setItem("token", result.data.token); // Store token
+          localStorage.setItem("role", result.data.role);
 
           navigate("/driverdashboard", {
             state: {
@@ -60,13 +61,23 @@ const DriverLogin = () => {
         backgroundColor: "#f9f9f9",
       }}
     >
-      <div className="text-danger" style={{ color: "red", marginBottom: "10px" }}>
+      <div
+        className="text-danger"
+        style={{ color: "red", marginBottom: "10px" }}
+      >
         {error && error}
       </div>
-      <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>Login</h2>
+      <h2 style={{ textAlign: "center", marginBottom: "20px", color: "#333" }}>
+        Login
+      </h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "15px" }}>
-          <label htmlFor="email" style={{ display: "block", marginBottom: "5px" }}>Email:</label>
+          <label
+            htmlFor="email"
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            Email:
+          </label>
           <input
             type="email"
             id="email"
@@ -83,7 +94,12 @@ const DriverLogin = () => {
           />
         </div>
         <div style={{ marginBottom: "15px" }}>
-          <label htmlFor="password" style={{ display: "block", marginBottom: "5px" }}>Password:</label>
+          <label
+            htmlFor="password"
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            Password:
+          </label>
           <input
             type="password"
             id="password"

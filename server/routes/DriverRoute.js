@@ -60,7 +60,7 @@ WHERE Email = ? AND Password = SHA2(?, 256)`;
         // Send a response based on the role (driver or driverassistant)
         return res.json({
           loginStatus: true,
-          role: driverDetails.role,
+          role: driverDetails.Role,
           token: token,
           driver_ID: driverDetails.driver_ID,
           driverName: driverDetails["First Name"], // First name for welcome message
