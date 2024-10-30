@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js"; // Import CryptoJS for hashing
-import "./Customer.css"; 
+import "./Customer.css";
+import "./products.css";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -107,7 +108,7 @@ const ProductList = () => {
     setCart(updatedCart);
     localStorage.setItem(cartKey, JSON.stringify(updatedCart)); // <-- Store cart with the hashed customer-specific key
   };
-  
+
   // Check if product is already in the cart
   const isInCart = (product_ID) => {
     return cart.some((item) => item.product_ID === product_ID);
@@ -134,7 +135,7 @@ const ProductList = () => {
         {products.map((product, index) => (
           <div key={index} className="product-card">
             <h2>{product.name}</h2>
-            <img 
+            <img
               src={product.image} // Dynamically fetch the image using the product's image URL
               alt={product.name}
               className="product-image"

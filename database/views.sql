@@ -124,6 +124,28 @@ JOIN Manager m ON r.store_ID = m.store_ID;
 
 ------------------------------------------------------------------------------------------------
 
+
+
+CREATE VIEW ItemsMostOrders AS
+SELECT 
+    p.product_ID,
+    p.name AS ProductName,
+    COUNT(DISTINCT o.order_ID) AS OrderCount,  -- Total number of orders that include this product
+    SUM(op.quantity) AS TotalQuantity,         -- Total quantity of this product ordered across all orders
+    YEAR(o.date) AS OrderYear,
+    MONTH(o.date) AS OrderMonth,
+    m.manager_ID
+FROM OrderProduct op
+JOIN `Order` o ON op.order_ID = o.order_ID
+JOIN Product p ON op.product_ID = p.product_ID
+JOIN Route r ON o.route_ID = r.route_ID
+JOIN Manager m ON r.store_ID = m.store_ID
+GROUP BY p.product_ID, OrderYear, OrderMonth, m.manager_ID;
+
+
+------------------------------------------------------------------------------------------------
+
+
 CREATE 
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 

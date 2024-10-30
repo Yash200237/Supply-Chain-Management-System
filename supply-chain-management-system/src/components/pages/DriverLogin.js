@@ -36,6 +36,8 @@ const DriverLogin = () => {
           localStorage.setItem("driver_ID", result.data.driver_ID);
           localStorage.setItem("driverName", result.data.driverName);
           localStorage.setItem("token", result.data.token); // Store token
+          localStorage.setItem("role", result.data.role);
+          localStorage.setItem("email", result.data.email);
 
           navigate("/driverdashboard", {
             state: {
@@ -97,7 +99,10 @@ const DriverLogin = () => {
 
         <Divider sx={{ mb: 3 }} />
 
-        <form onSubmit={handleSubmit}>
+
+
+      <form onSubmit={handleSubmit}>
+
           <TextField
             fullWidth
             id="email"
@@ -139,8 +144,6 @@ const DriverLogin = () => {
             Login
           </Button>
         </form>
-
-        
       </Paper>
     </Box>
   );
