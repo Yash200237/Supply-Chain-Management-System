@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import './DriverDashboard.css';
 import profilePicture from '../../images/profilepicture.jpg'; // Add profile picture for consistency
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaCity } from "react-icons/fa"; // Icons for style
+import { FaPhone, FaEnvelope, FaCity } from "react-icons/fa"; // Icons for style
 
 const DriverDashboard = () => {
     const { state } = useLocation();
