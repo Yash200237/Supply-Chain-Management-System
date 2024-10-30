@@ -41,15 +41,19 @@ WHERE Email = ? AND Password = SHA2(?, 256)`;
       // If there is a matching result, handle the login
       if (result.length > 0) {
         const driverDetails = result[0];
-        
+
         // Create the JWT token with the role and email
         const token = jwt.sign(
-          { email: driverDetails.Email,
+          {
+            email: driverDetails.Email,
             role: driverDetails.role,
             driver_ID: driverDetails.driver_ID, // Use driver_ID for both roles
-          }, "jwt_secret_key", {
-          expiresIn: "1d",
-        });
+          },
+          "jwt_secret_key",
+          {
+            expiresIn: "1d",
+          }
+        );
 
         res.cookie("token", token);
 
@@ -90,9 +94,8 @@ router.get("/driverschedule/:driverID", verifyToken, (req, res) => {
   });
 });
 
-
 // Fetch driver details by driver ID
-router.get('/driverdetails/:driverID', (req, res) => {
+router.get("/driverdetails/:driverID", (req, res) => {
   const driverID = req.params.driverID; // Get driver ID from request parameters
 
   // SQL query to fetch the driver's details

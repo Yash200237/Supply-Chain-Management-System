@@ -1,0 +1,13 @@
+.product-card {
+    width: 275px; /* Set a fixed width */
+    text-align: center;
+    margin: 10px;
+  }
+  
+  .product-image {
+    width: 150px; /* Set a consistent width */
+    height: 150px; /* Set a consistent height */
+    object-fit: cover; /* Ensures image is cropped to fit dimensions */
+    margin-bottom: 10px;
+  }
+  
