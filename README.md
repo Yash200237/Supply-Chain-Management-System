@@ -1,4 +1,5 @@
 ## CS3043 Database Systems Semester Project
+
 # Supply Chain Management System
 
 A modern web application for managing and optimizing supply chain logistics, product distribution, and reporting. The system supports multiple user roles **Customers**, **Drivers**, **Assistants**, and **Managers** each with tailored interfaces and functionalities. It streamlines order placement, scheduling, delivery, staff assignments, and analytics for efficient and reliable operations.
@@ -11,10 +12,10 @@ A modern web application for managing and optimizing supply chain logistics, pro
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Role-Based Pages](#role-based-pages)
-    - [Customer](#customer)
-    - [Driver](#driver)
-    - [Assistant](#assistant)
-    - [Manager](#manager)
+  - [Customer](#customer)
+  - [Driver](#driver)
+  - [Assistant](#assistant)
+  - [Manager](#manager)
 - [Getting Started](#getting-started)
 
 ---
@@ -35,7 +36,7 @@ A modern web application for managing and optimizing supply chain logistics, pro
 - **Frontend:** JavaScript (React.js), HTML, CSS, Bootstrap
 - **Backend:** MySQL
 - **Routing:** React Router
-- **Other Libraries:**  Chart.js for analytics, Axios for API calls
+- **Other Libraries:** Chart.js for analytics, Axios for API calls
 
 ---
 
@@ -48,7 +49,9 @@ Supply-Chain-Management-System
 ├── server                            # backend
 |   ├── routes/
 │   ├── utils/
-│   └── index.js
+│   ├── index.js
+|   ├── package.json
+|   └──.gitignore
 └── supply-chain-management-system/   # frontend
     ├── public/
     │   └── index.html
@@ -63,7 +66,8 @@ Supply-Chain-Management-System
     │   ├── App.js
     │   └── index.js
     ├── README.md
-    └── package.json
+    ├── package.json
+    └──.gitignore
 ```
 
 ---
@@ -71,6 +75,7 @@ Supply-Chain-Management-System
 ## Role-Based Pages
 
 ### Customer
+
 - Place orders, choose delivery routes, track orders, view order history.
 - Dashboard: Product catalog, cart, order tracker.
 
@@ -80,6 +85,7 @@ Supply-Chain-Management-System
 ---
 
 ### Driver
+
 - View assigned and completed truck schedules.
 - Dashboard: Delivery schedule.
 
@@ -89,6 +95,7 @@ Supply-Chain-Management-System
 ---
 
 ### Assistant
+
 - View assigned and completed truck schedules.
 
 **_Screenshot Placeholder:_**
@@ -97,6 +104,7 @@ Supply-Chain-Management-System
 ---
 
 ### Manager
+
 - Register staff(Drivers and assistants), schedule trucks/trains, assign orders, generate and view reports.
 - Dashboard: Driver and assistant registration, create truck schedule,assign orders to trains and reporting.
 
@@ -107,25 +115,90 @@ Supply-Chain-Management-System
 
 ## Getting Started
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Yash200237/Supply-Chain-Management-System.git
-   cd Supply-Chain-Management-System/supply-chain-management-system
-   ```
+### 1. Set Up the Local MySQL Database
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+Since the database is not hosted, you must first create a local MySQL database using the provided SQL files.
 
-3. **Start the development server**
-   ```bash
-   npm start
-   ```
-   The app will run at [http://localhost:3000](http://localhost:3000).
+- Ensure you have MySQL installed and running on your machine.
+- Use the SQL files in the `database` folder to create and populate the database:
 
-> **Note:** Connect to MySQL and configure backend endpoints as needed for full functionality.
+- The default database configuration (can be customized in `server/utils/db.js`):
+
+  ```javascript
+  import mysql from "mysql2";
+
+  const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "database_name",
+    multipleStatements: true, // Enables multiple result sets
+  });
+
+  con.connect(function (err) {
+    if (err) {
+      console.log("connection error");
+    } else {
+      console.log("connected");
+    }
+  });
+
+  export default con;
+  ```
+
+- **Edit** the `password` and `database_name` fields in `server/utils/db.js` according to your local MySQL setup.
 
 ---
 
+### 2. Clone the repository
 
+```bash
+git clone https://github.com/Yash200237/Supply-Chain-Management-System.git
+cd Supply-Chain-Management-System/supply-chain-management-system
+```
+
+### 3. Install and Run the Frontend
+
+- Navigate to the frontend directory:
+
+  ```bash
+  cd supply-chain-management-system
+  ```
+
+- Install dependencies:
+
+  ```bash
+  npm install
+  ```
+
+- Start the frontend development server:
+  ```bash
+  npm start
+  ```
+- The app will run at [http://localhost:3000](http://localhost:3000).
+
+---
+
+### 4. Install and Run the Backend
+
+- Open a new terminal and navigate to the backend directory:
+
+  ```bash
+  cd server
+  ```
+
+- Install dependencies:
+
+  ```bash
+  npm install
+  ```
+
+- Start the backend server:
+  ```bash
+  npm start
+  ```
+- By default, the backend will connect to your local MySQL database as configured above.
+
+---
+
+> **Note:** Connect to MySQL and configure backend endpoints as needed for full functionality.
