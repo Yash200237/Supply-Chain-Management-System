@@ -1,9 +1,7 @@
---- CS3043 Database Systems Semester Project --
-Supply-Chain-Management-System
-
+## CS3043 Database Systems Semester Project
 # Supply Chain Management System
 
-A modern web application for managing and optimizing supply chain logistics, product distribution, and reporting. The system supports multiple user roles—**Customers**, **Drivers**, **Assistants**, and **Managers**—each with tailored interfaces and functionalities. It streamlines order placement, scheduling, delivery, staff assignments, and analytics for efficient and reliable operations.
+A modern web application for managing and optimizing supply chain logistics, product distribution, and reporting. The system supports multiple user roles **Customers**, **Drivers**, **Assistants**, and **Managers** each with tailored interfaces and functionalities. It streamlines order placement, scheduling, delivery, staff assignments, and analytics for efficient and reliable operations.
 
 ---
 
@@ -18,9 +16,6 @@ A modern web application for managing and optimizing supply chain logistics, pro
     - [Assistant](#assistant)
     - [Manager](#manager)
 - [Getting Started](#getting-started)
-- [Scripts](#scripts)
-- [Screenshots](#screenshots)
-- [License](#license)
 
 ---
 
@@ -30,7 +25,7 @@ A modern web application for managing and optimizing supply chain logistics, pro
 - **Product Distribution:** Manages distribution using trains and trucks with scheduling and capacity constraints.
 - **Staff Rostering:** Assigns drivers and assistants to deliveries, enforcing work-hour and shift rules.
 - **Route Planning:** Supports predefined delivery routes for major cities and stores.
-- **Reporting:** Managers can generate sales, working hours, truck usage, and customer-order reports.
+- **Reporting:** Managers can generate sales (quarterly / by route), most orders, working hours(driver, assistant or truck) and customer-order reports.
 - **Role-Based Dashboards:** Dedicated dashboards for Customers, Drivers, Assistants, and Managers.
 
 ---
@@ -38,30 +33,37 @@ A modern web application for managing and optimizing supply chain logistics, pro
 ## Tech Stack
 
 - **Frontend:** JavaScript (React.js), HTML, CSS, Bootstrap
-- **Backend:** MySQL (for data management; see configuration/integration notes)
+- **Backend:** MySQL
 - **Routing:** React Router
-- **Other Libraries:** [Add libraries as needed, e.g., Chart.js for analytics, Axios for API calls]
+- **Other Libraries:**  Chart.js for analytics, Axios for API calls
 
 ---
 
 ## Project Structure
 
 ```
-supply-chain-management-system/
-├── public/
-│   └── index.html
-├── src/
-│   ├── components/
-│   │   ├── customer/
-│   │   ├── driver/
-│   │   ├── assistant/
-│   │   ├── manager/
-│   │   └── inc/         # Navbar, Footer, etc.
-│   ├── pages/           # Home, Login, Signup, etc.
-│   ├── App.js
+Supply-Chain-Management-System
+├── database
+|   └── mysql files/
+├── server                            # backend
+|   ├── routes/
+│   ├── utils/
 │   └── index.js
-├── README.md
-└── package.json
+└── supply-chain-management-system/   # frontend
+    ├── public/
+    │   └── index.html
+    ├── src/
+    │   ├── components/
+    │   │   ├── customer/
+    │   │   ├── driver/
+    │   │   ├── manager/
+    │   │   ├── pages/                # Home,Signup, etc.
+    │   │   └── inc/                  # Navbar, Footer, etc.
+    │   ├── images
+    │   ├── App.js
+    │   └── index.js
+    ├── README.md
+    └── package.json
 ```
 
 ---
@@ -78,8 +80,8 @@ supply-chain-management-system/
 ---
 
 ### Driver
-- View assigned deliveries, truck schedules, track work hours.
-- Dashboard: Delivery schedule, route info, order tracker.
+- View assigned and completed truck schedules.
+- Dashboard: Delivery schedule.
 
 **_Screenshot Placeholder:_**
 ![Driver Page](images/driver_dashboard.png)
@@ -87,7 +89,7 @@ supply-chain-management-system/
 ---
 
 ### Assistant
-- View and manage assistant work roster, delivery assignments, track hours.
+- View assigned and completed truck schedules.
 
 **_Screenshot Placeholder:_**
 ![Assistant Page](images/assistant_dashboard.png)
@@ -95,8 +97,8 @@ supply-chain-management-system/
 ---
 
 ### Manager
-- Register staff, schedule trucks/trains, assign orders, generate and view reports.
-- Dashboard: Staff management, schedule planner, reporting.
+- Register staff(Drivers and assistants), schedule trucks/trains, assign orders, generate and view reports.
+- Dashboard: Driver and assistant registration, create truck schedule,assign orders to trains and reporting.
 
 **_Screenshot Placeholder:_**
 ![Manager Page](images/manager_dashboard.png)
@@ -126,26 +128,4 @@ supply-chain-management-system/
 
 ---
 
-## Scripts
-
-- `npm start` — Runs the app in development mode.
-- `npm run build` — Builds the app for production.
-- `npm test` — Runs the test suite.
-- `npm run eject` — Ejects create-react-app configuration.
-
----
-
-## Screenshots
-
-Add screenshots of the main dashboards/pages in the respective placeholders above.
-
----
-
-## License
-
-[Specify license here, e.g., MIT, GPL, etc.]
-
----
-
-**For any questions or contributions, please open an issue or pull request!**
 
