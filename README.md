@@ -81,7 +81,13 @@ Supply-Chain-Management-System
 - Dashboard: Product catalog, cart, order tracker.
 
 **_Screenshot Placeholder:_**
-![Customer Page](docs/customerUI/customerdashboard.png)
+<p float="left">
+  <img src="docs/customerUI/customerlogin.png" width="32%" />
+  <img src="docs/customerUI/customerdashboard.png" width="32%" />
+  <img src="docs/customerUI/products.png" width="32%" />
+  <img src="docs/customerUI/cart.png" width="32%" />
+  <img src="docs/customerUI/trackorder.png" width="32%" />
+</p>
 
 ---
 
