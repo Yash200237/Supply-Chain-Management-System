@@ -102,7 +102,7 @@ Supply-Chain-Management-System
 
 ### Manager
 
-- Register staff(Drivers and assistants), schedule trucks/trains, assign orders, generate and view reports.
+- Register staff (Drivers and assistants), schedule trucks/trains, assign orders, generate and view reports.
 - Dashboard: Driver and assistant registration, create truck schedule and reporting.
 
 <p float="left">
@@ -110,13 +110,15 @@ Supply-Chain-Management-System
 </p>
 
 -Manager Dashboard Functionalities
-
+<br>
 <p>
   <img src="docs/managerUI/driverregi.png" width="45%" />
   <img src="docs/managerUI/truckschedule.png" width="45%" />
   <img src="docs/managerUI/reports.png" width="45%" />
 </p>
+<br>
 Report types
+<br>
 <p>
   <img src="docs/managerUI/salesQ.png" width="45%" />
   <img src="docs/managerUI/most_ordered.png" width="45%" />
@@ -126,7 +128,7 @@ Report types
 </p>
 
 Managers at headquaters are granted access to an enhanced version of the dashboard, which includes exclusive functionality for assigning orders to trains.
-
+<br>
 <p float="left">
   <img src="docs/managerUI/managerdashboard1.png" width="45%" />
 </p>
