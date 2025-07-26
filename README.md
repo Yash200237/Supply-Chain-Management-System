@@ -98,8 +98,9 @@ Supply-Chain-Management-System
 <p float="left">
   <img src="docs/driver_AssistantUI/driverdashboard.png" width="45%" />
 </p>
+
 ---
----
+
 ### Manager
 
 - Register staff (Drivers and assistants), schedule trucks/trains, assign orders, generate and view reports.
@@ -109,7 +110,7 @@ Supply-Chain-Management-System
   <img src="docs/managerUI/managerd2.png" width="45%" />
 </p>
 
--Manager Dashboard Functionalities
+Manager Dashboard Functionalities
 <br>
 <p>
   <img src="docs/managerUI/driverregi.png" width="45%" />
@@ -117,7 +118,6 @@ Supply-Chain-Management-System
   <img src="docs/managerUI/reports.png" width="45%" />
 </p>
 
-<br>
 Report types
 <br>
 
