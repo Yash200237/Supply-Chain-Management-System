@@ -91,6 +91,7 @@ const CustomerDashboard = () => {
 
   return (
     <div className="dashboard" style={{ flex: "1" }}>
+      
       <div className="dashboard-container">
         {/* Left side: Customer Details */}
         <div className="customer-details">
@@ -136,10 +137,7 @@ const CustomerDashboard = () => {
             <h1>Welcome, {customerName || "Customer"}!</h1>
           </header>
           <div className="content-blocks">
-            <div
-              className="content-block order-products"
-              style={{ marginTop: "20px" }}
-            >
+            <div className="content-block order-products" style={{marginTop: "20px"}}>
               <h2>Order Products</h2>
               <p>
                 Browse our catalog and place orders for your favorite products.
@@ -148,10 +146,7 @@ const CustomerDashboard = () => {
                 Order Products
               </button>
             </div>
-            <div
-              className="content-block track-delivery"
-              style={{ marginTop: "20px" }}
-            >
+            <div className="content-block track-delivery" style={{marginTop: "20px"}}>
               <h2>Track Delivery</h2>
               <p>Check the status of your orders and delivery timelines.</p>
               <button className="button" onClick={handleTrackDelivery}>

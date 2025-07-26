@@ -104,8 +104,7 @@ const Registration = () => {
         }
       })
       .catch((err) => {
-        const errorMsg =
-          err.response?.data?.Error || "An unexpected error occurred.";
+        const errorMsg = err.response?.data?.Error || "An unexpected error occurred.";
         setErrors({ form: errorMsg });
         setSuccessMessage("");
       });
@@ -122,11 +121,7 @@ const Registration = () => {
       >
         <Paper elevation={5} sx={{ p: 4, width: 400, borderRadius: 3 }}>
           <Box display="flex" justifyContent="center" mb={2}>
-            <img
-              src={img1}
-              alt="Logo"
-              style={{ maxWidth: "80px", height: "60px" }}
-            />
+            <img src={img1} alt="Logo" style={{ maxWidth: "80px", height: "60px" }} />
           </Box>
           <Typography variant="h4" align="center">
             Registration
@@ -199,19 +194,13 @@ const Registration = () => {
                 onChange={handleChange}
               >
                 <MenuItem value="">Select your closest city</MenuItem>
-                {[
-                  "Kandy",
-                  "Colombo",
-                  "Negombo",
-                  "Galle",
-                  "Matara",
-                  "Jaffna",
-                  "Trincomalee",
-                ].map((city) => (
-                  <MenuItem key={city} value={city}>
-                    {city}
-                  </MenuItem>
-                ))}
+                {["Kandy", "Colombo", "Negombo", "Galle", "Matara", "Jaffna", "Trincomalee"].map(
+                  (city) => (
+                    <MenuItem key={city} value={city}>
+                      {city}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
             <TextField
@@ -226,7 +215,11 @@ const Registration = () => {
             />
             <FormControl fullWidth margin="normal" error={!!errors.Type}>
               <InputLabel>Type</InputLabel>
-              <Select name="Type" value={formData.Type} onChange={handleChange}>
+              <Select
+                name="Type"
+                value={formData.Type}
+                onChange={handleChange}
+              >
                 <MenuItem value="">Select employee type</MenuItem>
                 <MenuItem value="driver">Driver</MenuItem>
                 <MenuItem value="driverassistant">Driver Assistant</MenuItem>
@@ -248,7 +241,7 @@ const Registration = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 2 }}
-              style={{ backgroundColor: "#f85606", color: "#fff" }}
+              style={{ backgroundColor:"#f85606" , color:"#fff" }}
             >
               Register
             </Button>

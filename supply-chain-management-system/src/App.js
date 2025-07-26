@@ -69,18 +69,10 @@ function App() {
             element={<SalesByCityRouteReport />}
           />
           <Route path="/working-hours" element={<WorkingHoursReport />} />
-          <Route
-            path="/working-hours/driverworkinghours"
-            element={<DriverWorkingHoursReport />}
-          />
-          <Route
-            path="/working-hours/driverassistantworkinghours"
-            element={<DriverAssistantWorkingHoursReport />}
-          />
-          <Route
-            path="/working-hours/truckworkinghours"
-            element={<TruckWorkingHoursReport />}
-          />
+          <Route path="/working-hours/driverworkinghours" element={<DriverWorkingHoursReport />} />
+          <Route path="/working-hours/driverassistantworkinghours" element={<DriverAssistantWorkingHoursReport />} />
+          <Route path="/working-hours/truckworkinghours" element={<TruckWorkingHoursReport />} />
+
           <Route
             path="/customer-order-report"
             element={<CustomerOrderReport />}

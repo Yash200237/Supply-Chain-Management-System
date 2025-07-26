@@ -82,11 +82,7 @@ const ManagerLogin = () => {
       >
         {/* Logo at the top center */}
         <Box display="flex" justifyContent="center" mb={2}>
-          <img
-            src={img1}
-            alt="Logo"
-            style={{ maxWidth: "80px", height: "60px" }}
-          />
+          <img src={img1} alt="Logo" style={{ maxWidth: "80px", height: "60px" }} />
         </Box>
 
         <Typography variant="h4" align="center" gutterBottom sx={{ mb: 0 }}>
@@ -147,11 +143,14 @@ const ManagerLogin = () => {
                 backgroundColor: orange[800],
               },
             }}
-            style={{ backgroundColor: "#f85606", color: "#fff" }}
+            style={{ backgroundColor:"#f85606" , color:"#fff" }}
           >
             Login
           </Button>
         </form>
+
+        
+        
       </Paper>
     </Box>
   );

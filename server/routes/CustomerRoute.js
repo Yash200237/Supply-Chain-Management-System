@@ -14,7 +14,7 @@ router.post("/customerlogin", (req, res) => {
     if (err) {
       return res.status(500).json({ loginStatus: false, Error: "Query error" });
     }
-
+    
     if (result.length > 0) {
       const customerDetails = result[0]; // Get the first customer record from CustomerDetails view
       const token = jwt.sign(
