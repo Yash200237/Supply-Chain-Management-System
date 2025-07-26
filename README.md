@@ -46,6 +46,7 @@ A modern web application for managing and optimizing supply chain logistics, pro
 Supply-Chain-Management-System
 ├── database
 |   └── mysql files/
+├── docs                              # UI pages shown in readme
 ├── server                            # backend
 |   ├── routes/
 │   ├── utils/
@@ -80,7 +81,7 @@ Supply-Chain-Management-System
 - Dashboard: Product catalog, cart, order tracker.
 
 **_Screenshot Placeholder:_**
-![Customer Page](images/customer_dashboard.png)
+![Customer Page](docs/customerdashboard.png)
 
 ---
 
