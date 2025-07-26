@@ -3,8 +3,8 @@ import mysql from "mysql2";
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "<password>",
-  database: "<database_name>",
+  password: "yashodha",
+  database: "supply_chain_management_system",
   multipleStatements: true, // Enables multiple result sets
 });
 
