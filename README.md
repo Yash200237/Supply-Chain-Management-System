@@ -80,7 +80,6 @@ Supply-Chain-Management-System
 - Place orders, choose delivery routes, track orders, view order history.
 - Dashboard: Product catalog, cart, order tracker.
 
-**_Screenshot Placeholder:_**
 <p float="left">
   <img src="docs/customerUI/customerlogin.png" width="45%" />
   <img src="docs/customerUI/customerdashboard.png" width="45%" />
@@ -91,23 +90,14 @@ Supply-Chain-Management-System
 
 ---
 
-### Driver
+### Driver/ Driver Assistant
 
 - View assigned and completed truck schedules.
 - Dashboard: Delivery schedule.
 
-**_Screenshot Placeholder:_**
-![Driver Page](images/driver_dashboard.png)
-
----
-
-### Assistant
-
-- View assigned and completed truck schedules.
-
-**_Screenshot Placeholder:_**
-![Assistant Page](images/assistant_dashboard.png)
-
+<p float="left">
+  <img src="docs/driver_AssistantUI/driverdashboard.png" width="45%" />
+</p>
 ---
 
 ### Manager
@@ -115,8 +105,30 @@ Supply-Chain-Management-System
 - Register staff(Drivers and assistants), schedule trucks/trains, assign orders, generate and view reports.
 - Dashboard: Driver and assistant registration, create truck schedule,assign orders to trains and reporting.
 
-**_Screenshot Placeholder:_**
-![Manager Page](images/manager_dashboard.png)
+<p float="left">
+  <img src="docs/managerUI/managerd2.png" width="45%" />
+</p>
+-Manager Dashboard Functionalities
+<p>
+  <img src="docs/managerUI/driverregi.png" width="45%" />
+  <img src="docs/managerUI/truckschedule.png" width="45%" />
+  <img src="docs/managerUI/reports.png" width="45%" />
+</p>
+Report types
+<p>
+  <img src="docs/managerUI/salesQ.png" width="45%" />
+  <img src="docs/managerUI/most_ordered.png" width="45%" />
+  <img src="docs/managerUI/salesR.png" width="45%" />
+  <img src="docs/managerUI/workinghours.png" width="45%" />
+  <img src="docs/managerUI/customer_order.png" width="45%" />
+</p>
+
+Headquarters managers are granted access to an enhanced version of the dashboard, which includes exclusive functionality for assigning orders to trains.
+<p>
+  <img src="docs/managerUI/managerdashboard1.png" width="45%" />
+  <img src="docs/customerUI/assigntotrains.png" width="45%" />
+  <img src="docs/customerUI/assign2trains.png" width="45%" />
+</p>
 
 ---
 
