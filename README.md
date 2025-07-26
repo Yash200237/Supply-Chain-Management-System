@@ -154,7 +154,7 @@ Since the database is not hosted, you must first create a local MySQL database u
 
 ```bash
 git clone https://github.com/Yash200237/Supply-Chain-Management-System.git
-cd Supply-Chain-Management-System/supply-chain-management-system
+cd Supply-Chain-Management-System
 ```
 
 ### 3. Install and Run the Frontend
