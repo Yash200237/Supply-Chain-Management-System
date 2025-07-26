@@ -64,7 +64,7 @@ Supply-Chain-Management-System
     │   └── index.js
     ├── README.md
     └── package.json
-    ```
+```
 
 ---
 
