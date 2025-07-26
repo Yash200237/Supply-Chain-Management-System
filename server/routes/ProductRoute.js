@@ -15,7 +15,7 @@ router.get("/products", (req, res) => {
     }
     results = results.map((product) => {
       const productImage = fs.readFileSync(
-        `./images/products/${product.product_ID}.jpg`
+        `../supply-chain-management-system/src/images/products/${product.product_ID}.jpg`
       );
       return {
         ...product,
