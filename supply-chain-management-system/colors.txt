@@ -4,7 +4,7 @@
 
 3. #0f5cce - Medium Blue: This color can be applied to secondary elements like sidebars, hover effects, and borders to complement the primary accent color. It's also suitable for less critical buttons or informational cards, creating harmony with the accent blue without competing with it.
 
-5. #24242a - Charcoal: Use this for text and backgrounds. The softer, neutral tone is excellent for body text, titles, and larger blocks of content. It provides enough contrast against lighter backgrounds without appearing too harsh.
+4. #24242a - Charcoal: Use this for text and backgrounds. The softer, neutral tone is excellent for body text, titles, and larger blocks of content. It provides enough contrast against lighter backgrounds without appearing too harsh.
 
 Buttons: Primary (#0b86f1), hover (#0f5cce), and secondary buttons (#24242a).
 Backgrounds: Use #141c23 for headers and footers, and #24242a or lighter variations as a background for cards and content areas.

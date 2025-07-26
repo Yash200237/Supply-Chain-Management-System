@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Customer.css";
 import profilePicture from "../../images/profilepicture.jpg";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaCity } from "react-icons/fa"; // Icons for style
-import { Margin } from "@mui/icons-material";
+//import { Margin } from "@mui/icons-material";
 
 const CustomerDashboard = () => {
   const navigate = useNavigate();
@@ -136,7 +136,10 @@ const CustomerDashboard = () => {
             <h1>Welcome, {customerName || "Customer"}!</h1>
           </header>
           <div className="content-blocks">
-            <div className="content-block order-products" style={{marginTop: "20px"}}>
+            <div
+              className="content-block order-products"
+              style={{ marginTop: "20px" }}
+            >
               <h2>Order Products</h2>
               <p>
                 Browse our catalog and place orders for your favorite products.
@@ -145,7 +148,10 @@ const CustomerDashboard = () => {
                 Order Products
               </button>
             </div>
-            <div className="content-block track-delivery" style={{marginTop: "20px"}}>
+            <div
+              className="content-block track-delivery"
+              style={{ marginTop: "20px" }}
+            >
               <h2>Track Delivery</h2>
               <p>Check the status of your orders and delivery timelines.</p>
               <button className="button" onClick={handleTrackDelivery}>

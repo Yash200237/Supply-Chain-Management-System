@@ -1,0 +1,11 @@
+.working-hours-container {
+    padding: 20px;
+  }
+  
+  .working-hours-buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  

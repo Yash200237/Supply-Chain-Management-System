@@ -3,8 +3,9 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-
-import "./Customer.css"; // Import your CSS for styling
+import CryptoJS from "crypto-js"; // Import CryptoJS for hashing
+import "./Customer.css";
+import "./products.css";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -14,8 +15,17 @@ const ProductList = () => {
 
   // Fetch products from the backend
   useEffect(() => {
+    const token = getTokenFromCookies(); // Retrieve token from cookies
+    if (!token) {
+      console.error("User not logged in");
+      return; // If no token, stop further execution
+    }
     axios
-      .get("http://localhost:5000/api/products") // Call the API endpoint
+      .get("http://localhost:5000/api/products", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Ensure token is attached
+        },
+      }) // Call the API endpoint
       .then((response) => {
         setProducts(response.data.products); // Set the fetched products in state
         const initialQuantities = {};
@@ -28,19 +38,31 @@ const ProductList = () => {
         console.error("Error fetching products: ", error);
       });
 
-    // Load cart from local storage on mount
-    const storedCart = localStorage.getItem("cart");
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
+    const customerID = decodedToken.customer_ID;
+    const hashedCustomerID = hashCustomerID(customerID);
+    const storedCart = localStorage.getItem(`cart_${hashedCustomerID}`);
+
     if (storedCart) {
-      setCart(JSON.parse(storedCart));
+      setCart(JSON.parse(storedCart)); // Load the correct cart
+    } else {
+      setCart([]); // If no cart, start with an empty one
     }
   }, []);
 
-  // Handle quantity change
-  const handleQuantityChange = (product_ID, newQuantity) => {
-    setQuantities({
-      ...quantities,
-      [product_ID]: newQuantity,
-    });
+  // Helper to get customer ID from JWT stored in cookies
+  const getTokenFromCookies = () => {
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="));
+    console.log("Token found in cookies:", token); // Log token for debugging
+
+    return token ? token.split("=")[1] : null;
+  };
+
+  // Helper to hash the customer ID
+  const hashCustomerID = (customerID) => {
+    return CryptoJS.SHA256(String(customerID)).toString(); // Hash the customer ID
   };
 
   // Handle the ordering process and store in local storage
@@ -70,9 +92,21 @@ const ProductList = () => {
         },
       ];
     }
+    // Get customer ID from JWT
+    const token = getTokenFromCookies();
+    if (!token) {
+      console.error("Customer is not logged in");
+      return;
+    }
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
+    const customerID = decodedToken.customer_ID;
+
+    // Hash the customer ID to create the unique cart key
+    const cartKey = `cart_${hashCustomerID(customerID)}`;
+
     // Update local storage and state
     setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart)); // <-- Store cart with the hashed customer-specific key
   };
 
   // Check if product is already in the cart
@@ -85,13 +119,14 @@ const ProductList = () => {
     navigate("/cart");
   };
 
-return (
+  return (
     <div className="product-list">
       <div className="product-list-header">
         <h1>Order Products</h1>
         {/* Cart Icon */}
         <FontAwesomeIcon
           icon={faShoppingCart}
+          align="right"
           className="cart-icon"
           onClick={goToCart} // Navigate to cart page when icon is clicked
         />
@@ -100,6 +135,11 @@ return (
         {products.map((product, index) => (
           <div key={index} className="product-card">
             <h2>{product.name}</h2>
+            <img
+              src={product.image} // Dynamically fetch the image using the product's image URL
+              alt={product.name}
+              className="product-image"
+            />
             <p>
               Price: LKR{" "}
               {isNaN(Number(product.price))
@@ -107,25 +147,6 @@ return (
                 : Number(product.price).toFixed(2)}
             </p>
             <p>Discount: {product.discount}%</p>
-            <p>Volume: {product.volume}L</p>
-            {/* Quantity input */}
-            <div>
-              <label htmlFor={'quantity-${product.product_ID}'}>
-                Quantity:{" "}
-              </label>
-              <input
-                type="number"
-                id={'quantity-${product.product_ID}'}
-                value={quantities[product.product_ID]}
-                min="1"
-                onChange={(e) =>
-                  handleQuantityChange(
-                    product.product_ID,
-                    parseInt(e.target.value)
-                  )
-                }
-              />
-            </div>
             <button
               className={`order-button ${
                 isInCart(product.product_ID) ? "added" : ""
