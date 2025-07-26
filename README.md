@@ -81,7 +81,7 @@ Supply-Chain-Management-System
 - Dashboard: Product catalog, cart, order tracker.
 
 **_Screenshot Placeholder:_**
-![Customer Page](docs/customerdashboard.png)
+![Customer Page](docs/customerUI/customerdashboard.png)
 
 ---
 
