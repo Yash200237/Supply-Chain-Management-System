@@ -71,7 +71,8 @@ const Signup = () => {
     if (!formData.address) newErrors.address = "Address is required.";
     if (!formData.closestcity) newErrors.closestcity = "City is required.";
     if (!formData.phone) newErrors.phone = "Phone number is required.";
-    if (!formData.customerType) newErrors.customerType = "Customer type is required.";
+    if (!formData.customerType)
+      newErrors.customerType = "Customer type is required.";
     return newErrors;
   };
 
@@ -101,11 +102,12 @@ const Signup = () => {
             phone: "",
             customerType: "",
           });
-          navigate("/start/customerlogin");
+          navigate("/customerlogin");
         }
       })
       .catch((err) => {
-        const errorMsg = err.response?.data?.Error || "An unexpected error occurred.";
+        const errorMsg =
+          err.response?.data?.Error || "An unexpected error occurred.";
         setErrors({ form: errorMsg });
         setSuccessMessage("");
       });
@@ -121,10 +123,14 @@ const Signup = () => {
         sx={{ backgroundColor: theme.palette.background.default }}
       >
         <Paper elevation={5} sx={{ p: 4, width: 400, borderRadius: 3 }}>
-        <Box display="flex" justifyContent="center" mb={2}>
-          <img src={img1} alt="Logo" style={{ maxWidth: "80px", height: "60px" }} />
-        </Box>
-          <Typography variant="h4" align="center" >
+          <Box display="flex" justifyContent="center" mb={2}>
+            <img
+              src={img1}
+              alt="Logo"
+              style={{ maxWidth: "80px", height: "60px" }}
+            />
+          </Box>
+          <Typography variant="h4" align="center">
             Sign up
           </Typography>
 
@@ -213,7 +219,15 @@ const Signup = () => {
                 onChange={handleChange}
               >
                 <MenuItem value="">Select your closest city</MenuItem>
-                {["Kandy", "Colombo", "Negombo", "Galle", "Matara", "Jaffna", "Trincomalee"].map((city) => (
+                {[
+                  "Kandy",
+                  "Colombo",
+                  "Negombo",
+                  "Galle",
+                  "Matara",
+                  "Jaffna",
+                  "Trincomalee",
+                ].map((city) => (
                   <MenuItem key={city} value={city}>
                     {city}
                   </MenuItem>
@@ -232,7 +246,11 @@ const Signup = () => {
               margin="normal"
             />
 
-            <FormControl fullWidth margin="normal" error={!!errors.customerType}>
+            <FormControl
+              fullWidth
+              margin="normal"
+              error={!!errors.customerType}
+            >
               <InputLabel>Customer Type</InputLabel>
               <Select
                 name="customerType"
@@ -253,9 +271,9 @@ const Signup = () => {
                 mt: 2,
                 color: "#1976d2",
                 fontWeight: "bold",
-                '&:hover': { backgroundColor: 'rgba(25, 118, 210, 0.1)' }
+                "&:hover": { backgroundColor: "rgba(25, 118, 210, 0.1)" },
               }}
-              style={{ backgroundColor: "#fff", color:"#f85606" }}
+              style={{ backgroundColor: "#fff", color: "#f85606" }}
             >
               Sign up
             </Button>
